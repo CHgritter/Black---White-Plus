@@ -452,6 +452,7 @@ start
 
 	stop script "BaywatchSwimmingBoy"
 	stop script "BaywatchSwimmingLaugh"
+	delete Influence // Herolich1: Added to remove anti influence at the end of the quest.
 
 
 end script BaywatchMain

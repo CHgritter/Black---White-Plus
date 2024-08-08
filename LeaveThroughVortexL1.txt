@@ -20,7 +20,7 @@ begin script LeaveThroughVortexL1
 	SeeThisFX = 0
 start
 
-	if IsSkippingCreatureGuide == 0	
+	if IsOpeningVortex == 0	 // Herolich1: replaced "IsSkippingCreatureGuide" with "IsOpeningVortex" for the fourth option. 
 		wait until OpenVortexL1 == 1
 
 		//create a yellow beam showing where the vortex would be...

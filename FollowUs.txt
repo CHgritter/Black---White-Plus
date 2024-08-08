@@ -6,6 +6,8 @@ challenge FollowUs
 
 global Zoomed
 global PickupDemoPlayed
+// Herolich1: added variable to skip tutorials
+global SkipMovementTutorial
 
 //------------------------------------------------------------------------------------------------------------------------
 // Track Zoom Usage (until Lost Bro)
@@ -821,6 +823,8 @@ start
 		stop good spirit looking
 		stop music
 		stop evil spirit pointing
+		// Herolich1: Hardcoded to make all tutorials get skipped.
+		SkipMovementTutorial = 1
 
 		// say" There'll be a party!"
 		Mother play ANM_P_GOSSIP_WOMAN_1 loop 1
@@ -850,18 +854,32 @@ start
 		enable jc special SJC_BLEND_ANGLE on Mother
 		enable jc special SJC_BLEND_ANGLE on Son
 */		
-
-		
-
-
-//		sy "Ill show you how to follow!" with interaction
-		say single line HELP_TEXT_FINAL_BEGINNING_06 with interaction
+		// Herolich1: Attempt at making a choice system to allow tutorials.
+		// Dunno if I will evver add it.
+/*
+		say "Press ESC to skip all movement related tutorials."
 		wait until read
 		clear dialogue
+		say "Or continue as normal by using the action button."
+		wait until read
+		clear dialogue
+		say "Make your choice." with interaction
+		wait until read
+		clear dialogue
+*/
+		// Herolich1: if tutorials aren't skipped, it will show it.
+		if SkipMovementTutorial == 0
+//		sy "Ill show you how to follow!" with interaction
+			say single line HELP_TEXT_FINAL_BEGINNING_06 with interaction
+			wait until read
+			clear dialogue
 
 //-------------------------------------------------------------------------------------------------		
-		run script Drag													// Hand demo dragging up ravine
+			run script Drag													// Hand demo dragging up ravine
 //-------------------------------------------------------------------------------------------------
+		end if
+		// Herolich1 Additions end here.
+
 //		sy "Click and hold the Move Button to grab the land." with interaction
 //		say HELP_TEXT_FINAL_BEGINNING_07 with interaction
 //		wait until read
@@ -1112,68 +1130,82 @@ challenge BUILD_CITADEL
 		make good spirit cling across 0.8 down 1.0
 		wait 1 second
 
-//		sy "But now it's time to learn how to look around." with interaction
-		say HELP_TEXT_FINAL_BEGINNING_13 with interaction
-		wait until read
-		wait until camera ready
+		// Herolich1 Additions start here.
+		// Herolich1: This was made with the idea that tutorials might be toggleable, and to make the compiler work I added a lot of
+		// if end if statements. For now it skips you all the way to helping build the temple.
+		if SkipMovementTutorial == 0
+	//		sy "But now it's time to learn how to look around." with interaction
+			say HELP_TEXT_FINAL_BEGINNING_13 with interaction
+			wait until read
+			wait until camera ready
 
-		// Rotating hand demo
-		run script Rotating
+			// Rotating hand demo
+			run script Rotating
+		end if
+		// Herolich1 Additions end here.
 
-	end cinema
+		end cinema
 
-	set interaction SCRIPT_INTERFACE_LEVEL_JUST_GRAB_DOUBLE_CLICK_AND_ROTATE
+		// Herolich1 Additions start here.
+		if SkipMovementTutorial == 0
+		set interaction SCRIPT_INTERFACE_LEVEL_JUST_GRAB_DOUBLE_CLICK_AND_ROTATE
 
-	run script TeachRotate(Citadel, TemplePos)
+		run script TeachRotate(Citadel, TemplePos)
 
-	set interaction SCRIPT_INTERFACE_LEVEL_JUST_GRAB_DOUBLE_CLICK_AND_ROTATE_AND_PITCH
+		set interaction SCRIPT_INTERFACE_LEVEL_JUST_GRAB_DOUBLE_CLICK_AND_ROTATE_AND_PITCH
 
-	run script TeachPitch(Citadel, TemplePos)
+		run script TeachPitch(Citadel, TemplePos)
 
-// Zoom demo
-	begin cinema
+	// Zoom demo
+		begin cinema
 
-		move camera position to [TemplePos] time 2
-		move camera focus to [TempleFoc] time 2
+			move camera position to [TemplePos] time 2
+			move camera focus to [TempleFoc] time 2
 
-		eject good spirit
-		//sy "One last thing, zooming in and out is most useful."
-		say HELP_TEXT_NEW_ENUM_02
-		wait until read
+			eject good spirit
+			//sy "One last thing, zooming in and out is most useful."
+			say HELP_TEXT_NEW_ENUM_02
+			wait until read
 
-		run script Zoom(TemplePos, TempleFoc)
+			run script Zoom(TemplePos, TempleFoc)
 
-	end cinema
+		end cinema
 
-	set interaction SCRIPT_INTERFACE_LEVEL_JUST_GRAB_DOUBLE_CLICK_AND_ROTATE_PITCH_AND_ZOOM
+		set interaction SCRIPT_INTERFACE_LEVEL_JUST_GRAB_DOUBLE_CLICK_AND_ROTATE_PITCH_AND_ZOOM
 
-	begin dialogue
-	//sy "now you try"
-		say HELP_TEXT_NEW_ENUM_03
-		wait until read
-	end dialogue
-	run script TeachZoom(Citadel, TemplePos)
+		begin dialogue
+		//sy "now you try"
+			say HELP_TEXT_NEW_ENUM_03
+			wait until read
+		end dialogue
+		run script TeachZoom(Citadel, TemplePos)
 
-	start jc special SJC_SWITCH_ON_BOOKMARK
+		start jc special SJC_SWITCH_ON_BOOKMARK
 
-	run background script TrackZoomUsage
+		run background script TrackZoomUsage
+		end if
+		// Herolich1 Additions end here.
 
-	begin cinema
+		begin cinema
 
-		make good spirit appear
+		// Herolich1 Additions start here.
+		if SkipMovementTutorial == 0
+			make good spirit appear
 
-		//"All this moving around is giving me a headache, I think we may need to practice it a bit"
-		say HELP_TEXT_FINAL_BEGINNING_70
-		wait until read
+			//"All this moving around is giving me a headache, I think we may need to practice it a bit"
+			say HELP_TEXT_FINAL_BEGINNING_70
+			wait until read
 
-		//"We can go to the special practice land by pressing F2 on the keyboard" with interaction
-		say HELP_TEXT_FINAL_BEGINNING_71 with interaction
-		wait until read
+			//"We can go to the special practice land by pressing F2 on the keyboard" with interaction
+			say HELP_TEXT_FINAL_BEGINNING_71 with interaction
+			wait until read
 
-//		sy "Okay; Now were ready to help the villagers finish building the Temple." with interaction
-		say single line HELP_TEXT_FINAL_BEGINNING_15 with interaction
-		wait until read
-		close dialogue
+	//		sy "Okay; Now were ready to help the villagers finish building the Temple." with interaction
+			say single line HELP_TEXT_FINAL_BEGINNING_15 with interaction
+			wait until read
+			close dialogue
+		end if
+		// Herolich1 Additions end here.
 
 		move camera position to [StorageCamPos] time 4
 		move camera focus to [Radius3Pos] time 5
@@ -1186,8 +1218,12 @@ challenge BUILD_CITADEL
 
 		set interaction	SCRIPT_INTERFACE_LEVEL_NORMAL
 
+		// Herolich1 Additions start here.
+		if SkipMovementTutorial == 0
 		// Give Food to the builders hand demo
-		run script GiveFood
+			run script GiveFood
+		end if
+		// Herolich1 Additions end here.
 	end cinema
 
 	enable alignment music

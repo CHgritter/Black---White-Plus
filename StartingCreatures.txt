@@ -1,0 +1,27 @@
+// Herolich1
+// This is my own script to create the three starter creatures after you've picked a creature (or your own.)
+// Might consider refining the system by making it check your Creature type instead, just in case your original creature was one of these three species.
+
+begin script StartingCreatures
+	CreatureCow = 0
+	CreatureApe = 0
+	CreatureTiger = 0
+	CowBasePos = marker at [2229.612, 16.080, 3154.966]
+	ApeBasePos = marker at [2233.0173, 16.0800, 3152.3228]
+	TigerBasePos = marker at [2234.441, 16.080, 3148.074]
+
+start
+    if not ChosenCreature == 1
+		CreatureCow = create CREATURE CREATURE_TYPE_COW at [CowBasePos]
+        run background script SwapCreatures(CreatureCow)
+    end if
+    if not ChosenCreature == 2
+		CreatureApe = create CREATURE CREATURE_TYPE_APE at [ApeBasePos]
+        run background script SwapCreatures(CreatureApe)
+    end if
+    if not ChosenCreature == 3
+		CreatureTiger = create CREATURE CREATURE_TYPE_TIGER at [TigerBasePos]
+        run background script SwapCreatures(CreatureTiger)
+    end if
+
+end script StartingCreatures

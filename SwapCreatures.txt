@@ -57,7 +57,7 @@ start
 
 			if camera position near [Highlight] radius 100 and NewCreature viewed
 				if get ReminderTimer2 time remaining <= 0
-					set ReminderTimer2 time to 60 seconds
+					set ReminderTimer2 time to 180 seconds // Herolich1: increased the reminder timer. I am considering just removing this part for how obnoxious it can get.
 					begin dialogue
 						eject evil spirit
 						make evil spirit point at [Highlight] in world

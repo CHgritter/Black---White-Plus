@@ -22,8 +22,17 @@ global ChallengeHighlightEndVariable
 
 global IsSkippingToCreatureSelect
 global IsSkippingCreatureGuide
-global IsKeepingOldCreature
+// Herolich1: Disabled to reduce confusion. has been semi replaced with "HasOldCreature"
+//global IsKeepingOldCreature
 global LeaveLandNow
+// Herolich1: added global variables.
+// is opening vortex is the option where all guides are skipped and the vortex is open right away.
+// Has old Creature shows whether the profile had a creature already.
+// Kept old Creature is to see if you have replaced your old creature.
+global IsOpeningVortex
+global HasOldCreature
+// Herolich1: placed here instead of in land 1 setup because otherwise Creature Development can't find it.
+global KeptOldCreature
 
 // for gold reminders while script is running
 global help_text_shaolin_quest_reminder_02
@@ -31,6 +40,9 @@ global help_text_first_meteorite_quest_reminder_02
 global help_text_meteorite_ogre_quest_reminder_02
 global help_text_meteorite_nomad_quest_reminder_02
 global help_text_retake_aztec_village_quest_reminder_02
+
+// Herolich1: DevMode is for testing stuff.
+global DevMode
 
 // ---
 

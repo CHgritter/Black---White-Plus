@@ -368,8 +368,10 @@ start
 			close dialogue
 			wait 1 seconds
 			snapshot challenge success 0.0 alignment 0.0 HELP_TEXT_TITLE_38 StandardReminder(variable HELP_TEXT_REMINDER_36)
+			// Herolich1: Handholding removed.
+			// TODO? Add a check or something to skip this or not. for now it is commented out.
 			// Play hand demo
-			run script Throwing
+			//run script Throwing //Temporarily? commented out.
 		end cinema
 	end if
 
@@ -523,3 +525,6 @@ end script ThrowingStones
 
 //marker at [1994.873, 14.698, 2334.059]  position for audience
 //marker at [1982.051, 12.468, 2336.026]  blokes house
+
+
+// Herolich1: TODO: find out what makes the "You rule at rock throwing, boss!" loop happen when you knock the rock off without starting the quest.

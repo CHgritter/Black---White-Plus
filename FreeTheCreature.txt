@@ -971,6 +971,22 @@ end script FreezeRayStatue
 
 //------------------------------------------------------------------------------------------------------------------------
 
+// Herolich1: This script is supposed to permanently kill Laetes, with help from Shane for providing a jumping off point.
+// Sadly, it isn't enough to force it to stay dead, as he just respawns anyways. So I instead delete him as well.
+// He does stand up moments before death, but that's a minor issue.
+
+begin script EnablePermanentCreatureDeath(Creature)
+
+start
+    wait until HEALTH of Creature == 0
+    force Creature CREATURE_DEAD_FOREVER Creature
+	wait 5 seconds
+	delete Creature with fade
+end script EnablePermanentCreatureDeath
+
+
+//------------------------------------------------------------------------------------------------------------------------
+
 
 // *** FREE THE CREATURE - MAIN ****
 begin script FreeTheCreature
@@ -1053,7 +1069,7 @@ start
 	disable MyCreature indestructible
 	TargetBelief = get LethysTown belief for player 2
 	TargetBelief = TargetBelief/2
-	wait 300 seconds
+	wait 90 seconds  // Herolich1: Reduced the timer from 300 to 90, to have less waiting around. Might replace it wiht a check that the previous scripts are done.
 	while LethyTownInTrouble == 0
 		PlayerBelief = get LethysTown belief for player 1
 		LethysBelief = get LethysTown belief for player 2
@@ -1174,10 +1190,20 @@ start
 	enable leash on MyCreature
 	enable leash on LethysCreature
 	release computer player 2
+	// Herolich1: Make Lethys an ally and make him a lot less aggressive, hopefully.
+	set player 1 ally with player 2 percentage 1
+	set computer player 2 personality "TakeOverTown" 0.0
+	set computer player 2 personality "DestroyTown"	0.0
+	set computer player 2 personality "DefeatPlayer" 0.0
+	set computer player 2 personality "ExpandTown" 0.0
 
 	run script WaitUntilTownTakenOver(LethysTown)
 	
 	pause computer player 2	
+	// Herolich1: Added Laetes to the scene to be scared as his god goes bye bye.
+	set LethysCreature position to [1808.1, 155.9, 2173.3] // Herolich1: Added
+	set LethysCreature focus to [EnemyCitadel] // Herolich1: Added
+	force LethysCreature CREATURE_BE_FRIGHTENED_ON_THE_SPOT LethysCreature // Herolich1: Added
 	begin cinema
 		//start music MUSIC_TYPE_SCRIPT_NEMESIS
 		start music MUSIC_TYPE_SCRIPT_NEMESIS
@@ -1199,6 +1225,7 @@ start
 		wait until read
 		say HELP_TEXT_L3_LETHYS_GIVES_CREED_10
 		wait until read
+		force LethysCreature CREATURE_BE_FRIGHTENED_ON_THE_SPOT LethysCreature // Herolich1: Added
 
 		//Explode the citadel
 		delete EnemyCitadel with temple explode
@@ -1215,13 +1242,18 @@ start
 		set camera focus to [1836.488, 145.916, 2136.782] 
 		wait 16 second
 		disable computer player 2
+		run background script EnablePermanentCreatureDeath(LethysCreature) // Herolich1: Enables a script that will remove Laetes once he has been killed.
 		stop music
+		LethysCreature play C_INDIVIDUAL_ANGRY // Herolich1: Added
 		say HELP_TEXT_EXTRA_GOOD_ADVISOR_05
 		wait until read
 		say HELP_TEXT_EXTRA_EVIL_ADVISOR_LINES_04
 		wait until read
 		say HELP_TEXT_EXTRA_GOOD_ADVISOR_06
 		wait until read
+		wait until LethysCreature played // Herolich1: Added
 	end cinema
+	release LethysCreature // Herolich1: To make Laetes act again.
+	set player 1 ally with player 2 percentage 0 // Herolich1: You killed Lethys. You're not allies with someone you killed (also because otherwise you can still interact with his wolf)
 	LethysKilled = 1
 end script FreeTheCreature

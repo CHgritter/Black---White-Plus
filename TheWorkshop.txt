@@ -373,6 +373,8 @@ start
 	delete Highlight
 	wait 30 seconds
 	release Man
+	// Herolich1: makes skiptimer 1
+	SkipTimer = 1
 
 end script TheWorkshopComplete
 

@@ -34,7 +34,11 @@ start
 		delete GateKey2
 		QuarryRock = get OBJECT MOBILE_STATIC_INFO_GATE_TOTEM_BLANK at [QuarryPos] radius 30
 		delete QuarryRock
-		if IsKeepingOldCreature == 0
+		// Herolich1 DevMode: If devmode is greater than zero and account already has a creature, the creature intro is skipped
+		// This is for the vortex option, to get into the game faster. There is no dev mode for the parts prior to this due to it
+		// not needing as much work.
+		// In normal gameplay, you will always first be brought through the CreaturesInGlade script
+		if DevMode > 0 and HasOldCreature == 1
 			run script CreaturesInGlade
 		else
 			set game time 15.40
@@ -42,12 +46,15 @@ start
 			set camera zones to "Land1Zone5.exc"
 			CreatureGates = get FEATURE at [1781.03,2810.63]
 			open CreatureGates
+			KeptOldCreature = 1 // Herolich1: added KeptOldCreature check so Sable quests are skipped when not skipping creature guide.
+			ChosenCreature = 0
 			ChooseYourCreatureFinished = 1
 			load my_creature at [1850.00, 1300.00]  // arbitrary position
 		end if
 	end if
 		run background script RunCreatureBreederLand(1)
 		run background script TheMissionaries
+		run background script StartingCreatures // Herolich1: a script that places two or all of the starter creatures in the glade.
 	if IsSkippingCreatureGuide == 0
 		run background script MoveTheGuideAround
 	end if
@@ -55,7 +62,7 @@ start
 //	run script CreatureDevelopmentSet
 
 	run script CreatureDevSeeHome
-	if IsSkippingCreatureGuide == 0
+	if IsSkippingCreatureGuide == 0 and KeptOldCreature == 0 // Herolich1: added KeptOldCreature check so Sable quests are skipped when not skipping creature guide.
 		run script CreatureDevLearnToEat
 		run script CreatureDevPunishment
 	else
@@ -69,13 +76,13 @@ start
 		run background script MagicMushroom
 		SingingStonesStart = 1
 
-	if IsSkippingCreatureGuide == 0
+	if IsSkippingCreatureGuide == 0 and KeptOldCreature == 0 // Herolich1: added KeptOldCreature check so Sable quests are skipped when not skipping creature guide.
 		run script CreatureDevLeashIntro
 	end if
 
 		run background script HermitMain
 
-	if IsSkippingCreatureGuide == 0
+	if IsSkippingCreatureGuide == 0 and KeptOldCreature == 0 // Herolich1: added KeptOldCreature check so Sable quests are skipped when not skipping creature guide.
 		run script CreatureDevLeashAttachToHouse
 	end if
 
@@ -83,23 +90,27 @@ start
 		run background script CreatureSavingPeople							// This waits until creature big enough
 //	run script CreatureGuideSet
 
-	if IsSkippingCreatureGuide == 0
+	if IsSkippingCreatureGuide == 0 // Herolich1: added an else statement so that the Aztec village can be taken when skipping the creature guide.
 		run script MeetTheGuide
 		run script GuideAsksToMeetYourCreature
 		run script GuideImpressTownLesson
+	else
+		GuideNotImpressing = 1
 	end if
 
 		run background script PiedPiper
 
-	if IsSkippingCreatureGuide == 0
+	if IsSkippingCreatureGuide == 0 // Herolich1: added an else statement so that Sleg can still be fought can be taken when skipping the creature guide.
 		run script GuideImpressTownNextLesson
 		run script CreatureDevGuideTeachesFight
+	else
+		CreatureDevelopment_Fight = 1
 	end if
 
 		run background script CreatureGuardian								
 		run background script LeaveThroughVortexL1							// This waits until OpenVortexL1 == 1 (set in TheStorm)
 
-	if IsSkippingCreatureGuide == 0
+	if IsOpeningVortex == 0 // Herolich1: replaced "IsSkippingCreatureGuide" with "IsOpeningVortex"
 		run script TheStorm	
 	else
 		wait until LeaveLandNow == 1

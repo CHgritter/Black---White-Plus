@@ -18,5 +18,8 @@ thelostflock.txt
 TheMissionaries.txt
 throwingstones.txt
 MagicMushroom.txt
+// Herolich1: added a new txt file.
+StartingCreatures.txt
+//
 LandControl1.txt
 

@@ -111,7 +111,7 @@ start
 		wait 5 seconds
 	end while
 
-	ALIGNMENT of ComputerCreature = ALIGNMENT of MyCreature
+	ALIGNMENT of ComputerCreature = ALIGNMENT of MyCreature / 2 // Herolich1: made creature alignment half that of the player's creature.
 	enable ComputerCreature friends with MyCreature
 
 	// Release him into the world again
@@ -214,7 +214,7 @@ start
 		wait 5 seconds
 	end while
 
-	ALIGNMENT of ComputerCreature = - ALIGNMENT of MyCreature
+	ALIGNMENT of ComputerCreature = - ALIGNMENT of MyCreature / 2 // Herolich1: made Lethys creature half the opposite of your  own, to hopefully make him less of a prick.
 
 	// Release him into the world again
 	release ComputerCreature
@@ -316,7 +316,7 @@ start
 		wait 5 seconds
 	end while
 
-	ALIGNMENT of ComputerCreature = - ALIGNMENT of MyCreature
+	ALIGNMENT of ComputerCreature = - ALIGNMENT of MyCreature  // Herolich1: untouched, because it just makes sense.
 
 	// Release him into the world again
 	release ComputerCreature

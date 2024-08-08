@@ -10,6 +10,9 @@ global LethysGone
 global TriggeredGestures
 global DidLearnGesturesBeforeOwningTown
 global DoneExitLethysVortex=0
+// Herolich1: A timer that will skip the wait for the gestures tutorial if you've finished the workshop quest.
+// find a way to make this simpler to handle.
+global SkipTimer
 
 //------------------------------------------------------------------------------------------------------------------------
 begin challenge help script CheckForKhazarChallengeHighlightNotify(Highlight, Location, AdvisorType, AdvisorSpeakEnum) 

@@ -373,7 +373,10 @@ start
 	run background script DidYouKnow(dyk13, variable HELP_TEXT_DYK_13, variable DYK_CREATURE)			// resting creatures grow quicker
 	MyCreature = get player 1 creature
 
-	if IsSkippingCreatureGuide == 0
+	// Herolich1: added KeptOldCreature check so Sable quests are skipped when not skipping creature guide.
+	// This is done because I have had experiences where these quests would break when using an already mature creature.
+	// Plus, with a pre-existing creature, these quests are hardly needed.
+	if IsSkippingCreatureGuide == 0 and KeptOldCreature == 0 
 		Trainer = create VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [CitadelEntrancePos]
 		Highlight = create highlight HIGHLIGHT_QUEST at [HighlightPos]
 		ALTITUDE of Highlight = 6
@@ -393,7 +396,8 @@ start
 	set MyCreature home position [HomePos]
 	set MyCreature focus to camera position
 
-	if IsSkippingCreatureGuide == 0
+	// Herolich1: added KeptOldCreature check so Sable quests are skipped when not skipping creature guide.
+	if IsSkippingCreatureGuide == 0 and KeptOldCreature == 0 
 		run background script CreatureDevelopmentTrainerLeaveCitadel (Trainer, TrainerPos)
 
 		begin cinema

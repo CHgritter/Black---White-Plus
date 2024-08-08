@@ -51,7 +51,7 @@ begin script FireBallChallenge
 	Seed3Gone = 0
 
 	FireInfluence = 0
-	HutAntiInfluence = create anti influence at position [Hut1Pos] radius 50
+	HutAntiInfluence = 0 // Herolich1: moved the assigning of the HutAntiInfluence into the quest being started
 	HighCamPosAboveCitadel = marker at [3333.6067, 233.1279, 3238.7915]
 	ShieldScrollCamPos = marker at [3580.8599, 32.6802, 3489.5591]
 	ShieldScrollCamFoc = marker at [3611.9944, 8.7162, 3461.9143]
@@ -78,6 +78,7 @@ start
 
 	if KhazarGone == 0
 		FireInfluence = create influence at [FireBallSeedPos1] radius 40
+		HutAntiInfluence = create anti influence at position [Hut1Pos] radius 50 // Herolich1: moved the assigning of the HutAntiInfluence into the quest being started
 
 		HEALTH of Hut1 = 1
 		HEALTH of Hut2 = 1
@@ -124,7 +125,10 @@ start
 			wait until camera ready
 
 			// Fireball challenge hand demo
-			run script Fireball
+
+			// Herolich1: handholding skipped. 
+			// TODO? Add a check or something to skip this or not. for now it is commented out.
+			// run script Fireball //Temporarily? commented out.
  		end cinema
 
 		//Wait for the player to pickup a fireball for the first time.
@@ -442,6 +446,7 @@ start
 		
 		release computer player 2
 		KhazarInScript=0
+		delete HutAntiInfluence // Herolich1: Added to remove anti influence at the end of the quest.
 
 		delete FireBallSeed1 with fade
 		delete FireBallSeed2 with fade

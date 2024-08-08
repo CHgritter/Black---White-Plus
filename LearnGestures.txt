@@ -28,7 +28,7 @@ start
 		end if
 
 		start hand demo "gestures" with pause on trigger
-		//"Move your hand in a spiral like this, and you’ll charge into Miracle selection."
+		//"Move your hand in a spiral like this, and youï¿½ll charge into Miracle selection."
 		say HELP_TEXT_EXTRA_KHAZAR_07
 		wait until read
 		wait until hand demo trigger
@@ -145,14 +145,34 @@ start
 
 			wait until camera ready
 			set interaction SCRIPT_INTERFACE_LEVEL_JUST_HAND_MOVE
-		end cinema
+
+			// Herolich1: Added the dialogue of the PlayMiracleHandDemo in
+			move camera position to [3222.985, 101.944, 3370.304] time 5
+			move camera focus to [3130.855, 49.218, 3358.674] time 4
+	
+			move computer player 2 to [3150.297, 50, 3403.188] speed 50
+	
+			//"You can charge miracles without having to return to your temple to select them"
+			say HELP_TEXT_EXTRA_KHAZAR_05
+			wait until read
+
+			say HELP_TEXT_KHAZAR_EXTRA_LINES_02 with interaction
+			wait until read
+			wait until camera ready
+
+			//stop music
+		//end cinema
 		// Initial snapshot is in the hand demo
-		run script PlayMiracleHandDemo(WorshipSite)
+
+		// Herolich1: handholding removed.
+		// TODO? Add a check or something to skip this or not. for now it is commented out.
+		// Also commented out the part where he wants you to try, and instead moves on to the town.
+		// run script PlayMiracleHandDemo(WorshipSite) //Temporarily? commented out.
 
 //		snapshot quest success 0.0 alignment 0.0 HELP_TEXT_TITLE_115 PlayMiracleHandDemo(WorshipSite)
 
 		run background script DidYouKnow(DYKMarker, variable HELP_TEXT_DYK_107, variable DYK_MIRACLES)
-
+/*
 		set GestureTimer time to 5*60 seconds
 		GestureSuccess=1
 
@@ -191,7 +211,7 @@ start
 				wait until read
 				close dialogue
 			end if
-
+*/
 			remove resource RESOURCE_TYPE_FOOD 9000000 from StoragePit
 			remove resource RESOURCE_TYPE_WOOD 9000000 from StoragePit
 			set Highlight position to [HighlightPos2]

@@ -85,6 +85,11 @@ start
 			say HELP_TEXT_NEW_LAND_2_SHIELD_18
 			wait until read
 
+			// Herolich1: handholding removed
+			// TODO? Add a check or something to skip this or not. for now it is commented out.
+			// This one will need a lot more work, since the example also creates the example shield.
+			// for now it skips the part where you attack the shield.
+/*
 			// "This is how you cast a shield."
 			say HELP_TEXT_NEW_LAND_2_SHIELD_19
 			wait until read
@@ -96,7 +101,7 @@ start
 			end if
 
 			// Cast Physical Shield hand demo
-			run script PShield
+			run script PShield //Temporarily? commented out.
 
 			// MOVE THE CAMERAS POSITION SO IT IS GOOD FOR AIMING AT THE SHIELD
 			move camera position to [AimAtShieldCamPos] time 2
@@ -133,17 +138,22 @@ start
 			begin cinema
 				// "Don't worry about hitting the shield"
 				say HELP_TEXT_NEW_LAND_2_SHIELD_24
-
 				move camera position to [3559.6484, 64.1569, 3443.4514] time 6
 				move camera focus to [3604.9004, 6.7596, 3456.4651] time 6
 
 				wait until read
+*/
+				move camera position to [3559.6484, 64.1569, 3443.4514] time 6
+				move camera focus to [3604.9004, 6.7596, 3456.4651] time 6
+
 
 				// "Now you have a try.  Shield the hut and I will attack it."
 				say HELP_TEXT_NEW_LAND_2_SHIELD_22
 				wait until read
+
+				set interaction SCRIPT_INTERFACE_LEVEL_NORMAL
 			end cinema
-		end if
+		//end if
 
 		// create three spellseeds at [ShieldSeedPos] - Create them early to give them time to settle
 		ShieldSeed1 = create SCRIPT_OBJECT_TYPE_ONE_SHOT_SPELL SPELL_SEED_TYPE_PHYSICAL_SHIELD at [ShieldSeedPos1]

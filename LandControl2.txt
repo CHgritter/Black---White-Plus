@@ -15,8 +15,9 @@ start
 
 	while Exit == 0
 		wait 3 seconds
-		//Check for expansion 
-		if get ExpansionTimer time remaining <= 0
+		//Check for expansion
+		// Herolich1: Added that if the skiptimer is 1 before the time remaining is zero or lower, it will enable the quest immediatly.
+		if get ExpansionTimer time remaining <= 0 or SkipTimer == 1
 			if get PLAYER of HomeTown == 1
 				run background script LearnGestures(Town1)
 				Exit = 1
@@ -313,6 +314,9 @@ begin script LandControl2
 	CanLethysVortex=0
 	DoneLethysVortex=0
 	DoneWorkshop=0
+	// Herolich1: Load in skiptimer and dev influence
+	SkipTimer=0
+	DevModeInfluence=0
 
 	//Counts
 	TownCount=0
@@ -365,6 +369,13 @@ start
 		
 	while LeavingLandTwo == 0
 		wait 9 seconds //To slow process hit.
+
+		 // Herolich1: Added a devmode function that creates the vortex if DevMode is 3 or higher.
+		if DevMode > 2
+			DevModeInfluence = create influence at [1061.107, 147.785, 3597.965] radius 40
+			run script LeaveThroughVortexL2
+		end if
+
 
 		if LearnWorshipCompleted == 1 and DoneWorkshop == 0
 			DoneWorkshop=1

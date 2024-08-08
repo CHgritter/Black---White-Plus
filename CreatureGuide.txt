@@ -130,15 +130,54 @@ begin script CreateGuideCreature
 start
 	if Guide not exists
 		MyCreature = get player 1 creature
+		// Herolich1: extended the guide options by a lot.
+		//if MyCreature type CREATURE CREATURE_TYPE_APE
+		//	Guide = create CREATURE CREATURE_TYPE_BEAR at [CreateGuidePos]
 		if MyCreature type CREATURE CREATURE_TYPE_COW
 			Guide = create CREATURE CREATURE_TYPE_SHEEP at [CreateGuidePos]
-		elsif MyCreature type CREATURE  CREATURE_TYPE_TIGER
+		elsif MyCreature type CREATURE CREATURE_TYPE_TIGER
 			Guide = create CREATURE CREATURE_TYPE_LION at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_LEOPARD
+			Guide = create CREATURE CREATURE_TYPE_WOLF at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_WOLF
+			Guide = create CREATURE CREATURE_TYPE_TIGER at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_LION
+			Guide = create CREATURE CREATURE_TYPE_LEOPARD at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_HORSE
+			Guide = create CREATURE CREATURE_TYPE_ZEBRA at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_TORTOISE
+			Guide = create CREATURE CREATURE_TYPE_HORSE at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_ZEBRA
+			Guide = create CREATURE CREATURE_TYPE_RHINO at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_BEAR
+			Guide = create CREATURE CREATURE_TYPE_MANDRILL at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_POLAR_BEAR
+			Guide = create CREATURE CREATURE_TYPE_GORILLA at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_SHEEP
+			Guide = create CREATURE CREATURE_TYPE_TORTOISE at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_CHIMP
+			Guide = create CREATURE CREATURE_TYPE_POLAR_BEAR at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_MANDRILL
+			Guide = create CREATURE CREATURE_TYPE_CHIMP at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_RHINO
+			Guide = create CREATURE CREATURE_TYPE_COW at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_GORILLA
+			Guide = create CREATURE CREATURE_TYPE_APE at [CreateGuidePos]
+		// Herolich1: Added these two for CI.
+		/*
+		elsif MyCreature type CREATURE CREATURE_TYPE_CHICKEN
+			Guide = create CREATURE CREATURE_TYPE_CROCODILE at [CreateGuidePos]
+		elsif MyCreature type CREATURE CREATURE_TYPE_CROCODILE
+			Guide = create CREATURE CREATURE_TYPE_CHICKEN at [CreateGuidePos]
+		*/
 		else
 			Guide = create CREATURE CREATURE_TYPE_BEAR at [CreateGuidePos]
 		end if
 
 		set Guide name HELP_TEXT_GUIDE_CREATURE_NAME_01
+		// Herolich1: bases the creature guide's alignment on an average of your own and your creature's alignment
+		// Might remove this one, since it's just fluff no one asked for.
+		ALIGNMENT of Guide = (ALIGNMENT of MyCreature + alignment of player) / 2 
 		SCALE of Guide = 2.0
 		SPEED of Guide = 40.5
 		STRENGTH of Guide = 1.0 
@@ -199,61 +238,63 @@ start
 	MyCreature = get player 1 creature
 
 	run script CreateGuideCreature
+	
+	if IsSkippingCreatureGuide == 0 // Herolich1: added this to skip a lot of waiting when picking the storm starting option.
+		move Guide position to [AfterFightPos]
+		wait until [Guide] near [AfterFightPos] radius 40
+		wait 5 seconds
 
-	move Guide position to [AfterFightPos]
-	wait until [Guide] near [AfterFightPos] radius 40
-	wait 5 seconds
+		EXHAUSTION of Guide = 1
+		force Guide CREATURE_SLEEP Guide
 
-	EXHAUSTION of Guide = 1
-	force Guide CREATURE_SLEEP Guide
+		Highlight = create highlight HIGHLIGHT_QUEST at [Guide]+[10,0]
+		ALTITUDE of Highlight = 0
+	//	update snapshot success 1 alignment 0 HELP_TEXT_TITLE_105 StandardReminder(variable HELP_TEXT_REMINDER_108)
+		enable Highlight active
 
-	Highlight = create highlight HIGHLIGHT_QUEST at [Guide]+[10,0]
-	ALTITUDE of Highlight = 0
-//	update snapshot success 1 alignment 0 HELP_TEXT_TITLE_105 StandardReminder(variable HELP_TEXT_REMINDER_108)
-	enable Highlight active
+		// Guide goes to sleep again and when bugged tells you to do the Guardian script if it is uninitiated
+		set SnoozeTimer time to 300 seconds
+		while get SnoozeTimer time remaining > 0
+			if Highlight clicked
+				begin cinema
+					force Guide CREATURE_IDLE Guide
+					EXHAUSTION of Guide = 0
+					move camera to face Guide distance 30 time 2
+					move camera focus to [Guide] + [0,25,0]	 time 2
 
-	// Guide goes to sleep again and when bugged tells you to do the Guardian script if it is uninitiated
-	set SnoozeTimer time to 300 seconds
-	while get SnoozeTimer time remaining > 0
-		if Highlight clicked
-			begin cinema
-				force Guide CREATURE_IDLE Guide
-				EXHAUSTION of Guide = 0
-				move camera to face Guide distance 30 time 2
-				move camera focus to [Guide] + [0,25,0]	 time 2
+					wait until camera ready
 
-				wait until camera ready
+					update snapshot success 0.85 alignment 0 HELP_TEXT_TITLE_105 StandardReminder(variable HELP_TEXT_GUIDE_DIES_30)
 
-				update snapshot success 0.85 alignment 0 HELP_TEXT_TITLE_105 StandardReminder(variable HELP_TEXT_GUIDE_DIES_30)
-
-				disable creature sound
-				//sy "I need rest. I will tell you the secret later."
-				say HELP_TEXT_GUIDE_DIES_30
-				wait until read
-				enable creature sound
-
-				set Guide focus to camera position
-				if CreatureGuardianInitiated == 0
-					move camera position to [SeeGuardianPos] time 3
-					move camera focus to [SeeGuardianFoc] time 3
 					disable creature sound
-					//sy "Why not test what you have learnt while you wait."
-					say HELP_TEXT_GUIDE_DIES_29
+					//sy "I need rest. I will tell you the secret later."
+					say HELP_TEXT_GUIDE_DIES_30
 					wait until read
 					enable creature sound
-					wait until camera ready
-				end if
-				EXHAUSTION of Guide = 1
-				force Guide CREATURE_SLEEP Guide
-			end cinema
-			clear clicked object
-		end if
-	end while
 
-	update snapshot success 0.9 alignment 0 HELP_TEXT_TITLE_105 StandardReminder(variable HELP_TEXT_GUIDE_DIES_14)
+					set Guide focus to camera position
+					if CreatureGuardianInitiated == 0
+						move camera position to [SeeGuardianPos] time 3
+						move camera focus to [SeeGuardianFoc] time 3
+						disable creature sound
+						//sy "Why not test what you have learnt while you wait."
+						say HELP_TEXT_GUIDE_DIES_29
+						wait until read
+						enable creature sound
+						wait until camera ready
+					end if
+					EXHAUSTION of Guide = 1
+					force Guide CREATURE_SLEEP Guide
+				end cinema
+				clear clicked object
+			end if
+		end while
 
-	EXHAUSTION of Guide = 0
-	force Guide CREATURE_IDLE Guide
+		update snapshot success 0.9 alignment 0 HELP_TEXT_TITLE_105 StandardReminder(variable HELP_TEXT_GUIDE_DIES_14)
+
+		EXHAUSTION of Guide = 0
+		force Guide CREATURE_IDLE Guide
+	end if
 
 	move Guide position to [GuidePos]
 
@@ -1648,8 +1689,10 @@ start
 		close dialogue
 		enable creature sound
 
+			// Herolich1: Handholding skip.
+			// TODO? Add a check or something to skip this or not. for now it is commented out.
 		//Run the hand demo script 
-		run script ImpressFood
+		// run script ImpressFood //Temporarily? commented out.
 
 		// "Notice how much the villagers loved this" with interaction
 		say HELP_TEXT_NEW_DEVELOPMENT_STAGE_GUIDE_IMPRESSES_TOWN_20

@@ -4,9 +4,11 @@ global QuarryRockPresent
 global ApeState
 global CowState
 global TigerState
+global OriginalState
 global ApeTimer
 global CowTimer
 global TigerTimer
+global OriginalTimer
 define script CreaturesInGlade
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -34,9 +36,10 @@ start
 end script AdvisorSpotsGateKey2
 
 //------------------------------------------------------------------------------------------------------------------------
-//  Make creatures play a variety of different anims
+//  Make creatures play a variety of different anims 
+//  Herolich1: Added everything CreatureOriginal related
 //------------------------------------------------------------------------------------------------------------------------
-begin script CreaturesPlayVarietyOfAnims (CreatureCow, CreatureApe, CreatureTiger)
+begin script CreaturesPlayVarietyOfAnims (CreatureCow, CreatureApe, CreatureTiger, CreatureOriginal) 
 start
 	if CreatureCow played
 		if 	CowTimer == 0
@@ -135,6 +138,38 @@ start
 			end if
 		else
 			TigerTimer=TigerTimer-1
+		end if
+	end if
+	if CreatureOriginal played
+		if 	OriginalTimer == 0
+			OriginalTimer = number from 5 to 20
+			if OriginalState == 0
+				force CreatureOriginal CREATURE_POINT_AT_CAMERA CreatureOriginal
+				OriginalState = 1
+			elsif OriginalState == 1
+				CreatureOriginal play C_INDIVIDUAL_FRIENDLY_WAVE
+				OriginalState = 2
+			elsif OriginalState == 2
+				CreatureOriginal play C_INDIVIDUAL_PICK_ME
+				OriginalState = 3
+			elsif OriginalState == 3
+				CreatureOriginal play C_INDIVIDUAL_HAPPY
+				OriginalState = 4
+			elsif OriginalState == 4
+				CreatureOriginal play C_MISC_PRAY
+				OriginalState = 5
+			elsif OriginalState == 5
+				CreatureOriginal play C_INDIVIDUAL_TIRED
+				OriginalState = 6
+			elsif OriginalState == 6
+				CreatureOriginal play C_INDIVIDUAL_IMPRESS
+				OriginalState = 7
+			elsif OriginalState == 7
+				CreatureOriginal play C_INDIVIDUAL_LOOK_AT_ME
+				OriginalState = 0
+			end if
+		else
+			OriginalTimer = OriginalTimer-1
 		end if
 	end if
 end script CreaturesPlayVarietyOfAnims
@@ -711,6 +746,17 @@ begin script CreaturesInGlade
 	HandNotOverTigerState = 0
 	HandOverAnyCreature = 0
 
+	// Herolich1: everything regarding the old creature setup
+	CreatureType = 0
+	CreatureOriginal = 0
+	OriginalFocusTimer = create timer for 0 seconds
+	CreatureOriginalClickedTwice = 0
+	SecondDelayTickOriginal = 0
+	OriginalBasePos = marker at [2234.706, 16.080, 3157.066]
+	HandNotOverOriginalState = 0
+	CreatureOriginalHeight = 0
+	OriginalHeight = 0
+
 	CowHeight = 0
 	ApeHeight = 0
 	TigerHeight = 0
@@ -721,12 +767,15 @@ start
 		set game time 15.40
 		enable game time
 
+		// Herolich1: added OriginalState and OriginalTimer
 		ApeState = 4
 		CowState = 0
 		TigerState = 6
+		OriginalState = 0
 		ApeTimer = 0
 		CowTimer = 0
 		TigerTimer = 0
+		OriginalTimer = 0
 
 		update snapshot success 0.75 alignment 0.0 HELP_TEXT_TITLE_43 StandardReminder(variable HELP_TEXT_REMINDER_54)
 		
@@ -735,6 +784,17 @@ start
 		CreatureCow = create CREATURE CREATURE_TYPE_COW at [CowInitialPos]
 		CreatureApe = create CREATURE CREATURE_TYPE_APE at [ApeBasePos]  
 		CreatureTiger = create CREATURE CREATURE_TYPE_TIGER at [TigerBasePos]
+		// Herolich1: added a check to see if you have an original creature.
+		// If yes, it will get loaded, then have it's original size saved, and then made to be the same height as the other creatures.
+		// If not, loads a second red monkey because it's cheaper to do instead of a bunch of if checks.
+		if HasOldCreature == 1
+			load my_creature at [OriginalBasePos]
+			CreatureOriginal = get player 1 creature
+			CreatureOriginalHeight = SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureOriginal
+			SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureOriginal = SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureCow
+		else
+			CreatureOriginal = create CREATURE CREATURE_TYPE_APE at [OriginalBasePos]
+		end if
 
 		force CreatureCow CREATURE_LOOK_FOREVER CowLookPos
 		//Ark = create FEATURE FEATURE_INFO_ARK_DRY_DOCK at [1881.0833, 8.1316, 3154.1094]
@@ -826,17 +886,21 @@ start
 		force CreatureTiger CREATURE_SIT TigerBasePos
 		move CreatureCow position to [CowBasePos]
 		force CreatureApe CREATURE_POINT_AT_CAMERA CreatureApe
+		force CreatureOriginal CREATURE_WAVE_AT_PLAYER CreatureOriginal // Herolich1: added
 		move camera position to [2225.328, 17.080, 3146.622] time 4			// Camera pos move to creatures
 		move camera focus to [2238.217, 18.187, 3155.706] time 4 			// Camera foc move to creatures
 		wait until CreatureCow played
 		wait until CreatureApe played
+		wait until CreatureOriginal played // Herolich1: added
 		set CreatureCow focus to camera position
 	
 		wait until CreatureCow played
 		CreatureCow play C_INDIVIDUAL_CONFUSED
 		wait until CreatureCow played
+		set CreatureOriginal focus to camera position // Herolich1: added
 		wait until CreatureApe played
 		set CreatureApe focus to camera position
+		wait until CreatureOriginal played // Herolich1: added
 		//force CreatureTiger CREATURE_LOOK_AT_CAMERA CreatureTiger
 		snapshot quest success 0.75 alignment 0.0 HELP_TEXT_TITLE_43 StandardReminder(variable HELP_TEXT_REMINDER_54)
 
@@ -856,6 +920,7 @@ start
 		CreatureTiger play PICK_ME loop 1
 
 		say HELP_TEXT_NEWEST_GET_CREATURE_06
+		CreatureOriginal play C_CONCURRENT_YAWN // Herolich1: added
 		wait until read
 		say HELP_TEXT_NEWEST_GET_CREATURE_07
 
@@ -878,6 +943,8 @@ start
 		CreatureTiger play C_INDIVIDUAL_HAPPY
 
 		say HELP_TEXT_NEWEST_GET_CREATURE_10
+		wait until CreatureOriginal played // Herolich1: added
+		CreatureOriginal play C_INDIVIDUAL_HAPPY // Herolich1: added
 		wait until read
 
 		send good spirit home
@@ -932,6 +999,19 @@ start
 					HandNotOverTigerState = 0
 				end if											
 			end if
+			// Herolich1: Added hand not over states for original creature 
+			if CreatureOriginal played
+				if HandNotOverOriginalState == 0
+					force CreatureOriginal CREATURE_LOOK_AT_CAMERA CreatureOriginal
+					HandNotOverOriginalState = 1
+				elsif HandNotOverOriginalState == 1
+					CreatureOriginal play C_INDIVIDUAL_LOOK_AT_ME
+					HandNotOverOriginalState = 2
+				elsif HandNotOverOriginalState == 2
+					CreatureOriginal play C_MISC_CRY
+					HandNotOverOriginalState = 0
+				end if											
+			end if
 
 			SecondDelayTickCow++
 
@@ -941,12 +1021,12 @@ start
 					make good spirit point to CreatureCow
 					say HELP_TEXT_NEWEST_GET_CREATURE_12
 					while not read						
-						run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger)
+						run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger, CreatureOriginal)
 					end while
 					eject evil spirit
 					say HELP_TEXT_NEWEST_GET_CREATURE_13
 					while not read
-						run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger)
+						run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger, CreatureOriginal)
 					end while
 					SpiritReading = 1
 					HandOver = 1
@@ -988,6 +1068,19 @@ start
 					HandNotOverTigerState = 0
 				end if											
 			end if
+			// Herolich1: Added hand not over states for original creature
+			if CreatureOriginal played
+				if HandNotOverOriginalState == 0
+					force CreatureOriginal CREATURE_LOOK_AT_CAMERA CreatureOriginal
+					HandNotOverOriginalState = 1
+				elsif HandNotOverOriginalState == 1
+					CreatureOriginal play C_INDIVIDUAL_LOOK_AT_ME
+					HandNotOverOriginalState = 2
+				elsif HandNotOverOriginalState == 2
+					CreatureOriginal play C_MISC_CRY
+					HandNotOverOriginalState = 0
+				end if											
+			end if
 
 
 			SecondDelayTickApe++
@@ -997,7 +1090,7 @@ start
 						make good spirit point to CreatureApe
 						say single line HELP_TEXT_NEWEST_GET_CREATURE_14
 						while not read
-							run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger)
+							run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger, CreatureOriginal)
 						end while
 						SpiritReading = 1
 						HandOver = 2
@@ -1039,6 +1132,19 @@ start
 					HandNotOverApeState = 0
 				end if											
 			end if
+			// Herolich1: Added hand not over states for original creature
+			if CreatureOriginal played
+				if HandNotOverOriginalState == 0
+					force CreatureOriginal CREATURE_LOOK_AT_CAMERA CreatureOriginal
+					HandNotOverOriginalState = 1
+				elsif HandNotOverOriginalState == 1
+					CreatureOriginal play C_INDIVIDUAL_LOOK_AT_ME
+					HandNotOverOriginalState = 2
+				elsif HandNotOverOriginalState == 2
+					CreatureOriginal play C_MISC_CRY
+					HandNotOverOriginalState = 0
+				end if											
+			end if
 
 			SecondDelayTickTiger++
 			if SecondDelayTickApe > 9
@@ -1047,7 +1153,7 @@ start
 						make evil spirit point to CreatureTiger
 						say single line HELP_TEXT_NEWEST_GET_CREATURE_15					
 						while not read
-							run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger)
+							run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger, CreatureOriginal)
 						end while
 						SpiritReading = 1
 						HandOver = 3
@@ -1060,8 +1166,72 @@ start
 			SecondDelayTickTiger = 0
 		end if
 
+		// Herolich1: Added hand over states for original creature
+		if hand position near [CreatureOriginal] radius 1
+			HandOverAnyCreature = 1
+			if CreatureOriginal played
+				CreatureOriginal play PICK_ME loop 1
+			end if
+			if CreatureCow played
+				if HandNotOverCowState == 0
+					force CreatureCow CREATURE_LOOK_AT_CAMERA CreatureCow
+					HandNotOverCowState = 1
+				elsif HandNotOverCowState == 1
+					CreatureCow play C_INDIVIDUAL_LOOK_AT_ME
+					HandNotOverCowState = 2
+				elsif HandNotOverCowState == 2
+					CreatureCow play C_MISC_CRY
+					HandNotOverCowState = 0
+				end if											
+			end if
+			if CreatureApe played
+				if HandNotOverApeState == 0
+					force CreatureApe CREATURE_LOOK_AT_CAMERA CreatureApe
+					HandNotOverApeState = 1
+				elsif HandNotOverApeState == 1
+					CreatureApe play C_INDIVIDUAL_LOOK_AT_ME
+					HandNotOverApeState = 2
+				elsif HandNotOverApeState == 2
+					CreatureApe play C_INDIVIDUAL_SAD
+					HandNotOverApeState = 0
+				end if											
+			end if
+			if CreatureTiger played
+				if HandNotOverTigerState == 0
+					force CreatureTiger CREATURE_LOOK_AT_CAMERA CreatureTiger
+					HandNotOverTigerState = 1
+				elsif HandNotOverTigerState == 1
+					CreatureTiger play C_INDIVIDUAL_LOOK_AT_ME
+					HandNotOverTigerState = 2
+				elsif HandNotOverTigerState == 2
+					CreatureTiger play C_INDIVIDUAL_SAD
+					HandNotOverTigerState = 0
+				end if											
+			end if
+
+			SecondDelayTickOriginal++
+
+			if SecondDelayTickOriginal > 9
+				if read and HandOver != 1
+					begin dialogue
+						make good spirit point to CreatureOriginal
+						say single line HELP_TEXT_NEW_L5_LION_PUZZLE_08 // "He must want to become our Creature. Let's have him."
+						while not read
+							run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger, CreatureOriginal)
+						end while
+						SpiritReading = 1
+						HandOver = 2
+						ReadCount = 0
+					end dialogue
+					SecondDelayTickOriginal = 0
+				end if
+			end if
+		else
+			SecondDelayTickOriginal = 0
+		end if
+
 		if HandOverAnyCreature == 0
-			run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger)
+			run script CreaturesPlayVarietyOfAnims(CreatureCow, CreatureApe, CreatureTiger, CreatureOriginal)
 		end if
 		
 		if CreatureCow played and get CowFocusTimer time remaining <= 0
@@ -1078,11 +1248,18 @@ start
 			set CreatureTiger focus to camera position
 			set TigerFocusTimer time to 5 seconds
 		end if
+		
+		// Herolich1: added OriginalFocusTimer
+		if CreatureOriginal played and get OriginalFocusTimer time remaining <= 0
+			set CreatureOriginal focus to camera position
+			set OriginalFocusTimer time to 5 seconds
+		end if
 
 		if CreatureCow clicked
 			CreatureCowClickedTwice++
 			CreatureApeClickedTwice = 0
 			CreatureTigerClickedTwice = 0
+			CreatureOriginalClickedTwice = 0 // Herolich1: added
 			clear clicked object
 			if CreatureCowClickedTwice == 1
 				begin dialogue
@@ -1098,6 +1275,7 @@ start
 			CreatureApeClickedTwice++
 			CreatureCowClickedTwice = 0
 			CreatureTigerClickedTwice = 0
+			CreatureOriginalClickedTwice = 0 // Herolich1: added
 			clear clicked object
 			if CreatureApeClickedTwice == 1
 				begin dialogue
@@ -1113,6 +1291,7 @@ start
 			CreatureTigerClickedTwice++
 			CreatureCowClickedTwice = 0
 			CreatureApeClickedTwice = 0
+			CreatureOriginalClickedTwice = 0 // Herolich1: added
 			clear clicked object
 			if CreatureTigerClickedTwice == 1
 				begin dialogue
@@ -1124,15 +1303,35 @@ start
 			end if
 		end if
 
+		// Herolich1: Added original creature clicked
+		if CreatureOriginal clicked
+			CreatureOriginalClickedTwice++
+			CreatureCowClickedTwice = 0
+			CreatureApeClickedTwice = 0
+			CreatureTigerClickedTwice = 0
+			clear clicked object
+			if CreatureOriginalClickedTwice == 1
+				begin dialogue
+					eject good spirit
+					// "Are you sure you want this creature?"
+					say single line HELP_TEXT_EXTRA_TRAINER_05
+					wait until read or CreatureOriginal clicked
+				end dialogue
+			end if
+		end if
+
 	until CreatureCowClickedTwice == 2					// Chosen the Cow !!!
 		begin cinema
 			CreatureCow play C_INDIVIDUAL_HAPPY
 			CreatureApe play C_MISC_CRY
 			CreatureTiger play C_MISC_CRY
+			CreatureOriginal play C_MISC_CRY // Herolich1: added
 			wait until CreatureApe played
 			wait until CreatureTiger played
+			wait until CreatureOriginal played // Herolich1: added
 			force CreatureApe CREATURE_POINT_AT_OBJECT CreatureCow
 			force CreatureTiger CREATURE_LOOK_BUT_DONT_APPROACH CreatureCow
+			force CreatureOriginal CREATURE_SIT OriginalBasePos // Herolich1: added creature sitting down
 
 			CowHeight = SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureCow
 
@@ -1147,8 +1346,17 @@ start
 
 			wait 1 seconds
 			start music MUSIC_TYPE_SCRIPT_CREATURE_CHOSEN
-			wait 3 seconds
-					
+			// Herolich1: If you have your original Creature present, the good spirit will mourn this.
+			if HasOldCreature == 1
+				wait until read
+				eject good spirit
+				say single line HELP_TEXT_END_OF_GAME_EXTRA_14 //"I hope it was worth it. It'll be different without our Creature."
+				wait until read
+
+				send good spirit home
+			else
+				wait 3 seconds
+			end if
 			send evil spirit home
 			close dialogue
 
@@ -1160,6 +1368,7 @@ start
 			wait 4 seconds
 			close dialogue
 
+			delete CreatureOriginal // Herolich1: added, might need some improvement
 			set player_creature to CreatureCow
 			set CreatureCow position to [HomePos]
 			set CreatureCow home position [HomePos]
@@ -1167,6 +1376,7 @@ start
 			delete CreatureTiger
 			set camera zones to "Land1Zone5.exc"
 			release CreatureCow
+			ChosenCreature = 1 // Herolich1: disables the Cow in StartingCreatures script
 			ChooseYourCreatureFinished = 1
 			//run SCRIPT_DEV_FUNCTION_TURN_ON_MY_CREATURE_REACTIVITY developer function
 		end cinema
@@ -1177,10 +1387,13 @@ start
 			CreatureApe play C_INDIVIDUAL_HAPPY
 			CreatureCow play C_MISC_CRY
 			CreatureTiger play C_INDIVIDUAL_ANGRY
+			CreatureOriginal play C_MISC_CRY // Herolich1: added
 			wait until CreatureCow played
 			wait until CreatureTiger played
+			wait until CreatureOriginal played // Herolich1: added
 			force CreatureCow CREATURE_POINT_AT_OBJECT CreatureApe
 			force CreatureTiger CREATURE_LOOK_BUT_DONT_APPROACH CreatureApe
+			force CreatureOriginal CREATURE_SIT OriginalBasePos // Herolich1: added creature sitting down
 	
 			ApeHeight = SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureApe
 
@@ -1195,8 +1408,17 @@ start
 
 			wait 1 seconds
 			start music MUSIC_TYPE_SCRIPT_CREATURE_CHOSEN
-			wait 3 seconds
+			// Herolich1: If you have your original Creature present, the good spirit will mourn this.
+			if HasOldCreature == 1
+				wait until read
+				eject good spirit
+				say single line HELP_TEXT_END_OF_GAME_EXTRA_14 //"I hope it was worth it. It'll be different without our Creature."
+				wait until read
 
+				send good spirit home
+			else
+				wait 3 seconds
+			end if
 			send evil spirit home
 			close dialogue
 
@@ -1208,6 +1430,7 @@ start
 			wait 4 seconds
 			close dialogue
 
+			delete CreatureOriginal // Herolich1: added, might need some improvement
 			set player_creature to CreatureApe
 			set CreatureApe position to [HomePos]
 			set CreatureApe home position [HomePos]
@@ -1215,6 +1438,7 @@ start
 			delete CreatureTiger
 			set camera zones to "Land1Zone5.exc"
 			release CreatureApe
+			ChosenCreature = 2 // Herolich1: disables the Ape in StartingCreatures script
 			ChooseYourCreatureFinished = 1
 			//run SCRIPT_DEV_FUNCTION_TURN_ON_MY_CREATURE_REACTIVITY developer function
 		end cinema
@@ -1225,10 +1449,13 @@ start
 			CreatureTiger play C_INDIVIDUAL_HAPPY
 			CreatureCow play C_MISC_CRY
 			CreatureApe play C_MISC_CRY
+			CreatureOriginal play C_MISC_CRY // Herolich1: added
 			wait until CreatureCow played
 			wait until CreatureApe played
+			wait until CreatureOriginal played // Herolich1: added
 			force CreatureCow CREATURE_POINT_AT_OBJECT CreatureTiger
 			force CreatureApe CREATURE_LOOK_BUT_DONT_APPROACH CreatureTiger
+			force CreatureOriginal CREATURE_SIT OriginalBasePos // Herolich1: added creature sitting down
 
 			TigerHeight = SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureTiger
 
@@ -1243,8 +1470,17 @@ start
 
 			wait 1 seconds
 			start music MUSIC_TYPE_SCRIPT_CREATURE_CHOSEN
-			wait 3 seconds
+			// Herolich1: If you have your original Creature present, the good spirit will mourn this.
+			if HasOldCreature == 1
+				wait until read
+				eject good spirit
+				say single line HELP_TEXT_END_OF_GAME_EXTRA_14 //"I hope it was worth it. It'll be different without our Creature."
+				wait until read
 
+				send good spirit home
+			else
+				wait 3 seconds
+			end if
 			send evil spirit home
 			close dialogue
 
@@ -1256,6 +1492,7 @@ start
 			wait 4 seconds
 			close dialogue
 
+			delete CreatureOriginal // Herolich1: added, might need some improvement
 			set player_creature to CreatureTiger
 			set CreatureTiger position to [HomePos]
 			set CreatureTiger home position [HomePos]
@@ -1263,6 +1500,105 @@ start
 			delete CreatureApe
 			set camera zones to "Land1Zone5.exc"
 			release CreatureTiger
+			ChosenCreature = 3 // Herolich1: disables the Tiger in StartingCreatures script
+			ChooseYourCreatureFinished = 1
+		end cinema
+
+	// Herolich1: added a section for picking your original creature
+	until CreatureOriginalClickedTwice == 2							// Chosen your original Creature !!!
+		begin cinema
+			CreatureOriginal play C_INDIVIDUAL_HAPPY
+			CreatureCow play C_MISC_CRY
+			CreatureApe play C_MISC_CRY
+			CreatureTiger play C_INDIVIDUAL_ANGRY
+			wait until CreatureCow played
+			wait until CreatureApe played
+			wait until CreatureTiger played
+			force CreatureTiger CREATURE_POINT_AT_OBJECT CreatureOriginal
+			force CreatureApe CREATURE_LOOK_BUT_DONT_APPROACH CreatureOriginal
+			force CreatureCow CREATURE_LOOK_BUT_DONT_APPROACH CreatureOriginal
+
+			// If the profile had a previous creature, load that one back in. Otherwise simply replace them with the ape.
+			if HasOldCreature == 1
+				OriginalHeight = SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureOriginal
+
+				move camera position to [2147.826, 81.381, 3103.167] time 10 	// Camera Pos Close_Up of Tiger, might need to be changed
+	
+				move camera focus to [CreatureOriginal] + [0, OriginalHeight, 0] time 4 	// Camera Foc Close_Up of Tiger
+
+				set CreatureOriginal focus to camera position
+				eject evil spirit
+				say HELP_TEXT_NEWEST_GET_CREATURE_16
+
+				wait 1 seconds
+				start music MUSIC_TYPE_SCRIPT_CREATURE_CHOSEN
+				wait until read
+				move CreatureOriginal position to [1978.323, 30.121, 3146.380]
+				move camera focus follow CreatureOriginal
+				eject good spirit
+				wait 2 seconds
+				say HELP_TEXT_EXTRA_EVIL_ADVISOR_LINES_03 // "It's good to have the big guy back."
+				wait until read
+				say HELP_TEXT_EXTRA_GOOD_ADVISOR_04 // "Yes. We're complete again."
+				wait until read
+				wait 1 seconds
+
+				send evil spirit home
+				send good spirit home
+				close dialogue
+				//wait until CreatureOriginal played
+
+				snapshot quest success 1 alignment 0.0 HELP_TEXT_TITLE_43 StandardReminder(variable HELP_TEXT_REMINDER_54)
+
+				set fade red 0 green 0 blue 0 time 2
+				//force CreatureOriginal CREATURE_LOOK_AT_CAMERA CreatureOriginal
+				wait 4 seconds
+				close dialogue
+
+				SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureOriginal = CreatureOriginalHeight
+				delete CreatureCow
+				delete CreatureTiger
+				delete CreatureApe
+				set camera zones to "Land1Zone5.exc"
+				load my_creature at [1850.00, 1300.00]
+				KeptOldCreature = 1 // Herolich1: added KeptOldCreature check so Sable quests are skipped when not skipping creature guide.
+			else
+				OriginalHeight = SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of CreatureOriginal
+
+				move camera position to [2233.126, 19.081, 3147.267] time 10 	// Camera Pos Close_Up of Tiger, might need to be changed
+//				move camera focus to [2256.574, 22.666, 3163.481] time 10 	    // Camera Foc Close_Up of Tiger
+
+				move camera focus to [CreatureOriginal] + [0, OriginalHeight, 0] time 4 	// Camera Foc Close_Up of the "original" creature
+
+				set CreatureOriginal focus to camera position
+				eject evil spirit
+				say single line HELP_TEXT_NEWEST_GET_CREATURE_16
+
+				wait 1 seconds
+				start music MUSIC_TYPE_SCRIPT_CREATURE_CHOSEN
+				wait 3 seconds
+
+				send evil spirit home
+				close dialogue
+
+				wait 1.2 seconds
+				snapshot quest success 1 alignment 0.0 HELP_TEXT_TITLE_43 StandardReminder(variable HELP_TEXT_REMINDER_54)
+
+				set fade red 0 green 0 blue 0 time 2
+				force CreatureOriginal CREATURE_LOOK_AT_CAMERA CreatureOriginal
+				wait 4 seconds
+				close dialogue
+
+				delete CreatureOriginal
+				set player_creature to CreatureApe
+				set CreatureApe position to [HomePos]
+				set CreatureApe home position [HomePos]
+				delete CreatureCow
+				delete CreatureTiger
+				set camera zones to "Land1Zone5.exc"
+				release CreatureApe
+				ChosenCreature = 2 // Herolich1: disables the Ape in StartingCreatures script
+			end if
 			ChooseYourCreatureFinished = 1
 		end cinema
 

@@ -35,6 +35,89 @@ start
 			say HELP_TEXT_EXTRA_KHAZAR_18
 			wait until read
 
+			// Herolich1: removed handholding and simplified the code.
+			// TODO? Add a check or something to skip this or not. for now it is commented out.
+			// For now, Khazar simply explains it to you as he lingers over the second indian village.
+			// And parts where the former if else statements have been merged into one.
+			if PLAYER of IndianTown == 1
+
+				move camera position to [2833.4871, 92.3013, 3179.2261] time 8
+				move camera focus to [2778.3403, 51.2221, 3062.0691] time 5
+
+				move computer player 2 to [2702.7856, 14.1852, 2856.6335] speed 75 with fixed height
+			
+				//"Before I leave to defend my realm I must tell you one more thing."
+				say HELP_TEXT_EXTRA_KHAZAR_20
+				wait until read
+				wait until camera ready
+			else
+
+				move camera position to [2911.2800, 111.7704, 3092.6733] time 8
+				move camera focus to [2812.9431, 51.4410, 3089.3518] time 6
+
+				move computer player 2 to [2812.6694, 50.9200, 3108.5249] speed 75 with fixed height
+
+				wait until 2 seconds
+
+				//"I strongly encourage you gain this town."
+				say HELP_TEXT_EXTRA_KHAZAR_19
+				wait until read
+
+				//"Before I leave to defend my realm I must tell you one more thing."
+				say HELP_TEXT_EXTRA_KHAZAR_20
+				wait until read
+				wait until camera ready
+			end if
+/*
+				set fade red 0 green 0 blue 0 time 2
+				wait until fade ready
+				clear dialogue
+
+				// fade to new camera position
+				set camera position to [3039.8284, 278.6630, 2966.3352]
+				set camera focus to [3395.2813, 0.5879, 2815.9624]
+
+				set fade in time 2
+				wait until fade ready
+*/
+				//"Youï¿½ll notice you cannot do anything, even cast miracles outside of your influence."
+				say HELP_TEXT_EXTRA_KHAZAR_21
+				wait until read
+
+				//"However, there is a way using the power of belief "
+				say HELP_TEXT_EXTRA_KHAZAR_22
+				// move camera position to [3344.8599, 41.1383, 2809.0728] time 6
+				// move camera focus to [3396.6990, 0.5854, 2787.1431] time 6
+				wait until read
+				// wait until camera ready
+
+				// start hand demo "Influence" with pause on trigger
+				//"you can reach outside the edge of your realm for short periods of time"
+				say HELP_TEXT_EXTRA_KHAZAR_23
+				wait until read
+				// wait until hand demo trigger
+
+				//"But your influence is soon lost until your hand is returned to your realm."
+				say HELP_TEXT_EXTRA_KHAZAR_24
+				wait until read
+				// wait until hand demo played
+/*
+				set fade red 0 green 0 blue 0 time 2
+				wait until fade ready
+			if PLAYER of IndianTown == 1
+				set  camera position to [2833.4871, 92.3013, 3179.2261] 
+				set camera focus to [2778.3403, 51.2221, 3062.0691]
+			else
+				set camera position to [2911.2800, 111.7704, 3092.6733] 
+				set camera focus to [2812.9431, 51.4410, 3089.3518]
+			end if
+				set fade in time 2
+				wait until fade ready
+*/
+				clear dialogue
+
+			// The original section.
+			/*
 			if PLAYER of IndianTown == 1
 
 				move camera position to [2833.4871, 92.3013, 3179.2261] time 8
@@ -58,7 +141,7 @@ start
 				set fade in time 2
 				wait until fade ready
 
-				//"You’ll notice you cannot do anything, even cast miracles outside of your influence."
+				//"Youï¿½ll notice you cannot do anything, even cast miracles outside of your influence."
 				say HELP_TEXT_EXTRA_KHAZAR_21
 				wait until read
 
@@ -121,7 +204,7 @@ start
 				set fade in time 2
 				wait until fade ready
 
-				//"You’ll notice you cannot do anything, even cast miracles outside of your influence."
+				//"Youï¿½ll notice you cannot do anything, even cast miracles outside of your influence."
 				say HELP_TEXT_EXTRA_KHAZAR_21
 				wait until read
 
@@ -153,6 +236,8 @@ start
 				clear dialogue
 
 			end if
+			*/
+			// end of original section.
 			stop music
 		end cinema
 		release computer player 2
