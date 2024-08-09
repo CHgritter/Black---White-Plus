@@ -371,7 +371,7 @@ start
 		wait 9 seconds //To slow process hit.
 
 		 // Herolich1: Added a devmode function that creates the vortex if DevMode is 3 or higher.
-		if DevMode > 2
+		if DevMode >= 3
 			DevModeInfluence = create influence at [1061.107, 147.785, 3597.965] radius 40
 			run script LeaveThroughVortexL2
 		end if

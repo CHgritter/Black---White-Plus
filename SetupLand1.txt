@@ -79,7 +79,7 @@ start
 	// 3 = land 3 oriented.
 	// 4 = land 4 oriented.
 	// 5 = land 5 oriented.
-	DevMode = 0
+	DevMode = -1
 
 	// Herolich1: For each start aside from the first, you will be brought to the creature select grove, where you can
 	// pick one of the three starting creatures, or your own creature.

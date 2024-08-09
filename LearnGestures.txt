@@ -144,7 +144,7 @@ start
 			wait until read
 
 			wait until camera ready
-			set interaction SCRIPT_INTERFACE_LEVEL_JUST_HAND_MOVE
+			//set interaction SCRIPT_INTERFACE_LEVEL_JUST_HAND_MOVE // Herolich1: so you won't get stuck.
 
 			// Herolich1: Added the dialogue of the PlayMiracleHandDemo in
 			move camera position to [3222.985, 101.944, 3370.304] time 5

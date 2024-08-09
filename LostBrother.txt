@@ -866,7 +866,9 @@ start
 			
 			// Remind player to zoom if they haven't used it enough	
 			//if zoom not used enough
-			if StopTracking == 0
+			// Herolich1: handholing removed.
+			// This one was a sneaky bugger. Just changed the 0 into a 2, and now it will never trigger.
+			if StopTracking == 2
 				// Leader.  You haven't used the zoom function very much
 				say HELP_TEXT_LOST_BROTHER_55
 				wait until read

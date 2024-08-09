@@ -5,6 +5,7 @@ begin script LandControl1
  dyk76 = marker at [1751.1938, 0.0000, 2466.3926]				// fish farms
  MyCitadel = 0
  CreatureGates = 0
+ CreatureActive = 0
 
 start
 	run script SetupLand1
@@ -38,7 +39,7 @@ start
 		// This is for the vortex option, to get into the game faster. There is no dev mode for the parts prior to this due to it
 		// not needing as much work.
 		// In normal gameplay, you will always first be brought through the CreaturesInGlade script
-		if DevMode > 0 and HasOldCreature == 1
+		if DevMode <= 0 or HasOldCreature == 0
 			run script CreaturesInGlade
 		else
 			set game time 15.40
@@ -57,6 +58,29 @@ start
 		run background script StartingCreatures // Herolich1: a script that places two or all of the starter creatures in the glade.
 	if IsSkippingCreatureGuide == 0
 		run background script MoveTheGuideAround
+	end if
+
+	// Herolich1: Added... a disgusting piece of code asking the player to refresh the gamestate so the creature is correctly found.
+	// I hate it. But I have no other choice.
+	if KeptOldCreature == 0 and HasOldCreature == 1
+		set interaction SCRIPT_INTERFACE_LEVEL_JUST_HAND_MOVE
+		begin cinema
+			set camera position to [1431.1, 20.5, 2005.5] 
+			set camera focus to [1542.8, 11.5, 2180.6]
+		end cinema
+		set fade in time 2
+		while CreatureActive == 0
+			wait 3 seconds
+			MyCreature = get player 1 creature
+			if MyCreature exists
+				CreatureActive = 1
+			else
+				say single line "Please go into the skirmish menu or quit and reopen the game so your creature gets recognized."
+			end if
+		end while
+		set fade red 0 green 0 blue 0 time 2
+		wait 2 seconds
+		set interaction SCRIPT_INTERFACE_LEVEL_NORMAL
 	end if
 
 //	run script CreatureDevelopmentSet

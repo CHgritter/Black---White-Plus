@@ -170,6 +170,7 @@ start
 		say HELP_TEXT_NEW_LAND_2_ENTRY_31
 		wait until read
 	end dialogue
+	wait 1 second
 
 	run script EndEnterLand2
 end script EnterLand2
