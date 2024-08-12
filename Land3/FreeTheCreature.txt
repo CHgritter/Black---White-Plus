@@ -976,12 +976,29 @@ end script FreezeRayStatue
 // He does stand up moments before death, but that's a minor issue.
 
 begin script EnablePermanentCreatureDeath(Creature)
-
+CreaturePosition = 0
 start
     wait until HEALTH of Creature == 0
-    force Creature CREATURE_DEAD_FOREVER Creature
-	wait 5 seconds
-	delete Creature with fade
+	CreaturePosition = marker at Creature
+		begin cinema
+			set camera to face CreaturePosition distance 30
+			set camera focus to CreaturePosition
+			start music MUSIC_TYPE_SCRIPT_NEMESIS
+    		force Creature CREATURE_DEAD_FOREVER Creature
+			eject evil spirit
+			say HELP_TEXT_BATTLE_ALERT_WINNING_EA_02 // We're just too good. // replace with a better line if possible
+			wait 5 seconds
+			delete Creature with fade
+			eject good spirit
+			wait until read
+			say HELP_TEXT_KILLING_GA_16 // Another life tossed away in vain. // replace with a better line if possible
+			wait until read
+			say HELP_TEXT_L3_FREE_CREATURE_02 // Boy, we had to fight for it, though // replace with a better line if possible
+			wait until read
+			send good spirit home
+			send evil spirit home
+			close dialogue
+		end cinema
 end script EnablePermanentCreatureDeath
 
 

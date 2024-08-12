@@ -313,7 +313,10 @@ start
 
 		move camera focus to [2619.296, 23.342, 2028.305] time 6
 
-		wait until camera ready
+		// Herolich1: DevModeCutscene skip if true
+		if DevModeCutscene == 0
+			wait until camera ready
+		end if
 
 		BeginPos = marker at camera position
 		BeginFoc = marker at camera focus
@@ -369,7 +372,10 @@ start
 		move camera position to [2702.3108, 51.3486, 1934.9015] time 5
 		move camera focus to [2648.9568, 27.5264, 1944.9845] time 5
 
-		wait until camera ready
+		// Herolich1: DevModeCutscene skip if true
+		if DevModeCutscene == 0
+			wait until camera ready
+		end if
 
 		force computer player 2	action "FindPlaceToUseScaffoldForBuilding" Scaffold1 Scaffold1PlacePos
 
@@ -413,7 +419,10 @@ start
 		move camera position to [3259.689, 52.531, 3402.550] time 4
 		move camera focus to [3239.098, 47.777, 3393.750] time 4
 
-		wait until camera ready
+		// Herolich1: DevModeCutscene skip if true
+		if DevModeCutscene == 0
+			wait until camera ready
+		end if
 
 		clear dialogue
 		say HELP_TEXT_NEW_LAND_2_ENTRY_13 // I will give  you some of my finest builders. These are Disciples and work single-mindedly.
@@ -451,7 +460,10 @@ start
 		move camera position to [3336.9802, 59.5568, 3352.0583] time 6
 		move camera focus to [3374.8469, 48.4321, 3329.6487] time 6
 
-		wait until camera ready
+		// Herolich1: DevModeCutscene skip if true
+		if DevModeCutscene == 0
+			wait until camera ready
+		end if
 
 		say HELP_TEXT_NEW_LAND_2_ENTRY_12 // Please accept my help of food, wood and water for your tribe.
 		run script GiveOneShots

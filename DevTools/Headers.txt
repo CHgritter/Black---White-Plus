@@ -41,10 +41,19 @@ global help_text_meteorite_ogre_quest_reminder_02
 global help_text_meteorite_nomad_quest_reminder_02
 global help_text_retake_aztec_village_quest_reminder_02
 
+// Herolich1: a few globals I might use in the future... maybe.
+
+
 // Herolich1: DevMode is for testing stuff.
 global DevMode
+global DevModeCutscene
+global ReferenceGod
 
 // ---
+
+global constant XPOS = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS
+//global constant YPOS = SCRIPT_OBJECT_PROPERTY_TYPE_YPOS
+global constant ZPOS = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS
 
 global constant HOUSE = SCRIPT_OBJECT_TYPE_ABODE
 global constant STORE = SCRIPT_OBJECT_TYPE_STORE

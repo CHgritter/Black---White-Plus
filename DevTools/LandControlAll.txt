@@ -1,0 +1,170 @@
+challenge LandControlAll
+
+
+//------------------------------------------------------------------------------------------------------------------------
+//This is being taken out as it is triggered in game code. - Jonty
+// Herolich1: With inspiration of some sample code made by Daniels118 that allows you to get the coordinates from your
+// hand position, I have made one that allows you to move around a god in cinema shots.
+//------------------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------------------------------------------
+begin script LandControlAll
+	
+start
+	load map "scripts/LandInBetween1.txt"
+	set fade in time 3
+	disable computer player 4
+	run script RunThisThing
+end script LandControlAll
+
+begin script RunThisThing
+	ReferenceGod = get computer player 2
+	//DontStop = 1
+start
+	set computer player 2 position to [3096.32,135.0,2741.86]
+	run background script LoopCameraShot
+	run background script GetGodCoords
+	run background script MoveAi
+	run background script GetBuildingCoords
+	//while DontStop == 1
+	//end while
+end script RunThisThing
+
+
+begin script LoopCameraShot
+position1 = marker at [2004.2, 103.2, 2364.962]
+position2 = marker at [1928.7, 136.2, 2332.662]
+position3 = marker at [1886.382, 128.008, 2351.157]
+position4 = marker at [1927.528, 180.008, 2453.359]
+position5 = marker at [1986.0,128.7,2379.7]
+position6 = marker at [2221.7,191.0,2524.1]
+position7 = marker at [2203.8,91.8,2345.4]
+focus1 = marker at [2004.7, 100.1, 2365.992]
+focus2 = marker at [1991.7, 100.1, 2360.992]
+focus3 = marker at [2221.816, 89.978, 2395.888]
+focus4 = marker at [2004.694, 99.944, 2351.363]
+focus5 = marker at [2231.9,89.9,2387.0]
+focus6 = marker at [2194.1,89.0,2365.3]
+focus7 = marker at [2174.8,88.5,2299.8]
+start
+	begin loop
+        when key KB_1 down
+			run script FreezeOnShot(position1,focus1)			
+        when key KB_2 down
+			run script FreezeOnShot(position2,focus2)			
+        when key KB_3 down
+			run script FreezeOnShot(position3,focus3)			
+        when key KB_4 down
+			run script FreezeOnShot(position4,focus4)			
+        when key KB_5 down
+			run script FreezeOnShot(position5,focus5)			
+        when key KB_6 down
+			run script FreezeOnShot(position6,focus6)			
+        when key KB_7 down
+			run script FreezeOnShot(position7,focus7)			
+	end loop
+end script LoopCameraShot
+
+begin script FreezeOnShot(point1, point2)
+
+start
+	begin cinema
+		move camera position to [point1] time 2
+		move camera focus to [point2] time 2
+	end cinema
+end script FreezeOnShot
+
+
+// most of these just don't work. the only one showing results is the one where he shows up in your face
+begin script MoveAi
+	PlayerPos = 0
+	ReferenceGodPosition = marker at computer player 2 position
+	MoveHappened = 0
+start
+	begin loop
+		ReferenceGodPosition = marker at computer player 2 position
+		while MoveHappened == 0
+        	when key KB_I down //Yup
+				MoveHappened = 1
+				set computer player 2 position to [ReferenceGodPosition] + [0,0.1,0] with fixed height
+        	when key KB_K down //Ydown
+				MoveHappened = 1
+				set computer player 2 position to [ReferenceGodPosition] + [0,-0.1,0] with fixed height
+        	when key KB_J down //Xleft
+				MoveHappened = 1
+				set computer player 2 position to [ReferenceGodPosition] + [-0.1,0,0] with fixed height
+        	when key KB_L down //Xright
+				MoveHappened = 1
+				set computer player 2 position to [ReferenceGodPosition] + [0.1,0,0] with fixed height
+        	when key KB_O down //Zleft
+				MoveHappened = 1
+				set computer player 2 position to [ReferenceGodPosition] + [0,0,-0.1] with fixed height
+        	when key KB_U down //Zright
+				MoveHappened = 1
+				set computer player 2 position to [ReferenceGodPosition] + [0,0,0.1] with fixed height
+        	when key KB_Y down //move to player
+				MoveHappened = 1
+				PlayerPos = marker at camera position
+				set computer player 2 position to [PlayerPos]
+        	//when key KB_H down //move to player
+			//	MoveHappened = 1
+			//	PlayerPos = marker at camera position
+			//	set computer player 2 position to [PlayerPos]
+		end while
+		wait 0.1 seconds
+		ReferenceGodPosition = marker at computer player 2 position
+		MoveHappened = 0
+	end loop
+end script MoveAi
+
+begin script GetGodCoords
+start
+    begin loop
+        when key KB_G down
+			run script DisplayCoords
+    end loop
+end script GetGodCoords
+
+begin script DisplayCoords
+    GodPos = marker at computer player 2 position
+	X = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of GodPos
+	Y = land height at computer player 2 position
+	Z = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of GodPos
+start
+	begin dialogue
+		say "Z: $d" with number Z with interaction
+		wait until read
+		say "Y: $d" with number Y with interaction
+		wait until read
+		say "X: $d" with number X with interaction
+		wait until read
+	end dialogue
+end script DisplayCoords
+
+begin script GetBuildingCoords
+BuildingInfo = 0
+start
+    begin loop
+    	when key KB_H down
+			BuildingInfo = get object hand is over
+			if BuildingInfo exists
+				run script DisplayCoordsAndRotation(BuildingInfo)
+			end if
+end script GetBuildingCoords
+
+begin script DisplayCoordsAndRotation(TheBuildingInQuestion)
+	ReferenceGod = get computer player 2
+    GodPos = marker at TheBuildingInQuestion
+	X = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of TheBuildingInQuestion
+	R = SCRIPT_OBJECT_PROPERTY_TYPE_ANGLE of TheBuildingInQuestion * 17.4533
+	Z = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of TheBuildingInQuestion
+start
+	begin dialogue
+		say "Rotation: $d" with number R with interaction
+		wait until read
+		say "Z: $d" with number Z with interaction
+		wait until read
+		say "X: $d" with number X with interaction
+		wait until read
+	end dialogue
+end script DisplayCoordsAndRotation

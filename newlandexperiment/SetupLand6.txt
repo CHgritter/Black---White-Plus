@@ -1,0 +1,270 @@
+
+global VortexFlockTest
+global FinishedLand6
+
+begin script SetupLand6
+
+start
+	LandNumber	= 6
+    enable player 1 virtual influence
+	set player 1 ally with player 2 percentage 0
+	disable computer player 4
+
+
+end script SetupLand6
+
+//------------------------------------------------------------------------------------------------------------------------
+//-OpenVortexTest-------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+begin script OpenVortexTest(VortexPos, Town, FlockPos, CreaturePos)
+
+start
+	begin known cinema
+		set game time 12.00
+		enable highlight draw
+
+		VortexFlockTest = flock at [VortexPos]						// fill in flock
+		set VortexFlockTest properties inner 2 outer 10
+		run background script Land6VortexEntry(30, VortexPos, Town, FlockPos, 27, 48, CreaturePos)
+
+		set camera position to [2004.2, 103.2, 2364.962] 
+		set camera focus to [2004.7, 100.1, 2365.992]
+
+		shake camera at [VortexPos] radius 300 amplitude 0.3 time 12
+
+		set fade in time 6
+
+		move camera position to [1928.7, 136.2, 2332.662] time 10
+		move camera focus to [1991.7, 100.1, 2360.992] time 10
+		wait 8 seconds
+
+		move camera position to [1886.382, 128.008, 2351.157] time 12				// Move camera above vortex looking over island
+		move camera focus to [2221.816, 89.978, 2395.888] time 12
+		wait 12 seconds
+
+		move camera position to [1927.528, 180.008, 2453.359] time 14
+		move camera focus to [2004.694, 99.944, 2351.363] time 14 
+
+		//Move the computer player towards the player.
+		move computer player 2 to [2035.918, 98.490, 2381.182] speed 160 // Enter Khazar !!!
+
+		//Spirit banter
+		eject good spirit
+		eject evil spirit
+		say HELP_TEXT_NEW_LAND_2_ENTRY_01 // I feel all inside out. Ugh.
+		wait until read
+		say HELP_TEXT_NEW_LAND_2_ENTRY_02 // Yeah, what a buzz.
+		wait until read
+
+		
+
+	end known cinema
+end script OpenVortexTest
+
+
+//------------------------------------------------------------------------------------------------------------
+begin script Land6VortexEntry(NoOfPeople, VortexPos, Town, FlockPos, FlockDistance, FlockDomainRadius, CreaturePos)
+	Vortex=0
+
+start
+	VortexOpen=1
+	Vortex = create VORTEX VORTEX_TYPE_OUT at [VortexPos]
+
+	set Vortex properties town Town flock position [FlockPos] distance FlockDistance radius FlockDomainRadius flock VortexFlockTest
+	
+	load my_creature at [CreaturePos]
+	MyCreature=get player 1 creature
+	set MyCreature focus to [VortexPos]
+	move MyCreature position to [CreaturePos]
+
+	wait 15 seconds
+	start Vortex fade out
+	wait 8 seconds
+	VortexOpen=0
+end script Land6VortexEntry
+
+//------------------------------------------------------------------------------------------------------------------------
+//-IntroduceKhazar-----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+begin script IntroduceKhazarEarly
+
+	BeginPos = 0
+	BeginFoc = 0
+	
+start
+	begin known cinema
+		say single line HELP_TEXT_NEW_LAND_2_ENTRY_03 // Look ! Someone's approaching.
+		wait until read
+
+		// Khazar Speech
+		send good spirit home
+		send evil spirit home
+
+		move camera position to [1986.0,128.7,2379.7] time 4
+		move camera focus to [2231.9,89.9,2387.0] time 4
+		wait 4 seconds
+
+		clear dialogue
+		say HELP_TEXT_NEW_LAND_2_ENTRY_04 // I greet you as one god to another. I am Khazar
+		wait 1 second
+		wait until read												 
+		say HELP_TEXT_NEW_LAND_2_ENTRY_05 // It was I who provided the vortex to bring you from your land
+		wait until read
+
+		say "As you might realize, Nemesis is seeking to become the only god in the whole of Eden."
+		wait until read
+		say "Many of the more cowardly gods have already pledged their allegiance to him, all based on some false promise that their loyalty will spare them from his wrath."
+		wait until read
+		say "And now they do his bidding, trying to wipe the rest of this world clean of the gods who refuse to dim their light." // Herolich1: Thanks to Daniels118 for the line idea "the gods who refuse to dim their light"
+		wait until read
+
+
+		move camera position to [2221.7,191.0,2524.1] time 6
+		move camera focus to [2194.1,89.0,2365.3] time 6
+		say HELP_TEXT_NEW_LAND_2_ENTRY_08 with interaction // But you and I together can turn the tide of this war. 
+		move computer player 2 to [2214.30,158.925,2481.54]  speed 110 
+		wait until read
+		clear dialogue
+		wait until camera ready
+
+		say HELP_TEXT_NEW_LAND_2_ENTRY_09 // There is much to do, though. Firstly you need to build up a Village and look after your worshippers.
+		wait until read
+		say "I will give you this town to start from."
+		wait until read
+		say "It isn't much, but with the proper planning and care, this town can act as a staging point for your expansion through this land."
+		wait until read
+		say "It will be the perfect place for you to learn how to spread belief in you across the land." with interaction
+		wait until read
+	end known cinema
+end script IntroduceKhazarEarly
+
+//------------------------------------------------------------------------------------------------------------------------
+//-ShowBuildingDisciple-----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+begin script ShowBuildingDisciple(VortexPos, Town)
+
+	Villager = 0
+	DisciplePos = marker at [2194.58,88.44,2326.02]
+
+start
+
+	begin known cinema
+		move camera position to [2203.8,91.8,2345.4] time 6
+		move camera focus to [2174.8,88.5,2299.8] time 6
+
+		wait until camera ready
+
+		clear dialogue
+		say HELP_TEXT_NEW_LAND_2_ENTRY_13 // I will give  you some of my finest builders. These are Disciples and work single-mindedly.
+		Villager = create VILLAGER INDIAN_MALE at [2222.6,40.2,2661.2]
+		attach Villager to Town
+
+		force computer player 2 action "DIRECTPickupAndDropObject" Villager DisciplePos
+
+		wait until computer player 2 ready
+
+		set Villager disciple VILLAGER_DISCIPLE_BUILDER with sound
+
+		set Villager carrying CARRIED_OBJECT_MALLET_HEAVY
+		move Villager position to [2191.8653, 88.44, 2322.8315]
+		wait until read
+
+		say HELP_TEXT_NEW_LAND_2_ENTRY_14 with interaction // You can create your own Disciples by placing people at the locations of the jobs you wish them to do.
+		Villager play ANM_P_HAMMERING loop -1
+		set Villager carrying CARRIED_OBJECT_MALLET_HEAVY
+		wait until read
+
+		// might need an additional camera perspective
+		move camera position to [2126.2,151.1,2276.8] time 6
+		move camera focus to [2192.5,89.0,2353.1] time 6
+
+		say "I will return once you're more established. I will be over at the abandoned Indian village nearby, should you need me." with interaction
+		wait until read
+		wait until camera ready
+
+	end known cinema
+
+end script ShowBuildingDisciple
+
+//------------------------------------------------------------------------------------------------------------------------
+//-ShowScroll-----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+//begin script ShowScroll
+//start
+//	begin known cinema
+//		move computer player 2 to [3367.0625, 48.6902, 3333.7722]  speed 20 with fixed height		// move Khazar to pos of giving spells
+//		wait until read
+//
+//		move camera position to [3336.9802, 59.5568, 3352.0583] time 6
+//		move camera focus to [3374.8469, 48.4321, 3329.6487] time 6
+//
+//		// Herolich1: DevModeCutscene skip if true
+//		if DevModeCutscene == 0
+//			wait until camera ready
+//		end if
+//
+//		say HELP_TEXT_NEW_LAND_2_ENTRY_12 // Please accept my help of food, wood and water for your tribe.
+//		run script GiveOneShots
+//		wait until read
+//
+//		say HELP_TEXT_NEW_LAND_2_ENTRY_17 with interaction// Later you will need to learn how to use Miracles. I shall return then.
+//		wait until read
+//
+//	end known cinema
+//end script ShowScroll
+
+//------------------------------------------------------------------------------------------------------------------------
+//-EnterLand6-----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+
+begin script EnterLand6
+
+	Town = get town with id 0
+	VortexPos = marker at [2011.4926, 2358.2321]
+	FlockPos = marker at [2188.9632, 89.3187, 2364.8483]
+	CreaturePos = marker at [1995.989, 100.0, 2392.173] //change this if needed
+	BuildCitadel = 0
+	BuildTownCentre = 0
+
+start
+
+	set computer player 2 position to [2230.91,105.190,2612.41] 
+	
+	set fade red 0 green 0 blue 0 time 0
+	disable Town build worship site
+	BuildTownCentre = get HOUSE at [2188.23,47.570,2317.47] radius 50
+	BUILT of BuildTownCentre = 0.3
+	// Build Town Centre 30%
+    begin cinema
+        run script OpenVortexTest(VortexPos, Town, FlockPos, CreaturePos)
+		start music MUSIC_TYPE_SCRIPT_KHAZAR
+		run script IntroduceKhazarEarly
+		build building at [1989.46,2356.52] desire 1.0
+		BuildCitadel = get CITADEL at [1989.46,2356.52] radius 50
+		BUILT of BuildCitadel = 0.3
+		run script ShowBuildingDisciple(VortexPos, Town)
+		release MyCreature
+		
+		eject evil spirit
+		eject good spirit
+
+		move computer player 2 to [2230.91,105.190,2612.41] speed 200 with fixed height
+		stop music
+	end cinema with dialogue
+		HEALTH of Town = 1
+		say HELP_TEXT_NEW_LAND_2_ENTRY_28 // "Khazar has provided us with so much. He's a true ally." // Might need to play another time...
+		wait until read
+
+		say HELP_TEXT_NEW_LAND_2_ENTRY_29 // "He's desperate. That's what he is."
+		wait until read
+
+		say HELP_TEXT_NEW_LAND_2_ENTRY_30 // "Let's get our Village built."
+		wait until read
+
+		say HELP_TEXT_NEW_LAND_2_ENTRY_31 // "Yeah, and we got to get Disciples working there."
+		wait until read
+	end dialogue
+	wait 1 second
+
+    disband VortexFlockTest
+end script EnterLand6

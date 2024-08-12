@@ -37,7 +37,7 @@ start
 		delete QuarryRock
 		// Herolich1 DevMode: If devmode is greater than zero and account already has a creature, the creature intro is skipped
 		// This is for the vortex option, to get into the game faster. There is no dev mode for the parts prior to this due to it
-		// not needing as much work.
+		// not needing as much work. This is best used when skipping to the next land as fast as possible. (The vortex option.)
 		// In normal gameplay, you will always first be brought through the CreaturesInGlade script
 		if DevMode <= 0 or HasOldCreature == 0
 			run script CreaturesInGlade

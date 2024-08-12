@@ -72,14 +72,6 @@ start
 	CitadelBuiltL1 = 0
 	LandNumber=1
     disable player 1 virtual influence
-	// Herolich1's dev mode
-	// The chosen land will be the focus of development. And any maps inbetween will be quickly skipped.
-	// 1 = land 1 oriented.
-	// 2 = land 2 oriented.
-	// 3 = land 3 oriented.
-	// 4 = land 4 oriented.
-	// 5 = land 5 oriented.
-	DevMode = -1
 
 	// Herolich1: For each start aside from the first, you will be brought to the creature select grove, where you can
 	// pick one of the three starting creatures, or your own creature.

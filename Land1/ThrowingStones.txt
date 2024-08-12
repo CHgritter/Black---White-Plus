@@ -1,5 +1,6 @@
 challenge THROWING_STONES
-global End
+// Herolich1: edited the name to be less confusing with the "end" statement
+global EndThrowingStones
 global ThrowingStonesUsed
 global ThrowStonesHighlight
 
@@ -166,7 +167,7 @@ start
 		end if
 
 
-		if End == 1 and HEALTH of BlokesHouse >= 1
+		if EndThrowingStones == 1 and HEALTH of BlokesHouse >= 1
 			move Bloke position to [BlokesHouse]
 			wait until [Bloke] near [BlokesHouse] radius 4 or HEALTH of Bloke <= 0
 			Active = 1
@@ -246,7 +247,7 @@ begin script TSAmmo(Stone) //producing the infinite stones
 start
 
 	begin loop
-	until End>0
+	until EndThrowingStones>0
 	when not Stone exists
 		Stone = create with angle 0 and scale 0.9 ROCK_OBJECT ROCK at [StartPos]
 		//SCALE of Stone = 0.5
@@ -294,7 +295,7 @@ begin script ThrowingStones
 start
 
 	enable jc special SJC_ALWAYS_VISIBLE on Rock1
-	End = 0
+	EndThrowingStones = 0
 
 	run background script DidYouKnow(dyk26,variable HELP_TEXT_DYK_26, variable DYK_MISC)			// silver scrolls not mandatory
 	run script ThrowingStonesChallengeHighlightNotify(100, variable GOOD_ADVISOR, variable HELP_TEXT_GENERAL_CHALLENGE_START_06, Rock1, Rock1Pos)
@@ -378,7 +379,7 @@ start
 	run background script DidYouKnow(dyk93, variable HELP_TEXT_DYK_93, variable DYK_NAVIGATION)			// expain aftertouch
 
 	begin loop
-		until End>0
+		until EndThrowingStones>0
 
 		wait 2 seconds
 
@@ -413,7 +414,7 @@ start
 							say single line HELP_TEXT_YOUTHROWING_12
 							wait until read
 							close dialogue
-							End = 1
+							EndThrowingStones = 1
 						end if
 
 
@@ -435,7 +436,7 @@ start
 					wait until read
 					send evil spirit home
 				end dialogue
-				End = 1
+				EndThrowingStones = 1
 			end if
 
 
@@ -485,7 +486,7 @@ start
 					wait 1 seconds
 					say HELP_TEXT_YOUTHROWING_12
 					wait until read
-					End = 1
+					EndThrowingStones = 1
 				end if
 			set camera position to [BeginPos]
 			set camera focus to [BeginFoc]
@@ -508,7 +509,7 @@ start
 					wait 1 seconds
 					say HELP_TEXT_YOUTHROWING_12
 					wait until read
-					End = 1
+					EndThrowingStones = 1
 				end if
 			set camera position to [BeginPos]
 			set camera focus to [BeginFoc]
