@@ -979,10 +979,13 @@ begin script EnablePermanentCreatureDeath(Creature)
 CreaturePosition = 0
 start
     wait until HEALTH of Creature == 0
-	CreaturePosition = marker at Creature
+	CreaturePosition = marker at [Creature]
 		begin cinema
-			set camera to face CreaturePosition distance 30
-			set camera focus to CreaturePosition
+			//set camera to face [Creature] distance 30
+			//set camera focus to [Creature]
+			
+			set camera position to [CreaturePosition]+[0,80,60]
+			set camera focus to [CreaturePosition]
 			start music MUSIC_TYPE_SCRIPT_NEMESIS
     		force Creature CREATURE_DEAD_FOREVER Creature
 			eject evil spirit
@@ -1229,7 +1232,15 @@ start
 		move camera focus to [1865.086, 117.621, 2316.185] time 4
 		move computer player 2 to [1776.720, 165.375, 2185.003] speed 300 with fixed height
 		wait until camera ready	
-		wait 2 seconds
+		eject good spirit
+		eject evil spirit
+		say HELP_TEXT_TAKE_LETHYS_VILLAGE_01 // How could you? You're evil-minded, in my opinion.
+		wait until read
+		say HELP_TEXT_TAKE_LETHYS_VILLAGE_02 // Ha ha ha.
+		wait until read
+		clear dialogue
+		send good spirit home
+		send evil spirit home
 
 		set fade red 0 green 0 blue 0 time 1
 		wait until fade ready

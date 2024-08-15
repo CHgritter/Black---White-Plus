@@ -1,0 +1,24 @@
+// Herolich1: This is a custom cutscene where after leaving you'll get shown Nemesis blasting your town.
+
+begin script LeavingLand1Scene
+Armageddon = 0
+MyCreatureTempPos = marker at [2498.965, 32.372, 2780.871] 
+start
+    begin cinema
+        set MyCreature position to [MyCreatureTempPos]
+		start music MUSIC_TYPE_SCRIPT_NEMESIS
+        set camera position to [1823.813, 32.140, 2665.888]
+        set camera focus to [1720.248, 57.472, 2809.793]
+		set fade in time 2
+		wait until fade ready
+        move camera position to [1779.142, 31.271, 2671.766] time 12
+        move camera focus to [1985.009, 84.537, 2809.989] time 12
+        wait 5 seconds
+        Armageddon = cast SPELL_EXPLOSION_LEVEL_3 spell at [1805.22, 28.140, 2691.31] from [1805.22, 28.140, 2691.31]+[0,30,0]  radius 50.0 time 15 curl 0
+        wait 7 seconds
+		set fade red 255 green 255 blue 255 time 1
+		wait until fade ready
+        stop music
+        wait 5 seconds
+    end cinema
+end script LeavingLand1Scene

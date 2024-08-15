@@ -1,5 +1,5 @@
 // --- General Script Global Variables
-global ArkSailed
+global ArkSailed // Herolich1 For CI and DE, this might be altered to take in account their general attitude towards you.
 global ChooseYourCreatureFinished
 global WonderBuilt
 global AztecVillageRetaken
@@ -11,7 +11,7 @@ global MyCreature
 global Guide
 global VortexOpen
 global PlayerCreatureType
-global LethysKilled
+global LethysKilled // 0 alive 1 dead
 global OpenVortexL1
 global CreatureDevelopment_Fight
 
@@ -42,12 +42,34 @@ global help_text_meteorite_nomad_quest_reminder_02
 global help_text_retake_aztec_village_quest_reminder_02
 
 // Herolich1: a few globals I might use in the future... maybe.
-global GodYellow
-global GodGreen
-global GodPurple
-global GodCyan
-global GodOrange
-
+global GodYellowKilled      // 0 alive 1 dead 2 betrayed
+global GodGreenKilled       // 0 alive 1 dead
+global GodPurpleKilled      // 0 alive 1 dead
+global GodCyanKilled        // 0 alive 1 dead
+global GodOrangeKilled      // 0 alive 1 dead 2 dissapointed
+// Herolich1: a few globals for CI specifically
+global MadinoAssisted       // Gives: Just get a good bowling score, instead of needing to win.
+global TykeAssisted         // Gives: Dunno
+global GuddleAssisted       // Gives: Sheeps are closer to Guddle
+global FangAssisted         // Gives: More time and hints to where he is.
+global OrrinAssisted        // Gives: A fairer race
+global NazzleAssisted       // Gives: More assistance in saving the guy... Or just use a portal.
+global FlitterAssisted      // Gives: nothing... I think. Can the Ballista be altered? If it can show where you'll hit, then add that.
+global NaxoAssisted         // Gives: Fairer fight, if possible.
+global PristaxAssisted      // Gives: a few "loaded dice" so to speak
+global LukelyAssisted       // Gives: the ability to learn it earlier? Maybe?
+global HerboAssisted        // Gives: Slower giants approach, and faster retreat.
+global ArkleAssisted        // Gives: an influence near the farms from the get go.
+global YaxAssisted          // Gives: Either an increased time limit, or his friends removed.
+global MontyAssisted        // Gives: An easier time depending on how good alligned your creature is, since that often times means he doesn't wreck buildings for the heck of it.
+global PasharAssisted       // Gives: The marauders near the celtic town aren't there, both reducing the amount you need to beat... and means you don't burn your town down.
+global JangoAssisted        // Gives: Just get a good mabrles score, instead of needing to win.
+global KulaAssisted         // Gives: Nothing. Can't really make it easier or harder without altering the terrain.
+global RufusAssisted        // Gives: Have Rufus hint about a secret path existing before the trial starts.
+global MercurioAssisted     // Gives: either an easier battle, or the battle gets skipped depending on what your own creature faced in the main story. (like if Mercurio had tried fighting a Creature of Nemesis, and got beat by it, and then your creature wins. That could be enough proof for him.)
+// Herolich1: a few globals for DE specifically
+global BrotherhoodStance    // 0 Friendly 1 Hostile
+global Path                 // 0 Normal 1 Savior 2 Nemesis 3 TrueNemesis
 
 // Herolich1: DevMode is for testing stuff.
 global DevMode
@@ -147,6 +169,7 @@ global constant SPELL_LIGHTNING_LEVEL_2 = MAGIC_TYPE_LIGHTNING_BOLT_PU_ONE
 global constant SPELL_LIGHTNING_LEVEL_3 = MAGIC_TYPE_LIGHTNING_BOLT_PU_TWO
 global constant SPELL_EXPLOSION_LEVEL_1 = MAGIC_TYPE_EXPLOSION_ONE
 global constant SPELL_EXPLOSION_LEVEL_2 = MAGIC_TYPE_EXPLOSION_ONE_PU_ONE
+global constant SPELL_EXPLOSION_LEVEL_3 = MAGIC_TYPE_EXPLOSION_ONE_PU_TWO // Herolich1: added for greater effect.
 global constant SPELL_HEAL_LEVEL_1 = MAGIC_TYPE_HEAL
 global constant SPELL_HEAL_LEVEL_2 = MAGIC_TYPE_HEAL_PU_ONE
 global constant SPELL_TELEPORT = MAGIC_TYPE_TELEPORT

@@ -139,6 +139,7 @@ start
 	else
 		wait until LeaveLandNow == 1
 	end if
+	run script LeavingLand1Scene
 
 end script LandControl1
 
