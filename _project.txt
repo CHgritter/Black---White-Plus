@@ -121,6 +121,7 @@ source Land4/BlindWoman.txt
 source Land4/swaptocow.txt
 source Land4/takeovervillagesl4.txt
 source Land4/ThesiusPuzzleLand4.txt
+source Land4/LeavingLand4Scene.txt
 source Land4/landcontrol4.txt
 ### Land 5 ###
 source Land5/beginland5.txt

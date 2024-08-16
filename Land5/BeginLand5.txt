@@ -135,6 +135,7 @@ start
 					
 		set MyCreature position to [CreaturePos]  
 		set MyCreature focus to [1396.906, 20.969, 3509.955]  
+		if DevMode < 5
 		MyCreature play C_INDIVIDUAL_CONFUSED loop 2
 		
 		start sound LH_SCRIPT_SAMPLE_IMPHUM	AUDIO_SFX_BANK_TYPE_SCRIPT_SFX
@@ -262,6 +263,7 @@ start
 		start sound LH_SCRIPT_SAMPLE_MUSHROOM_SUSPENSE AUDIO_SFX_BANK_TYPE_SCRIPT_SFX
 		move camera focus to [MyCreature]+[0, CreatureHeight*0.9, 0] time 0.5
 		move camera position to [MyCreature]+[0, CreatureHeight*0.9, 0] time 1.5
+		end if
 		set fade red 64 green 0 blue 0 time 1
 
 		wait 1.0 seconds

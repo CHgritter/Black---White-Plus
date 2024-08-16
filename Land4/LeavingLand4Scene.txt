@@ -1,0 +1,53 @@
+begin script LeavingLand4Scene
+
+CamPos1 = marker at [1834.4,32.2,2099.1]
+CamFoc1 = marker at [1915.0,10.1,2231.5]
+CamPos2 = marker at [1880.2,13.8,2173.4]
+CamFoc2 = marker at [1912.7,9.2,2227.4]
+RemoveCreatureFromShot = marker at [2707.420, 138.690, 2591.429]
+
+NorseLady = create VILLAGER VILLAGER_INFO_NORSE_HOUSEWIFE_FEMALE at [1900.8,7.7,2210.0]
+NorseGuy = create VILLAGER VILLAGER_INFO_NORSE_SHEPHERD_MALE at [1900.5,7.7,2210.8]
+NorseKid = create VILLAGER MALE at [1900.1,7.7,2209.8]
+start
+	AGE of NorseKid = 8
+	SCALE of NorseKid = 0.7
+	SCALE of NorseLady = 0.9
+	SCALE of NorseGuy = 1
+	set game time 07.30
+	set MyCreature position to [CreatureGetCreedPos]
+
+	begin cinema
+        start music MUSIC_TYPE_SCRIPT_CREATURE_GUIDE
+
+		enable Son high graphics detail
+		enable jc special SJC_I_AM_THE_LITTLE_BOY on Son
+		enable Mother high graphics detail
+		enable Father high graphics detail
+
+		set NorseKid focus to [NorseLady]
+		set NorseGuy focus to [NorseKid]
+		set NorseLady focus to [NorseKid]
+        
+		set camera position to [CamPos1]
+		set camera focus to [CamFoc1]
+		set fade in time 6
+		move camera position to [CamPos2] time 15
+		move camera focus to [CamFoc2] time 15
+        wait 9 seconds
+
+        // Herolich1: TODO, add a shot that zooms in more
+
+		NorseKid play ANM_P_HUG loop 1
+		NorseLady play ANM_P_HUG loop 1
+		wait 0.3 seconds
+		NorseGuy play ANM_P_HUG loop 1
+
+		wait until NorseKid played
+		wait until NorseLady played
+		set fade red 0 green 0 blue 0 time 1
+		wait until fade ready
+        stop music
+        wait 5 seconds
+    end cinema
+end script LeavingLand4Scene

@@ -257,6 +257,7 @@ start
 	wait until fade ready
 
 	VortexOpen=0
+	start ExitVortex fade out // Herolich1: addition
 
 end script LeaveThroughVortexL4
 

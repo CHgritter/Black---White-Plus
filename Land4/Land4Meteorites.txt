@@ -28,7 +28,6 @@ define script SkeletonIndividual(Person)
 begin script BuildUpTown
 
 start
-
 	wait 30 seconds	
 
 	begin dialogue
@@ -668,6 +667,7 @@ start
 	// Make sure the fireballs are switched on for the cutscene
 	ForceMeteorWaveActive = 1
 
+	if DevMode < 5
 	// Pull the player into the story cutscene when close enough
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_CREATURE_GUIDE
@@ -970,7 +970,7 @@ start
 		disable Man high graphics detail  
 		stop music
 	end cinema
-
+	end if
 	// Make the man pickupable and killable
 	enable Man pickup
 	disable Man indestructible

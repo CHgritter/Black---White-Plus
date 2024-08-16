@@ -17,23 +17,23 @@ start
 	// 3 = land 3 oriented.
 	// 4 = land 4 oriented.
 	// 5 = land 5 oriented.
-	DevMode = 5
+	DevMode = 0
 	// Cutscene means that the cutscenes itselfs will be shortened by a lot, unless they are part of the testing.
-	DevModeCutscene = 1
+	DevModeCutscene = 0
 
 
-	//run script LandControl1
-	//stop all scripts excluding files "LandControlAll.txt"
+	run script LandControl1
+	stop all scripts excluding files "LandControlAll.txt"
 
 	//Herolich1: This will eventually become a new map in this game.
 	//load map "scripts/LandInBetween1.txt"
 	//run script LandControl6
 	//stop all scripts excluding files "LandControlAll.txt"
 
-	//load map "scripts/land2.txt"
+	load map "scripts/land2.txt"
 //	set fade in time 3					Handled in OpenVortex (BeginLand2.txt)
-	//run script LandControl2
-	//stop all scripts excluding files "LandControlAll.txt"
+	run script LandControl2
+	stop all scripts excluding files "LandControlAll.txt"
 
 	load map "scripts/land3.txt"
 	//set fade in time 3 //Herolich1: moved
