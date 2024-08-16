@@ -990,8 +990,6 @@ start
     		force Creature CREATURE_DEAD_FOREVER Creature
 			eject evil spirit
 			say HELP_TEXT_BATTLE_ALERT_WINNING_EA_02 // We're just too good. // replace with a better line if possible
-			wait 5 seconds
-			delete Creature with fade
 			eject good spirit
 			wait until read
 			say HELP_TEXT_KILLING_GA_16 // Another life tossed away in vain. // replace with a better line if possible
@@ -1001,7 +999,15 @@ start
 			send good spirit home
 			send evil spirit home
 			close dialogue
+			move camera position to [2196.528, 133.908, 2180.823] time 5
+			move camera focus to [2274.4810, 29.8098, 2043.0614] time 5
+			wait 3 seconds
+			delete Creature with fade
+			wait 3 seconds
+			LaetesKilled = 1
 		end cinema
+		wait 6 seconds
+		stop music
 end script EnablePermanentCreatureDeath
 
 
@@ -1090,15 +1096,17 @@ start
 	TargetBelief = get LethysTown belief for player 2
 	TargetBelief = TargetBelief/2
 	wait 90 seconds  // Herolich1: Reduced the timer from 300 to 90, to have less waiting around. Might replace it wiht a check that the previous scripts are done.
-	while LethyTownInTrouble == 0
-		PlayerBelief = get LethysTown belief for player 1
-		LethysBelief = get LethysTown belief for player 2
-		if LethysBelief - PlayerBelief < TargetBelief
-			LethyTownInTrouble=1
-		elsif PlayerBelief > 400
-			LethyTownInTrouble=1
-		end if
-	end while
+	if DevMode < 4
+		while LethyTownInTrouble == 0
+			PlayerBelief = get LethysTown belief for player 1
+			LethysBelief = get LethysTown belief for player 2
+			if LethysBelief - PlayerBelief < TargetBelief
+				LethyTownInTrouble=1
+			elsif PlayerBelief > 400
+				LethyTownInTrouble=1
+			end if
+		end while
+	end if
 	
 	//Temporary  stuff, in case we have cheated.
 	ALTITUDE of Statue1 = -20
@@ -1186,8 +1194,10 @@ start
 		wait until read
 		
 		//Create the vortex here.
-		run background script LeaveThroughVortexL3(VortexPos)
-		
+		if DevMode < 4
+			run background script LeaveThroughVortexL3(VortexPos)
+		end if
+
 		move camera position to [2196.528, 133.908, 2180.823] time 5
 		move camera focus to [VortexPos] time 5
 		wait until camera ready

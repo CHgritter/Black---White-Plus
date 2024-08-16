@@ -1,0 +1,67 @@
+// Herolich1: This is a custom cutscene where after leaving you'll get sad stuff...
+
+begin script LeavingLand3Scene
+
+CamPos1 = marker at [1855.3,195.0,2031.5]
+CamFoc1 = marker at [2274.4810, 29.8098, 2043.0614]
+
+CamFoc2 = marker at [2274.4810, 29.8098, 2043.0614]
+
+CamPos3 = marker at [2269.0,405.3,1056.7]
+
+LethysPosition = marker at [1776.720, 165.375, 2185.003]
+LaetesPosition = marker at [1808.1, 155.9, 2173.3]
+LethysTemple = marker at [1812.28, 165.390, 2088.15]
+LethysCreature = 0
+
+start
+	set MyCreature position to [3250.3916, 85.7600, 3150.5042]
+    LethysCreature = get player 2 creature
+    if LethysKilled == 0
+	    pause computer player 2
+		move computer player 2 to [LethysPosition] speed 300 with fixed height
+	    set LethysCreature position to [LaetesPosition]
+	    set LethysCreature focus to camera position
+    elsif LaetesKilled == 0
+	    set LethysCreature position to [LethysTemple]
+    end if
+    begin cinema
+        if LethysKilled == 0
+		    start music MUSIC_TYPE_SCRIPT_EPIC_04
+        elsif LaetesKilled == 0
+		    start music MUSIC_TYPE_SCRIPT_GENERIC_03
+        else
+            start music MUSIC_TYPE_SCRIPT_NEMESIS
+        end if
+        set camera position to [CamPos1]
+        set camera focus to [CamFoc1]
+		set fade in time 2
+		wait until fade ready
+        wait 5 seconds
+        move camera position to [CamPos1] + [0, 10, 0] time 2
+        move camera focus to [LethysTemple] time 2
+        if LethysKilled == 0
+			LethysCreature play C_INDIVIDUAL_CONFUSED
+			wait until LethysCreature played
+			LethysCreature play C_INDIVIDUAL_CONFUSED
+			wait until LethysCreature played
+			LethysCreature play C_MISC_PRAY
+            wait 4 seconds
+        elsif LaetesKilled == 0
+			LethysCreature play C_MISC_CRY
+			wait until LethysCreature played
+			LethysCreature play C_MISC_CRY
+			wait until LethysCreature played
+			LethysCreature play C_MISC_CRY
+            wait 3 seconds
+        else
+            wait 6 seconds
+        end if
+        move camera position to [CamPos3] time 3
+        wait 1 second
+		set fade red 0 green 0 blue 0 time 1
+		wait until fade ready
+        stop music
+        wait 5 seconds
+    end cinema
+end script LeavingLand3Scene

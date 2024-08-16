@@ -137,6 +137,15 @@ start
 //				GA:	You know, you did the right thing by sparing Lethys, Leader.
 				say HELP_TEXT_NEW_L4_INTRO_02
 				wait until read
+			elsif LaetesKilled == 0
+//				"Hey Boss! Here we are!"
+//				EA:	Hey Boss! Here we are!
+				say HELP_TEXT_NEW_L4_INTRO_03
+				wait until read
+//				"You killed Lethys! Thats cool!"
+//				EA:	You killed Lethys! Thats cool!
+				say HELP_TEXT_NEW_L4_INTRO_04
+				wait until read
 			else
 //				"Hey Boss! Here we are!"
 //				EA:	Hey Boss! Here we are!
@@ -144,9 +153,9 @@ start
 				wait until read
 //				"You killed Lethys! Thats cool!"
 //				EA:	You killed Lethys! Thats cool!
-/*				say HELP_TEXT_NEW_L4_INTRO_04
+				say "Evil: You iced Lethys and his Creature! Hah!"
 				wait until read
-*/			end if 
+			end if 
 
 			wait until camera ready
 			camera path TRACK01

@@ -6,7 +6,7 @@ global ChanceMissed
 
 //------------------------------------------------------------------------------------------------------------------------
 
-begin script DecidedToGoThrough (VortexPos)
+begin script DecidedToGoThrough (VortexPos, Vortex)
 
  Highlight = create highlight HIGHLIGHT_CHALLENGE at [VortexPos]
 
@@ -30,6 +30,7 @@ start
 			wait until camera ready and 2 seconds
 		end cinema
 	end if
+	start Vortex fade out // Herolich1: addition
 
 end script DecidedToGoThrough
 
@@ -273,7 +274,7 @@ start
 
 	end cinema with dialogue
 
-		run background script DecidedToGoThrough (VortexPos)
+		run background script DecidedToGoThrough (VortexPos, Vortex)
 
 		say HELP_TEXT_KIDNAPPED_08
 		wait until read

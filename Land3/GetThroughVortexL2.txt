@@ -67,6 +67,7 @@ begin script GetThroughVortexL2
 
 start
 	begin cinema
+		set fade in time 3 //Herolich1: moved
 		start music MUSIC_TYPE_SCRIPT_NEMESIS
 
 		run background script VortexEntry(30, VortexPos, Town, VortexPos, 20, 80, CreaturePos, NullVortexFlock)

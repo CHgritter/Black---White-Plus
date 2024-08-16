@@ -3,6 +3,23 @@ challenge LandControl4
 begin script LandControl4
 start
 
+	// Herolich1: TITLE CARD!!
+	begin cinema
+		set draw text colour red 255 green 255 blue 255
+		set clipping window across 0 down 0 width 0 height 0 time 0
+		set fade in time 1
+		wait until fade ready
+		draw text "Land 4" across 0.25 down 0.30 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+		wait 2 seconds
+		draw text "The Return" across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+		wait 5 seconds
+		fade all draw text time 3 seconds
+		wait 2 seconds
+		set fade red 0 green 0 blue 0 time 2
+		wait 2 seconds
+		clear clipping window time 0
+	end cinema
+
 	run script SetupLand4
 	run script BeginLand4(1)
 	run script SetupUndeadVillage

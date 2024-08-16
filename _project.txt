@@ -97,6 +97,7 @@ source Land2/TreePuzzleOne.txt
 source Land2/LearnGestures.txt
 source Land2/LearnInfluence.txt
 source Land2/FinalGoldScroll.txt
+source Land2/LeavingLand2Scene.txt
 source Land2/landcontrol2.txt
 ### Land 3 ###
 source Land3/SetupLand3.txt
@@ -107,6 +108,7 @@ source Land3/GetThroughVortexL2.txt
 source Land3/SwapToApe.txt
 source Land3/TreePuzzleTwo.txt
 source Land3/throwbloke.txt
+source Land3/LeavingLand3Scene.txt
 source Land3/LandControl3.txt
 ### Land 4 ###
 source Land4/setupland4.txt

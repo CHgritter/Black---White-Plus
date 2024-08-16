@@ -18,6 +18,7 @@ start
 		wait until fade ready
 		FinishedLand3=1
 	end cinema
+	start Vortex fade out // Herolich1: addition
 end script LeaveThroughVortexL3
 
 

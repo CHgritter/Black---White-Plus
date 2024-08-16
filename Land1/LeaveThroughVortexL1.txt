@@ -226,6 +226,7 @@ start
 		LeaveLandNow = 1
 		
 	end cinema
+	start Vort fade out // Herolich1: addition
 
 end script LeaveThroughVortexL1
 

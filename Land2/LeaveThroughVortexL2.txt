@@ -84,6 +84,7 @@ start
 	  
 	VortexOpen=0
 	LeavingLandTwo = 1
+	start Vort fade out // Herolich1: addition
 
 end script LeaveThroughVortexL2
 

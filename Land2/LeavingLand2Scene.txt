@@ -1,0 +1,73 @@
+// Herolich1: This is a custom cutscene where after leaving you'll get shown a wolf...
+
+begin script LeavingLand2Scene
+
+CamPos1 = marker at [2920.1,86.0,1980.6]
+CamFoc1 = marker at [2922.8,79.7,2028.1]
+
+CamPos2 = marker at [2966.3,88.9,1982.9]
+CamFoc2 = marker at [2540.6,4.70,2316.9]
+
+CamPos3 = marker at [2983.0,89.1,2045.6]
+CamFoc3 = marker at [2699.0,44.3,1907.1]
+
+CamPos4 = marker at [2877.2,64.4,2022.9]
+CamFoc4 = marker at [2895.5,68.4,2018.8]
+
+NorseWolf = 0
+
+WolfPos = marker at [2911.6,76.0,2017.4]
+WolfFocus = marker at [2087.5,77.2,3267.7]
+start
+    NorseWolf = create CREATURE CREATURE_TYPE_WOLF at [WolfPos]
+    set NorseWolf focus to [WolfFocus]
+	SCALE of NorseWolf = 1.0
+    begin cinema
+		start music MUSIC_TYPE_SCRIPT_GENERIC_03
+        set camera position to [988.334, 160, 3680.747]
+        set camera focus to [2911.6,76.0,2017.4]
+		set fade in time 2
+		wait until fade ready
+		set camera lens  25	 time 4
+		wait until camera ready
+        wait 5 seconds
+        reset camera lens
+        set camera position to [CamPos1]
+        set camera focus to [CamFoc1]
+        wait 1 seconds
+		NorseWolf play C_INDIVIDUAL_SAD
+		wait until camera ready
+        move camera position to [CamPos2] time 7
+        move camera focus to [CamFoc2] time 7
+        wait until NorseWolf played
+		NorseWolf play C_INDIVIDUAL_SAD
+		wait until camera ready
+        wait until NorseWolf played
+		NorseWolf play C_INDIVIDUAL_SAD
+        wait 1 seconds
+        move camera position to [CamPos3] time 5
+        move camera focus to [CamFoc3] time 5
+        wait until NorseWolf played
+		NorseWolf play C_INDIVIDUAL_SAD
+		wait until camera ready
+        wait 1 seconds
+        set camera position to [CamPos4]
+        set camera focus to [WolfPos] + [0,-10.0,0]
+        wait until NorseWolf played
+		wait until camera ready
+        move camera position to [CamPos4] + [0,10.0,0] time 8
+        move camera focus to [WolfPos] time 8
+        wait 4 seconds
+        NorseWolf play C_INDIVIDUAL_ANGRY
+		wait until camera ready
+        wait until NorseWolf played
+        NorseWolf play C_INDIVIDUAL_ANGRY
+        stop music
+		set fade red 0 green 0 blue 0 time 1
+		wait until fade ready
+        wait until NorseWolf played
+        NorseWolf play C_INDIVIDUAL_ANGRY
+        wait 4 seconds
+        wait until NorseWolf played
+    end cinema
+end script LeavingLand2Scene

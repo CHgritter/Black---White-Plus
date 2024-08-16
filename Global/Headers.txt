@@ -12,6 +12,7 @@ global Guide
 global VortexOpen
 global PlayerCreatureType
 global LethysKilled // 0 alive 1 dead
+global LaetesKilled // Herolich1 addition
 global OpenVortexL1
 global CreatureDevelopment_Fight
 
@@ -134,6 +135,7 @@ global constant HAPPY = C_INDIVIDUAL_HAPPY
 global constant SAD = C_INDIVIDUAL_SAD
 global constant PICK_ME = C_INDIVIDUAL_PICK_ME
 global constant CREATURE = SCRIPT_OBJECT_TYPE_CREATURE
+global constant DUMB_CREATURE = SCRIPT_OBJECT_TYPE_DUMB_CREATURE //Herolich1: to create some cutscene creatures
 global constant PHYSICAL = CREATURE_ACTION_LEARNING_TYPE_NORMAL
 global constant INTELLECTUAL = CREATURE_ACTION_LEARNING_TYPE_NORMAL
 global constant MAGICAL = CREATURE_ACTION_LEARNING_TYPE_MAGIC
