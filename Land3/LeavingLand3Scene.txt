@@ -1,4 +1,4 @@
-// Herolich1: This is a custom cutscene where after leaving you'll get sad stuff...
+// Herolich1: This is a custom cutscene where after leaving you'll get the consequences of your actions
 
 begin script LeavingLand3Scene
 

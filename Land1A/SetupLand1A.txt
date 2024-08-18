@@ -1,17 +1,17 @@
 
 global VortexFlockTest
-global FinishedLand6
+global FinishedLand1A
 
-begin script SetupLand6
+begin script SetupLand1A
 
 start
-	LandNumber	= 6
+	LandNumber	= 2
     enable player 1 virtual influence
 	set player 1 ally with player 2 percentage 0
 	disable computer player 4
 
 
-end script SetupLand6
+end script SetupLand1A
 
 //------------------------------------------------------------------------------------------------------------------------
 //-OpenVortexTest-------------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ start
 
 		VortexFlockTest = flock at [VortexPos]						// fill in flock
 		set VortexFlockTest properties inner 2 outer 10
-		run background script Land6VortexEntry(30, VortexPos, Town, FlockPos, 27, 48, CreaturePos)
+		run background script Land1AVortexEntry(30, VortexPos, Town, FlockPos, 27, 48, CreaturePos)
 
 		set camera position to [2004.2, 103.2, 2364.962] 
 		set camera focus to [2004.7, 100.1, 2365.992]
@@ -63,7 +63,7 @@ end script OpenVortexTest
 
 
 //------------------------------------------------------------------------------------------------------------
-begin script Land6VortexEntry(NoOfPeople, VortexPos, Town, FlockPos, FlockDistance, FlockDomainRadius, CreaturePos)
+begin script Land1AVortexEntry(NoOfPeople, VortexPos, Town, FlockPos, FlockDistance, FlockDomainRadius, CreaturePos)
 	Vortex=0
 
 start
@@ -81,7 +81,7 @@ start
 	start Vortex fade out
 	wait 8 seconds
 	VortexOpen=0
-end script Land6VortexEntry
+end script Land1AVortexEntry
 
 //------------------------------------------------------------------------------------------------------------------------
 //-IntroduceKhazar-----------------------------------------------------------------------------------------------------------------------
@@ -214,10 +214,10 @@ end script ShowBuildingDisciple
 //end script ShowScroll
 
 //------------------------------------------------------------------------------------------------------------------------
-//-EnterLand6-----------------------------------------------------------------------------------------------------------------------
+//-EnterLand1A-----------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
 
-begin script EnterLand6
+begin script EnterLand1A
 
 	Town = get town with id 0
 	VortexPos = marker at [2011.4926, 2358.2321]
@@ -267,4 +267,4 @@ start
 	wait 1 second
 
     disband VortexFlockTest
-end script EnterLand6
+end script EnterLand1A

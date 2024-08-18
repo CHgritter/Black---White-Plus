@@ -1,0 +1,46 @@
+challenge LandControlAll
+
+begin script BurnArea(Position, Radius, Speed)
+	Cx = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of Position
+	Cz = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of Position
+	XStep = 10
+	ZStep = XStep * 0.707
+	CellRadius = XStep / 2
+	CurrOffset = 0
+	x0 = Cx - Radius + CellRadius
+	z0 = Cz - Radius + CellRadius
+	x1 = Cx + Radius - CellRadius
+	z1 = Cz + Radius - CellRadius
+	X = x0
+	Z = z0
+	Building = 0
+start
+	//@noyield
+	while X < x1
+		Z = z0 + CurrOffset
+		//@noyield
+		while Z < z1
+			Building = get SCRIPT_OBJECT_TYPE_ABODE at [X, 0, Z] radius CellRadius
+			if Building exists
+				enable Building on fire Speed
+			end if
+			Z += ZStep
+		end while
+		X += XStep
+		CurrOffset = CellRadius - CurrOffset
+	end while
+end script BurnArea
+
+begin script LandControlAll
+	Town = get town with id 0
+start
+	//load map "scripts/Land1.txt"
+	set fade in time 3
+	
+	begin camera
+		move camera position to [Town] + [-60, 100, 60] time 1
+		move camera focus to [Town] time 1
+	end camera
+	wait 2 seconds
+	run background script BurnArea(marker at [Town], 300, 0.2)
+end script LandControlAll

@@ -18,11 +18,22 @@ NorseWolf = 0
 
 WolfPos = marker at [2911.6,76.0,2017.4]
 WolfFocus = marker at [2087.5,77.2,3267.7]
+
+Storm = 0
+
 start
     NorseWolf = create CREATURE CREATURE_TYPE_WOLF at [WolfPos]
     set NorseWolf focus to [WolfFocus]
 	SCALE of NorseWolf = 1.0
     begin cinema
+        Storm = create SCRIPT_OBJECT_TYPE_WEATHER_THING WEATHER_INFO_DRIZZLE at [WolfPos] + [0, 15, 0]
+		set Storm properties time 60 fade 5
+		set Storm properties degrees 25 rainfall 0.6 snowfall 0 overcast 0.8 fallspeed 0.7
+		set Storm properties clouds 6 shade 0.5 height 70
+		set Storm properties sheetmin 0 sheetmax 0 forkmin 0 forkmax 0
+		set Storm properties inner 20 outer 50
+		disable Storm affected by wind
+
 		start music MUSIC_TYPE_SCRIPT_GENERIC_03
         set camera position to [988.334, 160, 3680.747]
         set camera focus to [2911.6,76.0,2017.4]
@@ -55,8 +66,8 @@ start
         set camera focus to [WolfPos] + [0,-10.0,0]
         wait until NorseWolf played
 		wait until camera ready
-        move camera position to [CamPos4] + [0,10.0,0] time 8
-        move camera focus to [WolfPos] time 8
+        move camera position to [CamPos4] + [0,15.0,0] time 8
+        move camera focus to [WolfPos] + [0,5.0,0] time 8
         wait 4 seconds
         NorseWolf play C_INDIVIDUAL_ANGRY
 		wait until camera ready

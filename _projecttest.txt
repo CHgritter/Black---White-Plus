@@ -1,0 +1,33 @@
+# Black & White 1 challenge project
+
+# How to use this file:
+# 1) copy into this folder all the source files taken from B&W1 for Mac;
+# 2) rename the file "ControlNemesisBattleStrate_.txt" to "ControlNemesisBattleStrategy.txt";
+# 3) open a command prompt, cd into this directory, and run the following command:
+#    chlasm -compile -p _project.txt -o _challenge.chl
+
+headers_path ../../headers
+header AudioMusic.h
+header AudioSFX.h
+header CameraPosEnum.h
+header CreatureEnum.h
+header CreatureSpec.h
+header GStates.h
+header HitRegions.h
+header LHSample.h
+header ScriptChallengeEnums.h
+header ScriptEnums.h
+header ScriptEnumstwo.h
+header LHKeyBoard.h
+
+info_path ../../headers
+info info1.txt
+info info2.txt
+info InfoScript1.txt
+info _constants.txt
+
+source_path .
+
+### Source files ###
+source DevTools/Headers.txt
+source DevTools/burnareatestfromDaniels.txt

@@ -1,0 +1,14 @@
+// Herolich1: this quest starts after Khazar has been wiped out(?)
+// you need to do something to get the Guardian Stone, and then you can save the town.
+
+begin script KhazarsCursedTown
+
+start
+    // Make it unreachable for a while.
+    // A silver scroll appears, and the town can be reached once more.
+    // Cutscene to introduce the quest
+    // The part where the curse happens
+    // The part where you can sovle the curse
+    // The ending cutscene where this gets solved.
+    // Main Script
+end script KhazarsCursedTown

@@ -69,8 +69,8 @@ source Land1/StartingCreatures.txt
 source Land1/LeavingLand1Scene.txt
 source Land1/LandControl1.txt
 ### hero's new land test. ###
-source newlandexperiment/SetupLand6.txt
-source newlandexperiment/LandControl6.txt
+# source Land1A/SetupLand1A.txt
+# source Land1A/Landcontrol1A.txt
 ### Land 2 ###
 source Land2/setupland2.txt
 source Land2/SlaversWarning.txt

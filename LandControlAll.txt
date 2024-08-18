@@ -5,9 +5,33 @@ challenge LandControlAll
 //run script LandControlAll
 //------------------------------------------------------------------------------------------------------------------------
 
+begin script TitleCard(Text1, Text2, Text3, UseThirdText)
+start
+	// Herolich1: TITLE CARD!!
+	begin cinema
+		set draw text colour red 255 green 255 blue 255
+		set clipping window across 0 down 0 width 0 height 0 time 0
+		wait 0.5 seconds
+		draw text constant Text1 across 0.25 down 0.30 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+		wait 2 seconds
+		draw text constant Text2 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+		if UseThirdText == 1
+			wait 2 seconds
+			draw text constant Text3 across 0.25 down 0.60 width 0.5 height 0.1 size 0.075 fade in time 1 seconds
+			wait 3 seconds
+		else
+			wait 5 seconds
+		end if
+		fade all draw text time 3 seconds
+		wait 2 seconds
+		set fade red 0 green 0 blue 0 time 2
+		wait 2 seconds
+		clear clipping window time 0
+	end cinema
+end script TitleCard
+
 //------------------------------------------------------------------------------------------------------------------------
 begin script LandControlAll
-	
 start
 
 	// Herolich1's dev mode
@@ -21,32 +45,73 @@ start
 	// Cutscene means that the cutscenes itselfs will be shortened by a lot, unless they are part of the testing.
 	DevModeCutscene = 0
 
-
+	run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_01, variable HELP_TEXT_TITLECARD_NAME_01, variable HELP_TEXT_TITLECARD_CREDIT_01, 0)
 	run script LandControl1
 	stop all scripts excluding files "LandControlAll.txt"
 
-	//Herolich1: This will eventually become a new map in this game.
-	//load map "scripts/LandInBetween1.txt"
-	//run script LandControl6
+	//load map "scripts/Land1A.txt"
+	//run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_02, variable HELP_TEXT_TITLECARD_NAME_02, variable HELP_TEXT_TITLECARD_CREDIT_01, 0)
+	//run script LandControl1A
+	//stop all scripts excluding files "LandControlAll.txt"
+
+	//load map "scripts/Land1B.txt"
+	//run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_03, variable HELP_TEXT_TITLECARD_NAME_03, variable HELP_TEXT_TITLECARD_CREDIT_01, 1)
+	//run script LandControl1B
 	//stop all scripts excluding files "LandControlAll.txt"
 
 	load map "scripts/land2.txt"
-//	set fade in time 3					Handled in OpenVortex (BeginLand2.txt)
+	set fade in time 1 // To make the screen go back to normal
+	run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_04, variable HELP_TEXT_TITLECARD_NAME_04, variable HELP_TEXT_TITLECARD_CREDIT_01, 0)
 	run script LandControl2
 	stop all scripts excluding files "LandControlAll.txt"
 
+	//load map "scripts/Land2A.txt"
+	//run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_05, variable HELP_TEXT_TITLECARD_NAME_05, variable HELP_TEXT_TITLECARD_CREDIT_01, 1)
+	//run script LandControl2A
+	//stop all scripts excluding files "LandControlAll.txt"
+
 	load map "scripts/land3.txt"
-	//set fade in time 3 //Herolich1: moved
+	run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_06, variable HELP_TEXT_TITLECARD_NAME_06, variable HELP_TEXT_TITLECARD_CREDIT_01, 0)
 	run script LandControl3
 	stop all scripts excluding files "LandControlAll.txt"
 
+	//load map "scripts/Land3A.txt"
+	//run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_07, variable HELP_TEXT_TITLECARD_NAME_07, variable HELP_TEXT_TITLECARD_CREDIT_01, 1)
+	//run script LandControl3A
+	//stop all scripts excluding files "LandControlAll.txt"
+
+	//load map "scripts/Land3B.txt"
+	//run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_08, variable HELP_TEXT_TITLECARD_NAME_08, variable HELP_TEXT_TITLECARD_CREDIT_01, 1)
+	//run script LandControl3B
+	//stop all scripts excluding files "LandControlAll.txt"
+
 	load map "scripts/land4.txt"
+	run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_09, variable HELP_TEXT_TITLECARD_NAME_09, variable HELP_TEXT_TITLECARD_CREDIT_01, 0)
 	run script LandControl4
 	stop all scripts excluding files "LandControlAll.txt"
 
+	//load map "scripts/Land4A.txt"
+	//run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_10, variable HELP_TEXT_TITLECARD_NAME_10, variable HELP_TEXT_TITLECARD_CREDIT_01, 1)
+	//run script LandControl4A
+	//stop all scripts excluding files "LandControlAll.txt"
+
 	load map "scripts/land5.txt"
+	run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_11, variable HELP_TEXT_TITLECARD_NAME_11, variable HELP_TEXT_TITLECARD_CREDIT_01, 0)
 	run script LandControl5
 	stop all scripts excluding files "LandControlAll.txt"
+
+	//load map "scripts/Land5A.txt"
+	/*
+	if GodOrangeKilled == 1
+		run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_12, variable HELP_TEXT_TITLECARD_NAME_13, variable HELP_TEXT_TITLECARD_CREDIT_01, 1)
+	elsif GodOrangeKilled == 2
+		run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_12, variable HELP_TEXT_TITLECARD_NAME_14, variable HELP_TEXT_TITLECARD_CREDIT_01, 1)
+	else
+		run script TitleCard(variable HELP_TEXT_TITLECARD_LAND_12, variable HELP_TEXT_TITLECARD_NAME_12, variable HELP_TEXT_TITLECARD_CREDIT_01, 1)
+	end if
+	*/
+	//run script LandControl5A
+	//stop all scripts excluding files "LandControlAll.txt"
 
 end script LandControlAll
 

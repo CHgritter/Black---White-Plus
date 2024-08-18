@@ -448,6 +448,7 @@ start
 		//"These fireball miracles are even more powerful than those puny standard ones.."
 		say HELP_TEXT_PICKUP_IDOLPYRE_02
 		wait until read
+		stop music // Herolich1: Fixed the song not ending
 
 	end cinema
 

@@ -1,0 +1,7 @@
+begin script Landcontrol1A
+
+    start
+    run script SetupLand1A
+    run script EnterLand1A
+	wait until FinishedLand1A == 1
+end script Landcontrol1A

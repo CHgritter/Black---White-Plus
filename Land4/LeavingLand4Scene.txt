@@ -1,3 +1,5 @@
+// Herolich1: This is a custom cutscene where after leaving you'll get a callback
+
 begin script LeavingLand4Scene
 
 CamPos1 = marker at [1834.4,32.2,2099.1]
@@ -15,15 +17,15 @@ start
 	SCALE of NorseLady = 0.9
 	SCALE of NorseGuy = 1
 	set game time 07.30
-	set MyCreature position to [CreatureGetCreedPos]
+	set MyCreature position to [RemoveCreatureFromShot]
 
 	begin cinema
         start music MUSIC_TYPE_SCRIPT_CREATURE_GUIDE
 
-		enable Son high graphics detail
-		enable jc special SJC_I_AM_THE_LITTLE_BOY on Son
-		enable Mother high graphics detail
-		enable Father high graphics detail
+		enable NorseKid high graphics detail
+		enable jc special SJC_I_AM_THE_LITTLE_BOY on NorseKid
+		enable NorseLady high graphics detail
+		enable NorseGuy high graphics detail
 
 		set NorseKid focus to [NorseLady]
 		set NorseGuy focus to [NorseKid]

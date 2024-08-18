@@ -168,7 +168,7 @@ start
 	
 	stop script "Walkabout, KillChild"
 
-	if camera position near [Healer] radius 100 and Healer viewed
+	if camera position near [Healer] radius 100 and Healer viewed or IsKilled == 2
 		begin cinema
 			set camera position to [Healer] + [5,5,5]
 			set camera focus to [Healer]
@@ -178,6 +178,15 @@ start
 			if IsKilled == 1
 				say HELP_TEXT_SPIRITUALHEALER_22		// ARGH !!
 				wait until read
+			elsif IsKilled == 2 // Not banished or dead, but there's no one left.
+				say single line "The Healer: Is this the reward I get for my efforts?"//MANUAL DIALOG
+				wait until read
+
+				say single line "The Healer: Fine then! Have it your way!"//MANUAL DIALOG
+				wait until read
+				
+				attach Healer to get town with id 2
+				release Healer
 			else
 				say HELP_TEXT_SPIRITUALHEALER_16		//That's it it's all over!
 				wait until read
@@ -197,7 +206,12 @@ start
 			set fade in time 2
 			wait until fade ready
 
-			HEALTH of Town = 0
+			if IsKilled == 2
+				run background script BurnArea(marker at [Town], 150, 0.2)
+				wait 2 seconds
+			else
+				HEALTH of Town = 0
+			end if
 
 			if IsKilled == 1
 				say single line HELP_TEXT_SPIRITUALHEALER_20 // You kill me, you kill them all.
@@ -205,8 +219,13 @@ start
  			end if
 
 			//Well you stopped those sacrifices
-			say single line HELP_TEXT_SPIRITUALHEALER_17
-			wait until read and 10 seconds
+			if IsKilled == 2
+				say single line "Good Spirit: Well, at least no further lives have been lost..." //MANUAL DIALOG
+				wait 8 seconds
+			else
+				say single line HELP_TEXT_SPIRITUALHEALER_17
+				wait until read and 10 seconds
+			end if
 
 		end cinema
 	else 
@@ -216,6 +235,39 @@ start
 end script HealerKilledOrBanished
 
 //------------------------------------------------------------------------------------------------------------------------
+// Herolich1: Burn the town down, made by Daniels118
+//------------------------------------------------------------------------------------------------------------------------
+begin script BurnArea(Position, Radius, Speed)
+	Cx = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of Position
+	Cz = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of Position
+	XStep = 10
+	ZStep = XStep * 0.707
+	CellRadius = XStep / 2
+	CurrOffset = 0
+	x0 = Cx - Radius + CellRadius
+	z0 = Cz - Radius + CellRadius
+	x1 = Cx + Radius - CellRadius
+	z1 = Cz + Radius - CellRadius
+	X = x0
+	Z = z0
+	Building = 0
+start
+	//@noyield
+	while X < x1
+		Z = z0 + CurrOffset
+		//@noyield
+		while Z < z1
+			Building = get SCRIPT_OBJECT_TYPE_ABODE at [X, 0, Z] radius CellRadius
+			if Building exists
+				enable Building on fire Speed
+			end if
+			Z += ZStep
+		end while
+		X += XStep
+		CurrOffset = CellRadius - CurrOffset
+	end while
+end script BurnArea
+//------------------------------------------------------------------------------------------------------------------------
 begin script FirstTimeBanished(Healer, Town)
 start
 	begin dialogue
@@ -223,6 +275,105 @@ start
  		wait until read
 	end dialogue
 end script FirstTimeBanished
+
+//------------------------------------------------------------------------------------------------------------------------
+// Herolich1: Intro Cutscene
+//------------------------------------------------------------------------------------------------------------------------
+begin script SpiritualHealerIntro(HealerHut)
+	Highlight = 0
+	IntroVillager = 0
+	VillagerStartPos = marker at [2086.6,22.9,2569.5]
+
+	CamPos1 = marker at [2106.8,26.2,2565.6]
+	CamFoc1 = marker at [2028.5,15.5,2571.0]
+	CamPos2 = marker at [2128.8,54.1,2561.0]
+	CamFoc2 = marker at [2037.6,15.6,2573.1]
+start 
+	Highlight = create highlight HIGHLIGHT_CHALLENGE at [HealerHut]
+	run script ChallengeHighlightNotify(Highlight, HealerHut, variable GOOD_ADVISOR, variable HELP_TEXT_GENERAL_CHALLENGE_START_06)
+
+	IntroVillager = create VILLAGER VILLAGER_INFO_GREEK_FARMER_MALE at [VillagerStartPos]
+
+	begin cinema
+		start music MUSIC_TYPE_SCRIPT_GREGORIAN
+		enable IntroVillager high graphics detail
+		IntroVillager play ANM_P_PRAY loop -1
+
+		eject evil spirit
+		say single line HELP_TEXT_DROWNINGFISHERMEN_01 //What's all the fuss?
+		move camera position to [CamPos1] time 2
+		move camera focus to [CamFoc1] time 2
+		wait until read
+		send evil spirit home
+
+		wait until camera ready
+		set IntroVillager focus to camera position
+		say single line "Greek dude: Holy one, there's this stranger walking around capable of miracles, but at a heavy cost." //MANUAL DIALOG NEEDS TO BE CHANGED
+		wait until read
+
+		IntroVillager play ANM_P_TALK1_MALE loop -1
+		say single line "Greek dude: Ever since he got here, we've all stopped aging... But at the cost of our children." //MANUAL DIALOG NEEDS TO BE CHANGED
+		wait until read
+
+		IntroVillager play ANM_P_MOURNING loop -1
+		say single line "Greek dude: Every day he calls forward a child to sacrifice for the many, and the children... It's horrific." //MANUAL DIALOG NEEDS TO BE CHANGED
+		wait until read
+
+		say single line "Greek dude: You have to do something, anything!" //MANUAL DIALOG NEEDS TO BE CHANGED
+		wait until read
+
+		move camera position to [CamPos2] time 5
+		move camera focus to [CamFoc2] time 5
+
+		wait until camera ready
+		eject good spirit
+		say single line "Good spirit: How appalling! We must stop this at once!" //MANUAL DIALOG
+		wait until read
+
+		eject evil spirit
+		say single line "Evil spirit: Kill him! Throw him off a cliff, yeah!" //MANUAL DIALOG
+		wait until read
+
+		send good spirit home
+		send evil spirit home
+		disable IntroVillager high graphics detail 
+		delete IntroVillager with fade
+		stop music
+	end cinema
+end script SpiritualHealerIntro
+
+
+//------------------------------------------------------------------------------------------------------------------------
+// Herolich1: Your Conciousness discuss the issue
+//------------------------------------------------------------------------------------------------------------------------
+begin script SpiritualHealerAfterDroppedFirstTime
+start 
+	wait 2 seconds
+	begin dialogue
+		eject evil spirit
+		say single line "Evil Spirit: I love carnage, but I don't think it's worth an entire town." //MANUAL DIALOG
+		wait until read
+		
+		say single line "Evil Spirit: Although... we don't really need a middle man for this." //MANUAL DIALOG
+		wait until read
+
+		eject good spirit
+		say single line "Good Spirit: Out of the question! Surely we can find a way around it." //MANUAL DIALOG
+		wait until read
+		
+		say single line "Good Spirit: What if we moved everyone out of this town instead? We might be able to break the Healer's curse with it!" //MANUAL DIALOG
+		wait until read
+		
+		say single line "Evil Spirit: That sounds boring to me." //MANUAL DIALOG
+		wait until read
+		
+		say single line "Good Spirit: Of course it does." //MANUAL DIALOG
+		wait until read
+
+		send good spirit home
+		send evil spirit home
+	end dialogue
+end script SpiritualHealerAfterDroppedFirstTime
 
 //------------------------------------------------------------------------------------------------------------------------
 // Landed in town - not entry is in camera mode follow.
@@ -246,6 +397,7 @@ begin script SpiritualHealerMain
 
 	Finished = 0
 	Banished = 0
+	DialoguePlayed=0
 
 	Villager1 = 0
 	Villager2 = 0
@@ -258,6 +410,7 @@ start
 
 	run background script Walkabout(Healer)
 	run background script TownAge(Healer, Town)
+	run background script SpiritualHealerIntro(HealerHut)
 
 	while Finished == 0
 		begin loop
@@ -268,44 +421,58 @@ start
 				run script KillChild(Healer, Town, Child)
 			end if
 
-		until Healer is HELD or Healer in MyCreature hand or HEALTH of Healer <= 0
+		until Healer is HELD or Healer in MyCreature hand or HEALTH of Healer <= 0 or not get VILLAGER in Town exists
 		end loop
 
 		stop script "Walkabout, KillChild"
 		
-		if HEALTH of Healer > 0
-			start say sound HELP_TEXT_SPIRITUALHEALER_15 at [Healer] //Put me down I'm needed
-		end if
-
-		wait until Healer is not HELD and not Healer in MyCreature hand
-
-		if HEALTH of Healer > 0
-			if Healer is FLYING
-				begin cinema
-					set camera focus follow Healer
-					set	camera position follow Healer
-					wait until not Healer is FLYING
-				end cinema
+		if get VILLAGER in Town exists
+			if HEALTH of Healer > 0
+				start say sound HELP_TEXT_SPIRITUALHEALER_15 at [Healer] //Put me down I'm needed
 			end if
 
-			if Healer exists
-				//If we are away from the town.
-				if get distance from [Healer] to [Town]	> 200
-					if Banished == 0
-						run script FirstTimeBanished(Healer, Town)
-						Banished =1
-					else
-						run script HealerKilledOrBanished(Healer, Town, 0)
-						Finished=1
-					end if
-				else
-					run script LandedSafeInTown(Healer, Town)
-					run background script Walkabout(Healer)
+			wait until Healer is not HELD and not Healer in MyCreature hand
+
+			if HEALTH of Healer > 0
+				if Healer is FLYING
+					begin cinema
+						set camera focus follow Healer
+						set	camera position follow Healer
+						wait until not Healer is FLYING
+					end cinema
 				end if
+
+				if Healer exists
+					//If we are away from the town.
+					if get distance from [Healer] to [Town]	> 200
+						if Banished == 0
+							run script FirstTimeBanished(Healer, Town)
+							Banished =1
+							DialoguePlayed = 1
+						else
+							run script HealerKilledOrBanished(Healer, Town, 0)
+							Finished=1
+							DialoguePlayed = 2
+						end if
+					else
+						run script LandedSafeInTown(Healer, Town)
+						run background script Walkabout(Healer)
+						DialoguePlayed = 1
+					end if
+				end if
+
+			else 
+				run script HealerKilledOrBanished(Healer, Town, 1)
+				Finished=1
+				DialoguePlayed = 2
 			end if
-			
+
+			if DialoguePlayed == 1
+				run script SpiritualHealerAfterDroppedFirstTime
+				DialoguePlayed = 2
+			end if
 		else
-			run script HealerKilledOrBanished(Healer, Town, 1)
+			run script HealerKilledOrBanished(Healer, Town, 2) //added a third situation
 			Finished=1
 		end if
 	end while

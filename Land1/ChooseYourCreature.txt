@@ -844,7 +844,7 @@ start
 			wait 1 second
 
 		else
-			set fade red 0 green 0 blue 0 time 2
+			//set fade red 0 green 0 blue 0 time 2
 			wait 2 seconds			 
 		end if
 
