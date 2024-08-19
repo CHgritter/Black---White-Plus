@@ -1,0 +1,1 @@
+// Herolich1: A quest where you can direct Khazar to take over a given town.

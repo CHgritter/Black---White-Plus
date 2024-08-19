@@ -412,9 +412,7 @@ start
 		//Calculate Town Count
 		TownCount=get player 1 town total
 
-		if TownCount > 5
-			CanKillKhazar++
-	
+		if TownCount > 4 // Herolich1: Split off the trigger for the idol quest and Khazar's death to allow him to react to it
 			//FireIdol check
 			if DoneIdol == 0
 				if CanDoIdol == 1
@@ -422,6 +420,10 @@ start
 					run background script IdolPyreMain
 				end if
 			end if
+		end if
+
+		if TownCount > 5 // Herolich1: Split off the trigger for the idol quest and Khazar's death to allow him to react to it
+			CanKillKhazar++
 		end if
 
 		Player3TownCount=get player 3 town total

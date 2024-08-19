@@ -1,0 +1,2 @@
+// Herolich1: A quest where you will collect rocks for the sculptor in exchange of gifts
+// Updates each time you progress through the gold story scrolls.

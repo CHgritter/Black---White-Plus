@@ -39,11 +39,11 @@ begin script ComputerPlayerConfrontPlayer(CompNumber, HelpText, DisplayText)
 start
 	begin loop
 		//position 10 metres from camera
-		move computer player CompNumber to facing camera position distance 10 speed 350
+		move computer player CompNumber to facing camera position distance 25 speed 350 //Herolich1: Makes Gods less in your face
 		wait 0.3 seconds
 	until get StartTimer time since set > 10
-		set computer player CompNumber position to facing camera position distance 10
-	until computer player CompNumber position near camera position radius 10
+		set computer player CompNumber position to facing camera position distance 25 //Herolich1: Makes Gods less in your face
+	until computer player CompNumber position near camera position radius 25 //Herolich1: Makes Gods less in your face
 	end loop
 
 	if DisplayText == 1
@@ -73,13 +73,13 @@ begin script KhazarConfrontPlayer(HelpText, DisplayText)
 start
 	begin loop
 		//position 10 metres from camera
-		move computer player 2 to facing camera position distance 10 speed 350
+		move computer player 2 to facing camera position distance 25 speed 350 //Herolich1: Makes Khazar less in your face
 		wait 0.3 seconds
 	until KhazarInScript == 1
 		Exit = 1
 	until get StartTimer time since set > 10
-		set computer player 2 position to facing camera position distance 10
-	until computer player 2 position near camera position radius 10
+		set computer player 2 position to facing camera position distance 25 //Herolich1: Makes Khazar less in your face
+	until computer player 2 position near camera position radius 25 //Herolich1: Makes Khazar less in your face
 	end loop
 
 	if Exit == 0
@@ -111,13 +111,13 @@ begin script LethysConfrontPlayer(HelpText, DisplayText)
 start
 	begin loop
 		//position 10 metres from camera
-		move computer player 3 to facing camera position distance 10 speed 350
+		move computer player 3 to facing camera position distance 25 speed 350 //Herolich1: Makes Lethys less in your face
 		wait 0.3 seconds
 	until LethysInScript == 1
 		Exit = 1
 	until get StartTimer time since set > 10
-		set computer player 3 position to facing camera position distance 10
-	until computer player 3 position near camera position radius 10
+		set computer player 3 position to facing camera position distance 25 //Herolich1: Makes Lethys less in your face
+	until computer player 3 position near camera position radius 25 //Herolich1: Makes Lethys less in your face
 	end loop
 
 	if Exit == 0
@@ -152,7 +152,7 @@ start
 			InfluenceP3 = get player 3 influence at camera position
 
 			if InfluenceP3 > InfluenceP1
-				set TauntTimer time to 60 seconds
+				set TauntTimer time to 5*60 seconds //Herolich1: Increased the time to five minutes
 				run script LethysConfrontPlayer(variable constant from HELP_TEXT_NEW_LAND_2_LETHYS_REACTION_01 to HELP_TEXT_NEW_LAND_2_LETHYS_REACTION_06, 0)
 			end if
 		end if
@@ -207,7 +207,7 @@ start
 					InfluenceP2 = get player 2 raw influence at camera position
 
 					if InfluenceP2 > InfluenceP1
-						set OnMyLandTimer time to 60 seconds
+						set OnMyLandTimer time to 5*60 seconds //Herolich1: Increased the time to five minutes
 
 						if number from 1 to 10 <= 5
 							MyText=variable constant from HELP_TEXT_NEW_LAND_2_KHAZAR_REACTION_01 to HELP_TEXT_NEW_LAND_2_KHAZAR_REACTION_06

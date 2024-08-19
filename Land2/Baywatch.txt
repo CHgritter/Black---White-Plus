@@ -125,6 +125,7 @@ begin script BaywatchMain
 	RewardPos = marker at [2854.7266, 50.3966, 3056.9429]
 	RewardCameraPos = marker at [2825.0017, 66.7546, 3067.1838]
 	RewardCameraFoc = marker at [2854.1843, 50.8918, 3054.0120]
+	KhazarPosition = marker at [2777.194,50.920,3064.096]
 
 start
 	BaywatchSwimmingCounter=5
@@ -150,6 +151,7 @@ start
 	run background script BaywatchSwimmingBoy(Boy4, VillagerHutPos)
 	run background script BaywatchSwimmingBoy(Boy5, VillagerHutPos)
 	run background script BaywatchSwimmingLaugh(SwimPos)
+	KhazarInScript=1
 
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_GENERIC_03
@@ -198,12 +200,24 @@ start
 
 		move camera position to [2772.9670, 69.8213, 3093.4985]	time 4
 		move camera focus to [2787.7322, 51.4469, 3067.7637] time 3
+		if KhazarGone == 0
+			move computer player 2 to [KhazarPosition] speed 350 with fixed height
+			wait until computer player 2 ready
+			wait until camera ready
+			say single line "Khazar: As minor as this problem may seem, it might be good to give it your full attention." //MANUAL DIALOG
+			wait until read
+			say single line "Khazar: Your people may worship you, but they do not let go of grievances easily." with interaction //MANUAL DIALOG
+			wait until read
+			release computer player 2
+		else
+			wait until camera ready
+		end if
 
-		wait until camera ready
 
 		disable Mother high gfx detail
 		stop music
 	end cinema
+	KhazarInScript=0
 
 	state Mother WANDER_AROUND
 		position [SoapBox]

@@ -28,6 +28,7 @@ begin script HanoiPuzzleStart(HanoiPuzzlePos)
 	HighlightPos = marker at [2385.287, 0.000, 2649.390]   
 	Highlight = create highlight HIGHLIGHT_CHALLENGE at [HighlightPos]
 	HanoiDYKPos = marker at [2376.031, 0.000, 2640.963]   
+	KhazarPosition = marker at [2378.341,5.000,2643.899]
 
 start
 	ALTITUDE of Highlight = 2
@@ -37,6 +38,7 @@ start
 	
 	if ChallengeHighlightEndVariable == 0
 		HanoiIntroTriggered=1
+		KhazarInScript=1
 		begin cinema
 			start music MUSIC_TYPE_SCRIPT_GENERIC_01
 
@@ -99,12 +101,20 @@ start
 			Master play ANM_P_TALK_TO_NEIGHBOUR loop 2
 
 			move Master position to [HanoiPuzzlePos]
+			if KhazarGone == 0
+				move computer player 2 to [KhazarPosition] speed 350
+				wait until computer player 2 ready
+				say single line "Khazar: Ah, a puzzle. Lately it is hard for me to find the time, but puzzles are a welcome distraction. Good luck, my friend." with interaction //MANUAL DIALOG
+				wait until read
+				release computer player 2
+			end if
 			move camera position to [BeginPos] time 3
 			move camera focus to [BeginFoc] time 3
 			wait until camera ready
 			delete Master with fade
 			stop music
 		end cinema
+		KhazarInScript=0
 	end if
 
 	//Keep the highlight in the game

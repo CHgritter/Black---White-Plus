@@ -482,9 +482,12 @@ end script MoveAlong
 // Introduction to the Challenge
 //------------------------------------------------------------------------------------------------------------------------
 begin script Introduction(Hut, Man)
+	
+	KhazarPosition = marker at [2103.758,9.799,2999.449]
 
 start
 
+	KhazarInScript=1
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_GENERIC_04
 
@@ -554,6 +557,13 @@ start
 		move camera focus to [2115.021, 10.319, 2997.035] time 3
 
 		disable Man high gfx detail
+		if KhazarGone == 0
+			move computer player 2 to [KhazarPosition] speed 350 with fixed height
+			wait until computer player 2 ready
+			say single line "Khazar: INSERT DIALOGUE HERE" with interaction //MANUAL DIALOG
+			wait until read
+			release computer player 2
+		end if
 
 		wait until camera ready
 
@@ -561,6 +571,7 @@ start
 		stop music
 
 	end cinema
+	KhazarInScript=0
 
 end script Introduction
 

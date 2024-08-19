@@ -52,12 +52,15 @@ begin script Riddle(AnnikaHome, AnnikaPos)
 	Annika = 0
 	BeginPos = 0
 	BeginFoc = 0
+	KhazarHasCommented = 0
+	KhazarPosition = marker at [2609.853,30.707,2491.241]
 
 start
 
 	BeginPos = marker at camera position
 	BeginFoc = marker at camera focus
 
+	KhazarInScript=1
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_GENERIC_02
 		
@@ -135,9 +138,20 @@ start
 
 			//Annika play ANM_P_TURN_180 loop 1
 			wait until Annika played
-
-			move camera position to [BeginPos] time 4
-			move camera focus to [BeginFoc] time 4
+			if KhazarGone == 0 and KhazarHasCommented == 0
+				move camera position to [2564.3,61.8,2479.2] time 4
+				move camera focus to [2637.4,39.2,2499.6] time 4
+				move computer player 2 to [KhazarPosition] speed 350 with fixed height
+				wait until computer player 2 ready
+				wait until camera ready
+				say single line "Khazar: I shall watch this with keen interest." with interaction //MANUAL DIALOG
+				wait until read
+				release computer player 2
+				KhazarHasCommented = 1
+			else
+				move camera position to [BeginPos] time 4
+				move camera focus to [BeginFoc] time 4
+			end if
 
 		end if		
 		move Annika position to [AnnikaHome]
@@ -146,6 +160,7 @@ start
 		delete Annika with fade
 		stop music
 	end cinema
+	KhazarInScript=0
 
 end script Riddle
 
@@ -198,6 +213,7 @@ begin script LostTreasureMain
 	ClueOnGround = 0
 	ArtifactFour = 0
 	Altar = marker at [2630.4441, 31.8904, 2524.9048]
+	KhazarPosition = marker at [2615.902,29.752,2515.444]
 
 	WhileTick = 0
 	EffectTick = 0
@@ -259,6 +275,7 @@ start
 
 	wait until PuzzleSolved > 0
 
+	KhazarInScript=1
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_EPIC_04
 		BeginPos = marker at camera position
@@ -282,6 +299,9 @@ start
 
 		set Zebra focus to [Altar]+[15,10,15]
  		force Zebra CREATURE_WAVE_AT_PLAYER Zebra
+		if KhazarGone == 0
+			move computer player 2 to [KhazarPosition] speed 350 with fixed height
+		end if
 		stop music
 	end cinema with dialogue
 
@@ -296,8 +316,17 @@ start
 		wait until read
 
 		say HELP_TEXT_LOST_TREASURE_14
+		
+		if KhazarGone == 0
+			wait until read
+			wait until computer player 2 ready
+			say single line "Khazar: Hm, I hope you get some use out of this, my ally. Khalen's sturdy shell makes him the shield of my people, but your Creature is yours to shape as you will." with interaction //MANUAL DIALOG
+			wait until read
+			release computer player 2
+		end if
 
 	end dialogue
+	KhazarInScript=0
 
 	run background script SwapCreatures(Zebra)
  

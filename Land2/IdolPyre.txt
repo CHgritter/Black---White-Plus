@@ -36,6 +36,7 @@ begin script IdolPyreMain
 	FirstAddWorshipDeathSpeech = 0
 	FifthWorshipperKilledSpeech = 0
 	AlignmentTotal = 0
+	KhazarPosition = marker at [2699.905,36.944,3648.303]
 
 	Highlight = create highlight HIGHLIGHT_CHALLENGE at [IdolPos]
 
@@ -79,6 +80,7 @@ start
 		
 
 	run script ChallengeHighlightNotify(Highlight,IdolPos, variable GOOD_ADVISOR, variable HELP_TEXT_GENERAL_CHALLENGE_START_04)
+	KhazarInScript=1
 
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_GREGORIAN
@@ -136,11 +138,20 @@ start
 		wait until read
 		wait 2 seconds
 
-		move camera position to [2689.3564, 48.5068, 3639.9231] time 7
-		move camera focus to [2703.0881, 38.4177, 3667.7935] time 6
-
 		send evil spirit home
 		send good spirit home
+		if KhazarGone == 0
+			move camera position to [2681.262, 52.319, 3627.739] time 7
+			move camera focus to [2703.654, 38.220, 3667.193] time 6
+			move computer player 2 to [KhazarPosition] speed 350 with fixed height
+			wait until computer player 2 ready
+			say single line "Khazar: This sacrilege cannot go unaccounted for. You must act with haste!" with interaction //MANUAL DIALOG
+			wait until read
+			release computer player 2
+		else
+			move camera position to [2689.3564, 48.5068, 3639.9231] time 7
+			move camera focus to [2703.0881, 38.4177, 3667.7935] time 6
+		end if
 		close dialogue
 
 //		move camera position to [2681.262, 52.319, 3627.739] time 7
@@ -161,6 +172,7 @@ start
 		snapshot challenge success 0.0 alignment 0.0 HELP_TEXT_TITLE_12 StandardReminder(variable HELP_TEXT_REMINDER_13)
 		stop music
 	end cinema
+	KhazarInScript=0
 
 	attach music MUSIC_TYPE_SCRIPT_GREGORIAN_3D to Idol
 

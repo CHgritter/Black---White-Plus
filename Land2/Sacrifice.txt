@@ -9,9 +9,11 @@ global SacrificeFinished
 begin script SacrificeIntro(Boy, Priest, Priestess, Altar)
 
 	Away = marker at [2188.886, 29.548, 3135.653] 
+	KhazarPosition = marker at [3338.300,85.605,3212.460]
 
 start
 	
+	KhazarInScript=1
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_GREGORIAN
 
@@ -126,8 +128,10 @@ start
 
 		move camera position to [3323.770, 87.295, 3197.739] time 3
 		move camera focus to [3342.188, 78.031, 3219.223] time 3
-
 		wait until camera ready
+		if KhazarGone == 0
+			move computer player 2 to [KhazarPosition] speed 350
+		end if
 
 		eject evil spirit
 		eject good spirit
@@ -136,13 +140,20 @@ start
 		make evil spirit point at [Altar]
 		say HELP_TEXT_SACRIFICE_05 with interaction
 		wait until read
-		
+		if KhazarGone == 0
+			stop evil spirit pointing
+			wait until computer player 2 ready
+			say single line "Khazar: How you decide to gain power is your will alone. But I warn you: what you choose will reflect on you as a god. This is true for us, just as it is true for Nemesis." with interaction //MANUAL DIALOG
+			wait until read
+			release computer player 2
+		end if
 
 		disable Boy high gfx detail
 		disable Priest high gfx detail
 		disable Priestess high gfx detail
 		stop music
 	end cinema
+	KhazarInScript=0
 
 end script SacrificeIntro
 

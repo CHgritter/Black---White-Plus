@@ -51,6 +51,7 @@ begin script PlagueMain
 	IndianTown = get TOWN at [IndianTownPos] radius 100
 	RewardCameraPos = marker at [2763.0857, 62.6855, 3075.3599]
 	RewardCameraFoc = marker at	[2784.8623, 51.3590, 3083.2463]
+	KhazarPosition = marker at [2796.181,50.920,3095.862]
 
 start
 	while StoragePit not exists or VillagerHut not exists
@@ -106,6 +107,7 @@ start
 	TownTotalInitial = (TownTotalInitial / 2)
 	Villager = create SCRIPT_OBJECT_TYPE_VILLAGER INDIAN_TRADER at [VillagerHut]
 
+	KhazarInScript=1
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_CREATURE_GUIDE
 
@@ -149,8 +151,12 @@ start
 		say HELP_TEXT_PLAGUE_02	// We've been poisoned ! We can't work, we can't pray and we can't worship you. Please help us !
 		wait until read
 
-		move camera position to [BeginPos] time 14
-		move camera focus to [BeginFoc] time 14
+		// Herolich1: changed the position of the shot.
+		move camera position to [2879.1,120.5,3158.5] time 12
+		move camera focus to [2787.0,51.4,3088.1] time 12
+		if KhazarGone == 0
+			move computer player 2 to [KhazarPosition] speed 350 with fixed height
+		end if
 
 		eject good spirit
 		eject evil spirit
@@ -165,6 +171,17 @@ start
 		
 		send good spirit home
 		send evil spirit home
+		
+		if KhazarGone == 0
+			wait until computer player 2 ready
+			say single line "Khazar: Lethys truly is a coward to stoop so low. Remember to have your people worshipping - you may find the Heal miracle useful here." with interaction //MANUAL DIALOG
+			wait until read
+			release computer player 2
+		end if
+		wait until camera ready
+		// Herolich1: Moved when the position and focus return to where they are meant to be.
+		move camera position to [BeginPos] time 2
+		move camera focus to [BeginFoc] time 2
 		wait until camera ready
 
 		enable Villager poisoned
@@ -173,6 +190,7 @@ start
 		disable Villager high gfx detail
 		stop music
 	end cinema
+	KhazarInScript=0
 
 	enable StoragePit poisoned
  

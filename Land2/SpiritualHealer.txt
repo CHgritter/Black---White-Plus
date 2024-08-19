@@ -288,11 +288,14 @@ begin script SpiritualHealerIntro(HealerHut)
 	CamFoc1 = marker at [2028.5,15.5,2571.0]
 	CamPos2 = marker at [2128.8,54.1,2561.0]
 	CamFoc2 = marker at [2037.6,15.6,2573.1]
+
+	KhazarPosition = marker at [2027.0,35.4,2562.5]
 start 
 	Highlight = create highlight HIGHLIGHT_CHALLENGE at [HealerHut]
 	run script ChallengeHighlightNotify(Highlight, HealerHut, variable GOOD_ADVISOR, variable HELP_TEXT_GENERAL_CHALLENGE_START_06)
 
 	IntroVillager = create VILLAGER VILLAGER_INFO_GREEK_FARMER_MALE at [VillagerStartPos]
+	KhazarInScript=1
 
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_GREGORIAN
@@ -301,25 +304,25 @@ start
 
 		eject evil spirit
 		say single line HELP_TEXT_DROWNINGFISHERMEN_01 //What's all the fuss?
-		move camera position to [CamPos1] time 2
-		move camera focus to [CamFoc1] time 2
+		move camera position to [CamPos1] time 4
+		move camera focus to [CamFoc1] time 4
 		wait until read
 		send evil spirit home
 
 		wait until camera ready
 		set IntroVillager focus to camera position
-		say single line "Greek dude: Holy one, there's this stranger walking around capable of miracles, but at a heavy cost." //MANUAL DIALOG NEEDS TO BE CHANGED
+		say single line "Greek dude: Holy one, there's a stranger in our lands capable of miracles, but at a terrible price." //MANUAL DIALOG NEEDS TO BE CHANGED
 		wait until read
 
 		IntroVillager play ANM_P_TALK1_MALE loop -1
-		say single line "Greek dude: Ever since he got here, we've all stopped aging... But at the cost of our children." //MANUAL DIALOG NEEDS TO BE CHANGED
+		say single line "Greek dude: Ever since he arrived, no one in our village has aged a moment. But it's at the cost of our children!" //MANUAL DIALOG NEEDS TO BE CHANGED
 		wait until read
 
 		IntroVillager play ANM_P_MOURNING loop -1
-		say single line "Greek dude: Every day he calls forward a child to sacrifice for the many, and the children... It's horrific." //MANUAL DIALOG NEEDS TO BE CHANGED
+		say single line "Greek dude: Every day he calls forward a child to sacrifice for the many..." //MANUAL DIALOG NEEDS TO BE CHANGED
 		wait until read
 
-		say single line "Greek dude: You have to do something, anything!" //MANUAL DIALOG NEEDS TO BE CHANGED
+		say single line "Greek dude: None of us asked for this. Please, do something!" //MANUAL DIALOG NEEDS TO BE CHANGED
 		wait until read
 
 		move camera position to [CamPos2] time 5
@@ -338,8 +341,16 @@ start
 		send evil spirit home
 		disable IntroVillager high graphics detail 
 		delete IntroVillager with fade
+		if KhazarGone == 0
+			move computer player 2 to [KhazarPosition] speed 350 with fixed height
+			wait until computer player 2 ready
+			say single line "Khazar: An immortal town, at a terrible cost... I'll leave the solution to you." with interaction //MANUAL DIALOG
+			wait until read
+			release computer player 2
+		end if
 		stop music
 	end cinema
+	KhazarInScript=0
 end script SpiritualHealerIntro
 
 

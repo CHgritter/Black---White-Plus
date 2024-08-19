@@ -991,7 +991,7 @@ start
 
 	// Reward
 	run script GiveSpellDispenserReward(RewardPos, variable MAGIC_TYPE_FLOCK_GROUND, 180, 0, 120)
-
+	// Add Khazar telling you yo can use this how you wish here.
 end script AllSlavesReleased
 
 //------------------------------------------------------------------------------------------------------------------------
