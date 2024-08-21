@@ -636,6 +636,9 @@ start
 			wait until read
 		end dialogue
 	end if
+	if LethysGone == 0
+	    run script ComputerPlayerConfrontPlayer(3, variable "I would've dealt with that much faster than you!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_GREEDYFARMER_01
+	end if
 
 end script GreedyFarmer
 

@@ -145,7 +145,7 @@ start
 			move camera focus to [2703.654, 38.220, 3667.193] time 6
 			move computer player 2 to [KhazarPosition] speed 350 with fixed height
 			wait until computer player 2 ready
-			say single line "Khazar: This sacrilege cannot go unaccounted for. You must act with haste!" with interaction //MANUAL DIALOG
+			say single line "Khazar: This sacrilege cannot go unaccounted for. You must act with haste!" with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_01
 			wait until read
 			release computer player 2
 		else
@@ -464,4 +464,14 @@ start
 
 	end cinema
 
+	if KhazarGone == 0
+		if HEALTH of Builder > 0
+		    run script ComputerPlayerConfrontPlayer(2, variable "Hurrah! The Idol has been destroyed! Well done, my ally.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_02
+		else
+		    run script ComputerPlayerConfrontPlayer(2, variable "Well, at least the Idol is gone.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_03
+		end if
+	end if
+	if LethysGone == 0
+	    run script ComputerPlayerConfrontPlayer(3, variable "I don't know whether to be glad you removed that thing or not...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_04
+	end if
 end script IdolPyreMain

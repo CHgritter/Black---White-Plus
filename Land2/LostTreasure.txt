@@ -144,7 +144,7 @@ start
 				move computer player 2 to [KhazarPosition] speed 350 with fixed height
 				wait until computer player 2 ready
 				wait until camera ready
-				say single line "Khazar: I shall watch this with keen interest." with interaction //MANUAL DIALOG
+				say single line "Khazar: I shall watch this with keen interest." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_LOST_TREASURE_01
 				wait until read
 				release computer player 2
 				KhazarHasCommented = 1
@@ -214,6 +214,7 @@ begin script LostTreasureMain
 	ArtifactFour = 0
 	Altar = marker at [2630.4441, 31.8904, 2524.9048]
 	KhazarPosition = marker at [2615.902,29.752,2515.444]
+	LethysPosition = marker at [2610.902,29.752,2507.444]
 
 	WhileTick = 0
 	EffectTick = 0
@@ -276,6 +277,7 @@ start
 	wait until PuzzleSolved > 0
 
 	KhazarInScript=1
+	LethysInScript=1
 	begin cinema
 		start music MUSIC_TYPE_SCRIPT_EPIC_04
 		BeginPos = marker at camera position
@@ -320,13 +322,26 @@ start
 		if KhazarGone == 0
 			wait until read
 			wait until computer player 2 ready
-			say single line "Khazar: Hm, I hope you get some use out of this, my ally. Khalen's sturdy shell makes him the shield of my people, but your Creature is yours to shape as you will." with interaction //MANUAL DIALOG
-			wait until read
-			release computer player 2
+			say single line "Khazar: Hm, I hope you get some use out of this, my ally. Khalen's sturdy shell makes him the shield of my people, but your Creature is yours to shape as you will." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_LOST_TREASURE_02
 		end if
-
+		if LethysGone == 0
+			move computer player 3 to [LethysPosition] speed 350 with fixed height
+			wait until read
+			wait until computer player 3 ready
+			say single line "Lethys: A Zebra? What a ridiculous Creature!" //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_LOST_TREASURE_03
+			if KhazarGone == 0
+				wait until read
+				say single line "Khazar: It is black with white stripes, in case that helps." // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_LOST_TREASURE_04
+				wait until read
+				say single line "Lethys: Shut it, Khazar." // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_LOST_TREASURE_05
+				wait until read
+				release computer player 2
+			end if
+			release computer player 3
+		end if
 	end dialogue
 	KhazarInScript=0
+	LethysInScript=0
 
 	run background script SwapCreatures(Zebra)
  

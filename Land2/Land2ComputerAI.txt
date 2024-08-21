@@ -51,6 +51,11 @@ start
 			say single line constant HelpText
 			wait until read
 		end dialogue
+	elsif DisplayText == 2 // Herolich1: For say string
+		begin dialogue
+			say single line string HelpText
+			wait until read
+		end dialogue
 	else
 		if CompNumber == 3
 			start say extra sound constant HelpText

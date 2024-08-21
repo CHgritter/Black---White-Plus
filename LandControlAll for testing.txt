@@ -31,8 +31,107 @@ start
 end script TitleCard
 
 //------------------------------------------------------------------------------------------------------------------------
+//Herolich1: My devtools
+begin script LoopCameraShot
+position1 = marker at [2196.697, 23.851, 2210.491]					// idol quest
+position2 = marker at [2185.113, 19.698, 2216.037]				// baywatch
+position3 = marker at [2216.266, 76.888, 2124.016]							// plague
+position4 = marker at [2265.655, 54.565, 1997.297]	// lost treasure1
+position5 = marker at [2264.064, 54.355, 1996.042]					// lost treasure2
+position6 = marker at [2278.576, 66.076, 2019.509]					// sacrifice
+position7 = marker at [2278.576, 66.076, 2019.509]					// flooded house
+position8 = marker at [2081.347, 23.811, 3005.942]					// Singing stones
+focus1 = marker at [2183.618, 18.470, 2209.543]						// idol quest
+focus2 = marker at [2185.643, 19.382, 2213.107]					// baywatch
+focus3 = marker at [2240.693, 45, 2048.689]								// plague
+focus4 = marker at [2262.890, 53.847, 1991.836]					// lost treasure1
+focus5 = marker at [2263.600, 53.637, 1989.939]						// lost treasure2
+focus6 = marker at [2272.370, 53.392, 1981.692]						// sacrifice
+focus7 = marker at [2255.115, 53.221, 1978.051]						// flooded house
+focus8 = marker at [2115.021, 10.319, 2997.035]						// Singing stones
+start
+	begin loop
+        when key KB_3 down
+			run script FreezeOnShot(position1,focus1)
+        when key KB_4 down
+			run script FreezeOnShot(position2,focus2)
+        when key KB_5 down
+			run script FreezeOnShot(position3,focus3)
+        when key KB_6 down
+			run script FreezeOnShot(position4,focus4)
+        when key KB_7 down
+			run script FreezeOnShot(position5,focus5)
+        when key KB_8 down
+			run script FreezeOnShot(position6,focus6)
+        when key KB_9 down
+			run script FreezeOnShot(position7,focus7)
+        when key KB_0 down
+			run script FreezeOnShot(position8,focus8)
+	end loop
+end script LoopCameraShot
+
+begin script FreezeOnShot(point1, point2)
+
+start
+	begin cinema
+		move camera position to [point1] time 2
+		move camera focus to [point2] time 2
+	end cinema
+end script FreezeOnShot
+
+
+// most of these just don't work. the only one showing results is the one where he shows up in your face
+begin script MoveAi
+	PlayerPos = 0
+	//ReferenceGodPosition = marker at computer player 2 position
+	//MoveHappened = 0
+start
+	begin loop
+		//ReferenceGodPosition = marker at computer player 2 position
+		//while MoveHappened == 0
+        	when key KB_Y down //move to player
+				//MoveHappened = 1
+				PlayerPos = marker at camera position
+				set computer player 2 position to [PlayerPos]
+		//end while
+		//wait 0.1 seconds
+		//ReferenceGodPosition = marker at computer player 2 position
+		//MoveHappened = 0
+	end loop
+end script MoveAi
+
+begin script GetGodCoords
+start
+    begin loop
+        when key KB_G down
+			run script DisplayCoords
+    end loop
+end script GetGodCoords
+
+begin script DisplayCoords
+    GodPos = marker at computer player 2 position
+	X = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of GodPos
+	Y = land height at computer player 2 position
+	Z = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of GodPos
+start
+	begin dialogue
+		say "Z: $d" with number Z with interaction
+		wait until read
+		say "Y: $d" with number Y with interaction
+		wait until read
+		say "X: $d" with number X with interaction
+		wait until read
+	end dialogue
+end script DisplayCoords
+
 //------------------------------------------------------------------------------------------------------------------------
 begin script LandControlAll
+	BuildCitadel = 0
+	Altar=marker at [3343.1909, 77.7200, 3220.2014]
+	Worship = 0
+	Town6 = 0
+	Town4 = 0
+	FreezeTime = 0
 start
 
 	// Herolich1's dev mode
@@ -61,21 +160,50 @@ start
 	//stop all scripts excluding files "LandControlAll.txt"
 
 
-	//load map "scripts/land2.txt"
-	//set fade in time 1 // To make the screen go back to normal
-	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_04, variable HELP_TEXT_PLUS_TITLECARD_NAME_04, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
-	//run script LandControl2
-	//stop all scripts excluding files "LandControlAll.txt"
+	load map "scripts/land2.txt"
+	run background script LoopCameraShot
+	run background script GetGodCoords
+	run background script MoveAi
+	build building at [3361.26,3241.85] desire 1.0
+	BuildCitadel = get CITADEL at [3361.26,3241.85] radius 50
+	BUILT of BuildCitadel = 1.0
+	Town6 = get town with id 11
+	Town4 = get town with id 2
+	wait 2 seconds
+	run map script line "CREATE_WORSHIP_SITE(\"3361, 3241\", 7, \"PLAYER_ONE\", \"NORSE\", 1, 1000)"
+	run map script line "CREATE_WORSHIP_SITE(\"3361, 3241\", 4, \"PLAYER_ONE\", \"INDIAN\", 1, 1000)"
+	wait 2 seconds
+	Worship = get WORSHIP at [Altar] radius 15
+	set player 1 ally with player 2 percentage 1
+	set player 1 ally with player 3 percentage 1
+
+	run background script HanoiFlood
+	run background script SingingStonesSongsMain
+	run background script TreePuzzleOne
+	run background script IdolPyreMain
+	run background script LostTreasureMain
+	run background script BaywatchMain
+	run background script PlagueMain
+	run background script GreedyFarmer
+	run background script Sacrifice(Town6, Altar)
+	run background script TheSlaversMain(Town4)
+	run background script SpiritualHealerMain
+	wait 10*60 seconds
+	wait until FreezeTime == 1
+	set fade in time 1 // To make the screen go back to normal
+	run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_04, variable HELP_TEXT_PLUS_TITLECARD_NAME_04, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
+	run script LandControl2
+	stop all scripts excluding files "LandControlAll.txt"
 
 	//load map "scripts/Land2A.txt"
 	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_05, variable HELP_TEXT_PLUS_TITLECARD_NAME_05, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 1)
 	//run script LandControl2A
 	//stop all scripts excluding files "LandControlAll.txt"
 
-	//load map "scripts/land3.txt"
-	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_06, variable HELP_TEXT_PLUS_TITLECARD_NAME_06, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
-	//run script LandControl3
-	//stop all scripts excluding files "LandControlAll.txt"
+	load map "scripts/land3.txt"
+	run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_06, variable HELP_TEXT_PLUS_TITLECARD_NAME_06, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
+	run script LandControl3
+	stop all scripts excluding files "LandControlAll.txt"
 
 	//load map "scripts/Land3A.txt"
 	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_07, variable HELP_TEXT_PLUS_TITLECARD_NAME_07, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 1)
@@ -87,8 +215,6 @@ start
 	//run script LandControl3B
 	//stop all scripts excluding files "LandControlAll.txt"
 
-	LethysKilled = 1
-	LaetesKilled = 1
 	load map "scripts/land4.txt"
 	run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_09, variable HELP_TEXT_PLUS_TITLECARD_NAME_09, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
 	run script LandControl4

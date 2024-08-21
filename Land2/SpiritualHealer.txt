@@ -179,10 +179,10 @@ start
 				say HELP_TEXT_SPIRITUALHEALER_22		// ARGH !!
 				wait until read
 			elsif IsKilled == 2 // Not banished or dead, but there's no one left.
-				say single line "The Healer: Is this the reward I get for my efforts?"//MANUAL DIALOG
+				say single line "The Healer: Is this the reward I get for my efforts?"//MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_13
 				wait until read
 
-				say single line "The Healer: Fine then! Have it your way!"//MANUAL DIALOG
+				say single line "The Healer: Fine then! Have it your way!"//MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_14
 				wait until read
 				
 				attach Healer to get town with id 2
@@ -220,7 +220,7 @@ start
 
 			//Well you stopped those sacrifices
 			if IsKilled == 2
-				say single line "Good Spirit: Well, at least no further lives have been lost..." //MANUAL DIALOG
+				say single line "Good Spirit: Well, at least no further lives have been lost..." //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_15
 				wait 8 seconds
 			else
 				say single line HELP_TEXT_SPIRITUALHEALER_17
@@ -231,7 +231,16 @@ start
 	else 
 		HEALTH of Town = 0
 	end if
-
+	if KhazarGone == 0
+		if IsKilled == 2
+			run script ComputerPlayerConfrontPlayer(2, variable "Don't fret, my friend. You've done the right thing.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_03
+		else
+    		run script ComputerPlayerConfrontPlayer(2, variable "It looks as though this was no bluff...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_02
+		end if
+	end if
+	if LethysGone == 0
+	    run script ComputerPlayerConfrontPlayer(3, variable "If I were you, I would have let him be. But let me guess: you work in mysterious ways!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_04
+	end if
 end script HealerKilledOrBanished
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -241,7 +250,7 @@ begin script BurnArea(Position, Radius, Speed)
 	Cx = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of Position
 	Cz = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of Position
 	XStep = 10
-	ZStep = XStep * 0.707
+	ZStep = XStep * 0.757 //0.707
 	CellRadius = XStep / 2
 	CurrOffset = 0
 	x0 = Cx - Radius + CellRadius
@@ -279,7 +288,7 @@ end script FirstTimeBanished
 //------------------------------------------------------------------------------------------------------------------------
 // Herolich1: Intro Cutscene
 //------------------------------------------------------------------------------------------------------------------------
-begin script SpiritualHealerIntro(HealerHut)
+begin script SpiritualHealerIntro(HealerHut, Town)
 	Highlight = 0
 	IntroVillager = 0
 	VillagerStartPos = marker at [2086.6,22.9,2569.5]
@@ -311,18 +320,18 @@ start
 
 		wait until camera ready
 		set IntroVillager focus to camera position
-		say single line "Greek dude: Holy one, there's a stranger in our lands capable of miracles, but at a terrible price." //MANUAL DIALOG NEEDS TO BE CHANGED
+		say single line "Greek dude: Holy one, there's a stranger in our lands capable of miracles, but at a terrible price." //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_01
 		wait until read
 
 		IntroVillager play ANM_P_TALK1_MALE loop -1
-		say single line "Greek dude: Ever since he arrived, no one in our village has aged a moment. But it's at the cost of our children!" //MANUAL DIALOG NEEDS TO BE CHANGED
+		say single line "Greek dude: Ever since he arrived, no one in our village has aged a moment. But it's at the cost of our children!" //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_02
 		wait until read
 
 		IntroVillager play ANM_P_MOURNING loop -1
-		say single line "Greek dude: Every day he calls forward a child to sacrifice for the many..." //MANUAL DIALOG NEEDS TO BE CHANGED
+		say single line "Greek dude: Every day he calls forward a child to sacrifice for the many..." //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_03
 		wait until read
 
-		say single line "Greek dude: None of us asked for this. Please, do something!" //MANUAL DIALOG NEEDS TO BE CHANGED
+		say single line "Greek dude: None of us asked for this. Please, do something!" //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_04
 		wait until read
 
 		move camera position to [CamPos2] time 5
@@ -330,11 +339,11 @@ start
 
 		wait until camera ready
 		eject good spirit
-		say single line "Good spirit: How appalling! We must stop this at once!" //MANUAL DIALOG
+		say single line "Good spirit: How appalling! We must stop this at once!" //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_05
 		wait until read
 
 		eject evil spirit
-		say single line "Evil spirit: Kill him! Throw him off a cliff, yeah!" //MANUAL DIALOG
+		say single line "Evil spirit: Kill him! Throw him off a cliff, yeah!" //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_06
 		wait until read
 
 		send good spirit home
@@ -344,7 +353,11 @@ start
 		if KhazarGone == 0
 			move computer player 2 to [KhazarPosition] speed 350 with fixed height
 			wait until computer player 2 ready
-			say single line "Khazar: An immortal town, at a terrible cost... I'll leave the solution to you." with interaction //MANUAL DIALOG
+			if PLAYER of Town == 1
+				say single line "Khazar: An immortal town, at a terrible cost... I'll leave the solution to you." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_01
+			else
+				say single line "Khazar: This situation is a conundrum... Don't worry, my ally. I will handle it... somehow." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_06
+			end if
 			wait until read
 			release computer player 2
 		end if
@@ -358,32 +371,36 @@ end script SpiritualHealerIntro
 // Herolich1: Your Conciousness discuss the issue
 //------------------------------------------------------------------------------------------------------------------------
 begin script SpiritualHealerAfterDroppedFirstTime
+	DialoguePlayed=0
 start 
-	wait 2 seconds
-	begin dialogue
-		eject evil spirit
-		say single line "Evil Spirit: I love carnage, but I don't think it's worth an entire town." //MANUAL DIALOG
-		wait until read
-		
-		say single line "Evil Spirit: Although... we don't really need a middle man for this." //MANUAL DIALOG
-		wait until read
+	if DialoguePlayed == 0
+		wait 2 seconds
+		DialoguePlayed = 1
+		begin dialogue
+			eject evil spirit
+			say single line "Evil Spirit: I love carnage, but I don't think it's worth an entire town." //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_07
+			wait until read
 
-		eject good spirit
-		say single line "Good Spirit: Out of the question! Surely we can find a way around it." //MANUAL DIALOG
-		wait until read
-		
-		say single line "Good Spirit: What if we moved everyone out of this town instead? We might be able to break the Healer's curse with it!" //MANUAL DIALOG
-		wait until read
-		
-		say single line "Evil Spirit: That sounds boring to me." //MANUAL DIALOG
-		wait until read
-		
-		say single line "Good Spirit: Of course it does." //MANUAL DIALOG
-		wait until read
+			say single line "Evil Spirit: Although... we don't really need a middle man for this." //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_08
+			wait until read
 
-		send good spirit home
-		send evil spirit home
-	end dialogue
+			eject good spirit
+			say single line "Good Spirit: Out of the question! Surely we can find a way around it." //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_09
+			wait until read
+
+			say single line "Good Spirit: What if we moved everyone out of this town instead? We might be able to break the Healer's curse with it!" //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_10
+			wait until read
+
+			say single line "Evil Spirit: That sounds boring to me." //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_11
+			wait until read
+
+			say single line "Good Spirit: Of course it does." //MANUAL DIALOG HELP_TEXT_PLUS_SPIRITUALHEALER_12
+			wait until read
+
+			send good spirit home
+			send evil spirit home
+		end dialogue
+	end if
 end script SpiritualHealerAfterDroppedFirstTime
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -403,12 +420,12 @@ begin script SpiritualHealerMain
 	HealerHut = get HOUSE at [2010.1100, 15.4100, 2603.3501]
 	HealerPos = marker at [2017.1619, 15.4100, 2594.7529]
 	Town = get town with id 9
+	DialoguePlayed=0
 
 	Child = 0
 
 	Finished = 0
 	Banished = 0
-	DialoguePlayed=0
 
 	Villager1 = 0
 	Villager2 = 0
@@ -421,7 +438,7 @@ start
 
 	run background script Walkabout(Healer)
 	run background script TownAge(Healer, Town)
-	run background script SpiritualHealerIntro(HealerHut)
+	run background script SpiritualHealerIntro(HealerHut, Town)
 
 	while Finished == 0
 		begin loop

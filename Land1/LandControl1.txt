@@ -75,7 +75,7 @@ start
 			if MyCreature exists
 				CreatureActive = 1
 			else
-				say single line "Please go into the skirmish menu or quit and reopen the game so your creature gets recognized."
+				say single line "Please go into the skirmish menu or quit and reopen the game so your creature gets recognized." //MANUAL DIALOG HELP_TEXT_PLUS_REPLACE_OLD_CREATURE
 			end if
 		end while
 		set fade red 0 green 0 blue 0 time 2

@@ -1,84 +1,84 @@
 
 	begin cinema
-	draw text HELP_TEXT_TITLECARD_LAND_01 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_01 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_02 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_02 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_03 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_03 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_04 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_04 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_05 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_05 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_06 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_06 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_07 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_07 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_08 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_08 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_09 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_09 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_10 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_10 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_11 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_11 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_LAND_12 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_LAND_12 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_01 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_01 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_02 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_02 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_03 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_03 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_04 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_04 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_05 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_05 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_06 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_06 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_07 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_07 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_08 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_08 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_09 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_09 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_10 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_10 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_11 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_11 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_12 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_12 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_13 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_13 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_NAME_14 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_NAME_14 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
-	draw text HELP_TEXT_TITLECARD_CREDIT_01 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
+	draw text HELP_TEXT_PLUS_TITLECARD_CREDIT_01 across 0.25 down 0.45 width 0.5 height 0.1 size 0.075 fade in time 2 seconds
 	wait 2 seconds
 	fade all draw text time 0 seconds
 	end cinema

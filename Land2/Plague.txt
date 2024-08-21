@@ -24,6 +24,7 @@ begin script PlagueMain
 	TownTotalInitial = 0
 	TownHealed = 0
 	TownPoisoned = 0
+	KhazarGiftedFood = 0
 
 	RewardPos = marker at [VillagerPos]+[-8,0,-8]
 
@@ -174,7 +175,7 @@ start
 		
 		if KhazarGone == 0
 			wait until computer player 2 ready
-			say single line "Khazar: Lethys truly is a coward to stoop so low. Remember to have your people worshipping - you may find the Heal miracle useful here." with interaction //MANUAL DIALOG
+			say single line "Khazar: Lethys truly is a coward to stoop so low. Remember to have your people worshipping - you may find the Heal miracle useful here." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_01
 			wait until read
 			release computer player 2
 		end if
@@ -222,6 +223,12 @@ start
 				wait until camera ready
 			end cinema
 			release Villager
+			if KhazarGone == 0
+			    run script ComputerPlayerConfrontPlayer(2, variable "I am sorry... Mortal life is so fragile.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_02
+			end if
+			if LethysGone == 0
+			    run script ComputerPlayerConfrontPlayer(3, variable "Hah! You are not as mighty as you thought, eh?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_03
+			end if
 			StorageHealed = 2
 		end if
 
@@ -289,6 +296,7 @@ start
 					VillagerHealedComment = 1
 					send good spirit home
 				end dialogue
+				
 			end if
 		elsif StorageHealed == 0
 				StorageHealed = 1
@@ -300,6 +308,14 @@ start
 					VillagerHealedComment = 1
 					send good spirit home
 				end dialogue
+		end if
+
+		if KhazarGone == 0 and StorageHealed == 1 and KhazarGiftedFood == 0
+			KhazarGiftedFood = 1
+		    run script ComputerPlayerConfrontPlayer(2, variable "That takes care of that. Here, have a few grain miracles to replenish your town.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_04
+			run map script line "CREATE_ONE_SHOT_SPELL_PU(\"2737.4,3129.7\", \"FOOD\")"
+			run map script line "CREATE_ONE_SHOT_SPELL_PU(\"2727.3,3116.2\", \"FOOD\")"
+			run map script line "CREATE_ONE_SHOT_SPELL_PU(\"2723.9,3104.7\", \"FOOD\")"
 		end if
 
 		if TownHealed > 0 and StorageHealed == 1 and FirstPermHeal == 0
@@ -352,6 +368,13 @@ start
 				say HELP_TEXT_NEW_REWARD_01
 				wait until read
 			end dialogue
+
+			if KhazarGone == 0
+			    run script ComputerPlayerConfrontPlayer(2, variable "Well done my friend! Once again, you prove yourself capable.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_05
+			end if
+			if LethysGone == 0
+			    run script ComputerPlayerConfrontPlayer(3, variable "A minor victory. But ultimately the war will be mine!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_06
+			end if
 
 			StorageHealed = 2
 		end if

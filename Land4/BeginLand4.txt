@@ -153,7 +153,7 @@ start
 				wait until read
 //				"You killed Lethys! Thats cool!"
 //				EA:	You killed Lethys! Thats cool!
-				say "Evil: You iced Lethys and his Creature! Hah!" //MANUAL DIALOG
+				say "Evil: You iced Lethys and his Creature! Hah!" //MANUAL DIALOG HELP_TEXT_PLUS_NEW_L4_INTRO_21
 				wait until read
 			end if 
 

@@ -178,10 +178,12 @@ begin script SlaversIntro(SlaverPosse)
 	IntroVillager =0
 	BeginPos =0
 	BeginFoc =0
+	KhazarPosition = marker at [2258.204,52.459,1997.054]
 
 start
 	IntroVillager = create VILLAGER VILLAGER_INFO_GREEK_FARMER_MALE at [VillagerStartPos]
 	
+	KhazarInScript=1
 	begin cinema
 
 		SPEED of IntroVillager = 0.1
@@ -279,6 +281,16 @@ start
 		disable IntroVillager high graphics detail 
 		delete IntroVillager with fade
 
+		if KhazarGone == 0
+			move computer player 2 to [KhazarPosition] speed 350 with fixed height
+			wait until computer player 2 ready
+			say single line "Khazar: These men seem oddly powerful. As much as I would wish to punish them for their intrusion on my land, I fear the consequences would be fierce." //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_01
+			wait until read
+			say single line "Khazar: If you can, please free my people. I have faith in you." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_02
+			wait until read
+			release computer player 2
+		end if
+		
 		move camera position to [BeginPos] time 5
 		move camera focus to [BeginFoc] time 5
 		
@@ -287,6 +299,7 @@ start
 		stop music
 
 	end cinema
+	KhazarInScript=0
 	run background script SlaverChiefGuard(ChiefGuard)
 
 
@@ -497,8 +510,33 @@ start
 		//JAMIE Do something!!!
 		//Attach the slavers and the slaves too to the town.
 	end if
+
+	if KhazarGone == 0
+    	run script ComputerPlayerConfrontPlayer(2, variable "I can take no more! My patience wanes!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_08
+		run script KhazarGetsMad(SlaverPosse)
+		run script ComputerPlayerConfrontPlayer(3, variable "Maybe this is an omen, hmm?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_09
+	end if
 end script SlaversKilledEnough
 
+//------------------------------------------------------------------------------------------------------------------------
+// Herolich1: Khazar goes and kills the Slavers
+//------------------------------------------------------------------------------------------------------------------------
+begin script KhazarGetsMad(SlaverPosse)
+ThrowThemInTheSea = marker at [1959.6,20.0,2184.5]
+Thrownin = 0
+TargetSlaver = 0 
+start
+	begin loop
+		TargetSlaver = get first in SlaverPosse
+		if TargetSlaver exists
+			force computer player 2 action "DIRECTPickupAndDropObject" TargetSlaver ThrowThemInTheSea
+			wait until computer player 2 ready
+			detach TargetSlaver from SlaverPosse
+			wait 0.5 seconds
+		end if
+	until size of SlaverPosse <= 0
+	end loop
+end script KhazarGetsMad
 //------------------------------------------------------------------------------------------------------------------------
 // All the slavers are dead
 //------------------------------------------------------------------------------------------------------------------------
@@ -507,6 +545,9 @@ start
 	  //Jamie all yours. Slaves cheering?
 	  //Release them to the town.
 	  //say "Slavers dead"
+	if KhazarGone == 0
+    	run script ComputerPlayerConfrontPlayer(2, variable "Less than ideal... but at least it is done. Thank you, my friend, I know you meant well.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_07
+	end if
 end script SlaversDead
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -608,6 +649,10 @@ start
 			enable OnFireBuilding on fire 0.5
 		end if
 
+		if KhazarGone == 0
+			run script ComputerPlayerConfrontPlayer(2, variable "Khazar: Help me friend! We must get rid of these slavers, lest my town ends up in ruin!", 2) // Khazar calls for you aid. //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_06
+		end if
+		
 		begin dialogue
 			eject good spirit
 			make good spirit point at [SlaverPosse]
@@ -821,6 +866,9 @@ start
 		wait until camera ready
 	end cinema
 	run background script SlaverChiefGuard(ChiefGuard)
+	if KhazarGone == 0
+    	run script ComputerPlayerConfrontPlayer(2, variable "Khazar: Be careful now, please?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_05
+	end if
 
 end script SlaversFinalWarning
 
@@ -834,6 +882,7 @@ begin script AllSlavesReleased(SlaverPosse, AnimalFlock, Town)
 	Slaver3 = 0
 	Slaver4 = 0
 	RewardPos = marker at [2252.1218, 52.9300, 1954.2427]
+	KhazarPosition = marker at [2252.1218, 62.9300, 1954.2427] //Insert real value
 start
 	detach ChiefGuard from SlaverPosse
 
@@ -992,6 +1041,21 @@ start
 	// Reward
 	run script GiveSpellDispenserReward(RewardPos, variable MAGIC_TYPE_FLOCK_GROUND, 180, 0, 120)
 	// Add Khazar telling you yo can use this how you wish here.
+	if KhazarGone == 0
+		KhazarInScript=1
+		begin cinema
+			move camera position to [2217.4,68.6,1992.0] time 3
+			move camera focus to [2317.7,63.3,1895.4] time 3
+			move computer player 2 to [KhazarPosition] speed 350 with fixed height
+			wait until computer player 2 ready
+			say single line "Khazar: Thank you, my friend. Once again you prove my trust and faith in you is warranted." //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_03
+			wait until read
+			say single line "Khazar: Feel free to use this spell dispenser to call upon the wild beasts of the land, should you need it." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_04
+			wait until read
+			release computer player 2
+		end cinema
+		KhazarInScript=0
+	end if
 end script AllSlavesReleased
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -1303,6 +1367,7 @@ start
 					run script SlaversFinalWarning
 					GivenFinalWarning=1
 				else
+					SlaverFinished=1 // Herolich1: Fixed bug where the script wouldn't end properly.
 					run script SlaversVeryAngry(SlaverPosse, AnimalFlock, Town, SlaveFlock, Highlight)
 				end if
 			else
@@ -1320,6 +1385,7 @@ start
 						run script SlaversFinalWarning
 						GivenFinalWarning=1
 					else
+						SlaverFinished=1 // Herolich1: Fixed bug where the script wouldn't end properly.
 						run script SlaversVeryAngry(SlaverPosse, AnimalFlock, Town, SlaveFlock, Highlight)
 					end if
 				else

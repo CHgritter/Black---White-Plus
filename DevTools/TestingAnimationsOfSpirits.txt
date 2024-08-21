@@ -1,0 +1,407 @@
+	begin cinema
+//say single line "ANIM_STAND"
+//make good spirit play across 0.3 down 0.8 constant 1 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 1 speed 1
+//wait 3 seconds
+//say single line "ANIM_HOVER"
+//make good spirit play across 0.3 down 0.8 constant 2 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 2 speed 1
+//wait 3 seconds
+//say single line "ANIM_HOVERL"
+//make good spirit play across 0.3 down 0.8 constant 3 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 3 speed 1
+//wait 3 seconds
+//say single line "ANIM_HOVERR"
+//make good spirit play across 0.3 down 0.8 constant 4 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 4 speed 1
+//wait 3 seconds
+//say single line "ANIM_WINGS"
+//make good spirit play across 0.3 down 0.8 constant 5 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 5 speed 1
+//wait 3 seconds
+//say single line "ANIM_LEYE"
+//make good spirit play across 0.3 down 0.8 constant 6 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 6 speed 1
+//wait 3 seconds
+//say single line "ANIM_REYE"
+//make good spirit play across 0.3 down 0.8 constant 7 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 7 speed 1
+//wait 3 seconds
+//say single line "ANIM_VOWELE"
+//make good spirit play across 0.3 down 0.8 constant 8 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 8 speed 1
+//wait 3 seconds
+//say single line "ANIM_VOWELO"
+//make good spirit play across 0.3 down 0.8 constant 9 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 9 speed 1
+//wait 3 seconds
+//say single line "ANIM_VOWELS"
+//make good spirit play across 0.3 down 0.8 constant 10 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 10 speed 1
+//wait 3 seconds
+say single line "ANIM_EM0"
+make good spirit play across 0.3 down 0.8 constant 11 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 11 speed 1
+wait 3 seconds
+say single line "ANIM_EM1"
+make good spirit play across 0.3 down 0.8 constant 12 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 12 speed 1
+wait 3 seconds
+say single line "ANIM_EM2"
+make good spirit play across 0.3 down 0.8 constant 13 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 13 speed 1
+wait 3 seconds
+say single line "ANIM_EM3"
+make good spirit play across 0.3 down 0.8 constant 14 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 14 speed 1
+wait 3 seconds
+say single line "ANIM_EM4"
+make good spirit play across 0.3 down 0.8 constant 15 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 15 speed 1
+wait 3 seconds
+say single line "ANIM_EM5"
+make good spirit play across 0.3 down 0.8 constant 16 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 16 speed 1
+wait 3 seconds
+say single line "ANIM_EM6"
+make good spirit play across 0.3 down 0.8 constant 17 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 17 speed 1
+wait 3 seconds
+say single line "ANIM_EM7"
+make good spirit play across 0.3 down 0.8 constant 18 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 18 speed 1
+wait 3 seconds
+say single line "ANIM_LOOKLR"
+make good spirit play across 0.3 down 0.8 constant 19 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 19 speed 1
+wait 3 seconds
+say single line "ANIM_LOOKUD"
+make good spirit play across 0.3 down 0.8 constant 20 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 20 speed 1
+wait 3 seconds
+say single line "ANIM_NOD"
+make good spirit play across 0.3 down 0.8 constant 21 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 21 speed 1
+wait 3 seconds
+say single line "ANIM_SHAKE"
+make good spirit play across 0.3 down 0.8 constant 22 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 22 speed 1
+wait 3 seconds
+say single line "ANIM_COCK"
+make good spirit play across 0.3 down 0.8 constant 23 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 23 speed 1
+wait 3 seconds
+say single line "ANIM_HEADINHANDS"
+make good spirit play across 0.3 down 0.8 constant 24 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 24 speed 1
+wait 3 seconds
+say single line "ANIM_LAUGH"
+make good spirit play across 0.3 down 0.8 constant 25 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 25 speed 1
+wait 3 seconds
+say single line "ANIM_CROSSARMS"
+make good spirit play across 0.3 down 0.8 constant 26 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 26 speed 1
+wait 3 seconds
+say single line "ANIM_SPARE"
+make good spirit play across 0.3 down 0.8 constant 27 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 27 speed 1
+wait 3 seconds
+say single line "ANIM_POINTLINTRO"
+make good spirit play across 0.3 down 0.8 constant 28 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 28 speed 1
+wait 3 seconds
+say single line "ANIM_POINTL"
+make good spirit play across 0.3 down 0.8 constant 29 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 29 speed 1
+wait 3 seconds
+say single line "ANIM_POINTRINTRO"
+make good spirit play across 0.3 down 0.8 constant 30 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 30 speed 1
+wait 3 seconds
+say single line "ANIM_POINTR"
+make good spirit play across 0.3 down 0.8 constant 31 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 31 speed 1
+wait 3 seconds
+say single line "ANIM_HOVERSTABLE"
+make good spirit play across 0.3 down 0.8 constant 32 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 32 speed 1
+wait 3 seconds
+say single line "ANIM_AVOIDL"
+make good spirit play across 0.3 down 0.8 constant 33 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 33 speed 1
+wait 3 seconds
+say single line "ANIM_AVOIDR"
+make good spirit play across 0.3 down 0.8 constant 34 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 34 speed 1
+wait 3 seconds
+say single line "ANIM_AVOIDU"
+make good spirit play across 0.3 down 0.8 constant 35 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 35 speed 1
+wait 3 seconds
+say single line "ANIM_AVOIDD"
+make good spirit play across 0.3 down 0.8 constant 36 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 36 speed 1
+wait 3 seconds
+say single line "ANIM_HANDSONHIPS"
+make good spirit play across 0.3 down 0.8 constant 37 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 37 speed 1
+wait 3 seconds
+say single line "ANIM_SPARE0"
+make good spirit play across 0.3 down 0.8 constant 38 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 38 speed 1
+wait 3 seconds
+say single line "ANIM_SHAKEFINGER"
+make good spirit play across 0.3 down 0.8 constant 39 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 39 speed 1
+wait 3 seconds
+say single line "ANIM_SCRATCHHEAD"
+make good spirit play across 0.3 down 0.8 constant 40 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 40 speed 1
+wait 3 seconds
+say single line "ANIM_SCRATCHCHIN"
+make good spirit play across 0.3 down 0.8 constant 41 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 41 speed 1
+wait 3 seconds
+say single line "ANIM_PICKNOSE"
+make good spirit play across 0.3 down 0.8 constant 42 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 42 speed 1
+wait 3 seconds
+say single line "ANIM_POINTATCAMERA"
+make good spirit play across 0.3 down 0.8 constant 43 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 43 speed 1
+wait 3 seconds
+say single line "ANIM_HANGHEAD"
+make good spirit play across 0.3 down 0.8 constant 44 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 44 speed 1
+wait 3 seconds
+say single line "ANIM_SULK"
+make good spirit play across 0.3 down 0.8 constant 45 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 45 speed 1
+wait 3 seconds
+say single line "ANIM_CRYING"
+make good spirit play across 0.3 down 0.8 constant 46 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 46 speed 1
+wait 3 seconds
+say single line "ANIM_GOINVISIBLE"
+make good spirit play across 0.3 down 0.8 constant 47 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 47 speed 1
+wait 3 seconds
+say single line "ANIM_DANCE"
+make good spirit play across 0.3 down 0.8 constant 48 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 48 speed 1
+wait 3 seconds
+say single line "ANIM_PRESSFACE"
+make good spirit play across 0.3 down 0.8 constant 49 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 49 speed 1
+wait 3 seconds
+say single line "ANIM_STROKEBEARD"
+make good spirit play across 0.3 down 0.8 constant 50 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 50 speed 1
+wait 3 seconds
+say single line "ANIM_COVEREYES"
+make good spirit play across 0.3 down 0.8 constant 51 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 51 speed 1
+wait 3 seconds
+say single line "ANIM_PRAY"
+make good spirit play across 0.3 down 0.8 constant 52 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 52 speed 1
+wait 3 seconds
+say single line "ANIM_PUNCHAIR"
+make good spirit play across 0.3 down 0.8 constant 53 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 53 speed 1
+wait 3 seconds
+say single line "ANIM_WAVENO"
+make good spirit play across 0.3 down 0.8 constant 54 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 54 speed 1
+wait 3 seconds
+say single line "ANIM_DODGY"
+make good spirit play across 0.3 down 0.8 constant 55 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 55 speed 1
+wait 3 seconds
+say single line "ANIM_DISMISSIVEWAVE"
+make good spirit play across 0.3 down 0.8 constant 56 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 56 speed 1
+wait 3 seconds
+say single line "ANIM_RUDE"
+make good spirit play across 0.3 down 0.8 constant 57 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 57 speed 1
+wait 3 seconds
+say single line "ANIM_HEADSLAP"
+make good spirit play across 0.3 down 0.8 constant 58 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 58 speed 1
+wait 3 seconds
+say single line "ANIM_KNOCKONSCREEN"
+make good spirit play across 0.3 down 0.8 constant 59 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 59 speed 1
+wait 3 seconds
+say single line "ANIM_WANKER"
+make good spirit play across 0.3 down 0.8 constant 60 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 60 speed 1
+wait 3 seconds
+say single line "ANIM_HANDGUN"
+make good spirit play across 0.3 down 0.8 constant 61 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 61 speed 1
+wait 3 seconds
+say single line "ANIM_BURP"
+make good spirit play across 0.3 down 0.8 constant 62 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 62 speed 1
+wait 3 seconds
+say single line "ANIM_FART"
+make good spirit play across 0.3 down 0.8 constant 63 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 63 speed 1
+wait 3 seconds
+say single line "ANIM_TRIUMPH"
+make good spirit play across 0.3 down 0.8 constant 64 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 64 speed 1
+wait 3 seconds
+say single line "ANIM_SHRUG"
+make good spirit play across 0.3 down 0.8 constant 65 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 65 speed 1
+wait 3 seconds
+say single line "ANIM_CLINGL"
+make good spirit play across 0.3 down 0.8 constant 66 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 66 speed 1
+wait 3 seconds
+say single line "ANIM_CLINGR"
+make good spirit play across 0.3 down 0.8 constant 67 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 67 speed 1
+wait 3 seconds
+say single line "ANIM_CLINGU"
+make good spirit play across 0.3 down 0.8 constant 68 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 68 speed 1
+wait 3 seconds
+say single line "ANIM_CLINGD"
+make good spirit play across 0.3 down 0.8 constant 69 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 69 speed 1
+wait 3 seconds
+say single line "ANIM_GIMMEFIVE"
+make good spirit play across 0.3 down 0.8 constant 70 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 70 speed 1
+wait 3 seconds
+say single line "ANIM_LOOKLRSTABLE"
+make good spirit play across 0.3 down 0.8 constant 71 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 71 speed 1
+wait 3 seconds
+say single line "ANIM_LOOKUDSTABLE"
+make good spirit play across 0.3 down 0.8 constant 72 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 72 speed 1
+wait 3 seconds
+say single line "ANIM_CHUCKLE"
+make good spirit play across 0.3 down 0.8 constant 73 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 73 speed 1
+wait 3 seconds
+say single line "ANIM_BLOW"
+make good spirit play across 0.3 down 0.8 constant 74 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 74 speed 1
+wait 3 seconds
+say single line "ANIM_SPARE5"
+make good spirit play across 0.3 down 0.8 constant 75 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 75 speed 1
+wait 3 seconds
+say single line "ANIM_SPARE6"
+make good spirit play across 0.3 down 0.8 constant 76 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 76 speed 1
+wait 3 seconds
+say single line "ANIM_SPARE7"
+make good spirit play across 0.3 down 0.8 constant 77 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 77 speed 1
+wait 3 seconds
+say single line "ANIM_SPARE8"
+make good spirit play across 0.3 down 0.8 constant 78 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 78 speed 1
+wait 3 seconds
+say single line "ANIM_SPARE9"
+make good spirit play across 0.3 down 0.8 constant 79 speed 1
+wait 2 seconds
+make evil spirit play across 0.6 down 0.6 constant 79 speed 1
+wait 3 seconds
+//say single line "ANIM_SPARE10"
+//make good spirit play across 0.3 down 0.8 constant 80 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 80 speed 1
+//wait 3 seconds
+//say single line "ANIM_LAST"
+//make good spirit play across 0.3 down 0.8 constant 81 speed 1
+//wait 2 seconds
+//make evil spirit play across 0.6 down 0.6 constant 81 speed 1
+//wait 3 seconds
+end cinema

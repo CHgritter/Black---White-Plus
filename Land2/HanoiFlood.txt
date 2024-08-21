@@ -104,7 +104,7 @@ start
 			if KhazarGone == 0
 				move computer player 2 to [KhazarPosition] speed 350
 				wait until computer player 2 ready
-				say single line "Khazar: Ah, a puzzle. Lately it is hard for me to find the time, but puzzles are a welcome distraction. Good luck, my friend." with interaction //MANUAL DIALOG
+				say single line "Khazar: Ah, a puzzle. Lately it is hard for me to find the time, but puzzles are a welcome distraction. Good luck, my friend." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BEACH_PUZZLE_01
 				wait until read
 				release computer player 2
 			end if
@@ -207,5 +207,13 @@ start
 
    	Highlight = get HIGHLIGHT HIGHLIGHT_TIPS at [HanoiDYKPos] radius 2
 	delete Highlight with fade
+	
+	if KhazarGone == 0
+    	run script ComputerPlayerConfrontPlayer(2, variable "And so his CD collection may stay dry. Brilliant.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BEACH_PUZZLE_02
+	    run script ComputerPlayerConfrontPlayer(2, variable "...What is a CD?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BEACH_PUZZLE_03
+	end if
+	if LethysGone == 0
+	    run script ComputerPlayerConfrontPlayer(3, variable "Wasting your precious time on puzzles. Pah!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BEACH_PUZZLE_04
+	end if
 
 end script HanoiFlood

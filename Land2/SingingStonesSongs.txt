@@ -560,7 +560,7 @@ start
 		if KhazarGone == 0
 			move computer player 2 to [KhazarPosition] speed 350 with fixed height
 			wait until computer player 2 ready
-			say single line "Khazar: INSERT DIALOGUE HERE" with interaction //MANUAL DIALOG
+			say single line "Khazar: Music is a mortal's most precious invention. Perhaps the local villagers may remember songs from long ago." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_01
 			wait until read
 			release computer player 2
 		end if
@@ -1163,31 +1163,49 @@ start
 		ulong 4, 30
 																		   
 	begin loop
-
+		
 		if TinkleComplete == 1
 			if TwinkleDoneOnce == 0
 				update snapshot success (SuccessValue * 0.33) alignment 0.0 HELP_TEXT_TITLE_44 StoneSongReminder			
 				SuccessValue++
-				TwinkleDoneOnce = 1
 			end if
 			run script ClearStones
 			run script TwinkleSequence
+			if TwinkleDoneOnce == 0
+				TwinkleDoneOnce = 1
+				if KhazarGone == 0
+				    run script ComputerPlayerConfrontPlayer(2, variable "Let's be careful with this one. The people won't work if it's night, and you cannot impress a sleeping villager.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_03
+				end if
+			end if
 		elsif FuneralComplete == 1
 			if FuneralDoneOnce == 0
 				update snapshot success (SuccessValue * 0.33) alignment 0.0 HELP_TEXT_TITLE_44 StoneSongReminder
 				SuccessValue++
-				FuneralDoneOnce = 1
 			end if
 			run script ClearStones
 			run script FuneralSequence(Man)
+			if FuneralDoneOnce == 0
+				FuneralDoneOnce = 1
+				if KhazarGone == 0
+				    run script ComputerPlayerConfrontPlayer(2, variable "The dead rise...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_04
+				end if
+				if LethysGone == 0
+				    run script ComputerPlayerConfrontPlayer(3, variable "To think such power is hidden in the land...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_05
+				end if
+			end if
 		elsif WhiteChristmasComplete == 1
 			if ChristmasDoneOnce == 0
 				update snapshot success (SuccessValue * 0.33) alignment 0.0 HELP_TEXT_TITLE_44 StoneSongReminder
 				SuccessValue++
-				ChristmasDoneOnce = 1
 			end if
 			run script ClearStones
 			run script WhiteChristmasSequence
+			if ChristmasDoneOnce == 0
+				ChristmasDoneOnce = 1
+				if LethysGone == 0
+				    run script ComputerPlayerConfrontPlayer(3, variable "I like this atmosphere. I should remember that tune for after I win!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_02
+				end if
+			end if
 		end if
 
 		// Done all songs at least once

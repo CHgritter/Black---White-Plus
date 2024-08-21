@@ -78,6 +78,7 @@ end script PlagueCheck
 begin script SacrificeCheck(Town)
 	Exit = 0
 	Altar=marker at [3343.1909, 77.7200, 3220.2014]
+	AltarKhazar=marker at [2482.832, 105.190, 1798.384]
 	Worship = 0
 start
 	while Exit == 0
@@ -88,9 +89,32 @@ start
 				if PLAYER of Town == 1
 					run background script Sacrifice(Town, Altar)
 					Exit = 1
+				elsif PLAYER of Town == 2 // For if Khazar owns the town
+					run background script Sacrifice(Town, Altar)
+					run script ComputerPlayerConfrontPlayer(2, variable "There is a silver scroll beckoning to us, my friend.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_04
+					Exit = 1
 				end if
 			end if
 		end if
+		// Herolich1: TODO, make the camera and code work for Khazar's temple
+		//if PLAYER of Town == 1
+		//	Worship = get WORSHIP at [Altar] radius 15
+		//	if Worship exists
+		//		if BUILT of Worship == 1
+		//			run background script Sacrifice(Town, Altar)
+		//			Exit = 1
+		//		end if
+		//	end if
+		//elsif PLAYER of Town == 2 // For if Khazar owns the town
+		//	Worship = get WORSHIP at [AltarKhazar] radius 15
+		//	if Worship exists
+		//		if BUILT of Worship == 1
+		//			run background script Sacrifice(Town, Altar)
+		//			run script ComputerPlayerConfrontPlayer(2, variable "There is a silver scroll beckoning to us, my friend.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_04
+		//			Exit = 1
+		//		end if
+		//	end if
+		//end if
 	end while
 end script SacrificeCheck
 
@@ -104,6 +128,10 @@ start
 		wait 6*60 seconds
 		if PLAYER of Town == 1
 			run background script LostTreasureMain
+			Exit = 1
+		elsif PLAYER of Town == 2
+			run background script LostTreasureMain
+			run script ComputerPlayerConfrontPlayer(2, variable "My friend, there is someone in my village who seems to have a riddle for us.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_LOST_TREASURE_06
 			Exit = 1
 		end if
 	end while
@@ -120,6 +148,12 @@ start
 		if PLAYER of Town == 1
 			run background script TheSlaversMain(Town)
 			Exit = 1
+		elsif LearnGesturesCompleted == 1 // Herolich1: Allows the quest to play out, even with Khazar in charge 
+			run background script TheSlaversMain(Town)
+			if KhazarGone == 0
+			    run script ComputerPlayerConfrontPlayer(2, variable "I need your aid in my second town!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_10
+			end if
+			Exit = 1
 		end if
 	end while
 end script SlaversCheck
@@ -134,6 +168,10 @@ start
 		wait 1.3 seconds
 		if PLAYER of Town == 1
 			run background script SpiritualHealerMain
+			Exit = 1
+		elsif PLAYER of Town == 2 // Herolich1: for if Khazar owns this town.
+			run background script SpiritualHealerMain
+			run script ComputerPlayerConfrontPlayer(2, variable "My friend, something is going on in my newest town.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_05
 			Exit = 1
 		end if
 	end while

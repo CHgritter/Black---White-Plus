@@ -18,5 +18,8 @@ start
 	Highlight = get HIGHLIGHT HIGHLIGHT_TIPS at [TreePuzzleOneDYKPos] radius 2
 	delete Highlight with fade
 run script GiveSpellDispenserReward(RewardDispenserPos, variable MAGIC_TYPE_FLOCK_FLYING, 300, 0, 7*60)
+if KhazarGone == 0
+    run script ComputerPlayerConfrontPlayer(2, variable "The Flock of Birds Miracle! Now this should be impressive indeed.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_TREEPUZZLEONE_01
+end if
  
 end script TreePuzzleOne

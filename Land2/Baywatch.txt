@@ -204,9 +204,9 @@ start
 			move computer player 2 to [KhazarPosition] speed 350 with fixed height
 			wait until computer player 2 ready
 			wait until camera ready
-			say single line "Khazar: As minor as this problem may seem, it might be good to give it your full attention." //MANUAL DIALOG
+			say single line "Khazar: As minor as this problem may seem, it might be good to give it your full attention." //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_01
 			wait until read
-			say single line "Khazar: Your people may worship you, but they do not let go of grievances easily." with interaction //MANUAL DIALOG
+			say single line "Khazar: Your people may worship you, but they do not let go of grievances easily." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_02
 			wait until read
 			release computer player 2
 		else
@@ -244,6 +244,9 @@ start
 				wait until camera ready
 				snapshot challenge success 1 alignment 1 HELP_TEXT_TITLE_01 StandardReminder(variable HELP_TEXT_BAYWATCH_36)
 			end cinema 
+			if KhazarGone == 0
+			    run script ComputerPlayerConfrontPlayer(2, variable "Well done my friend. Next time Laetes attacks, you should try using this on your Creature.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_03
+			end if
 
 		elsif BaywatchSwimmingCounter == 0 and BaywatchMurder < 5 and BaywatchHomeCounter == 5 - BaywatchMurder and HEALTH of Mother > 0
 			begin cinema
@@ -255,6 +258,9 @@ start
 
 				BaywatchFinished = 3
 			end cinema
+			if KhazarGone == 0
+    			run script ComputerPlayerConfrontPlayer(2, variable "I have no words...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_04
+			end if
 
 		elsif BaywatchMurder == 5 and HEALTH of Mother > 0
 
@@ -274,6 +280,9 @@ start
 				BaywatchFinished = 2
 
 			end cinema
+			if KhazarGone == 0
+    			run script ComputerPlayerConfrontPlayer(2, variable "I have no words...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_04
+			end if
 
 		elsif BaywatchMurder == 5 and HEALTH of Mother <= 0
 
@@ -291,6 +300,9 @@ start
 				BaywatchFinished = 3
 
 			end dialogue
+			if KhazarGone == 0
+			    run script ComputerPlayerConfrontPlayer(2, variable "That there are none left to remember this day is cold comfort.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_05
+			end if
 
 		elsif BaywatchSwimmingCounter == 0 and BaywatchMurder < 5 and BaywatchHomeCounter == 5 - BaywatchMurder and HEALTH of Mother <= 0
 
@@ -310,6 +322,9 @@ start
 				BaywatchFinished = 4
 
 			end cinema
+			if KhazarGone == 0
+    			run script ComputerPlayerConfrontPlayer(2, variable "I have no words...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_04
+			end if
 		end if
 
 
@@ -391,6 +406,9 @@ start
 					BaywatchFinished = 1
 
 				end cinema
+				if KhazarGone == 0
+				    run script ComputerPlayerConfrontPlayer(2, variable "Well done my friend.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_06
+				end if
 
 			elsif HEALTH of Mother <= 0
 
@@ -458,6 +476,9 @@ start
 					BaywatchFinished = 4
 
 				end cinema
+				if KhazarGone == 0
+    				run script ComputerPlayerConfrontPlayer(2, variable "I have no words...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_BAYWATCH_04
+				end if
 			end if
 
 		end if

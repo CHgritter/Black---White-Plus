@@ -143,7 +143,7 @@ start
 		if KhazarGone == 0
 			stop evil spirit pointing
 			wait until computer player 2 ready
-			say single line "Khazar: How you decide to gain power is your will alone. But I warn you: what you choose will reflect on you as a god. This is true for us, just as it is true for Nemesis." with interaction //MANUAL DIALOG
+			say single line "Khazar: How you decide to gain power is your will alone. But I warn you: what you choose will reflect on you as a god. This is true for us, just as it is true for Nemesis." with interaction //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_01
 			wait until read
 			release computer player 2
 		end if
@@ -316,7 +316,9 @@ start
 					set camera focus to [BeginFoc]
 				end cinema
 			end if
-
+			if KhazarGone == 0
+			    run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
+			end if
 			SacrificeFinished = 1
 		elsif HEALTH of Woman <=0
 			//Wife dead:
@@ -361,6 +363,9 @@ start
 					set camera focus to [BeginFoc]
 				end cinema
 			end if
+			if KhazarGone == 0
+			    run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
+			end if
 			SacrificeFinished = 1
 
 		elsif HEALTH of Boy <= 0
@@ -403,6 +408,9 @@ start
 					set camera position to [BeginPos]
 					set camera focus to [BeginFoc]
 				end cinema
+			end if
+			if KhazarGone == 0
+			    run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
 			end if
 			SacrificeFinished = 1
 
@@ -460,6 +468,9 @@ start
 					wait 0.1 seconds
 					snapshot challenge success 1 alignment 1 HELP_TEXT_TITLE_23 StandardReminder(variable HELP_TEXT_SACRIFICE_09)
 				end cinema
+				if KhazarGone == 0
+				    run script ComputerPlayerConfrontPlayer(2, variable "You are different from him.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_03
+				end if
 
 				SacrificeFinished = 1
 				run script rewardfromsky(variable REWARD_HEAL, RewardPos, IndianTown, 1)
