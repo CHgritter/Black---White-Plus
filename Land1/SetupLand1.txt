@@ -39,10 +39,8 @@ global CreatureGuardianInitiated
 global GuideNotImpressing
 global AztecTown
 global GlobalHealSpell
-// doesn't work here.
-//global KeptOldCreature
-// Herolich1: Chosen Creature is used for StarterCreature script.
-global ChosenCreature
+global ChosenCreature // Herolich1: Chosen Creature is used for StarterCreature script.
+global RockQuestProgression // Herolich1: The amount of rocks ready to be needed.
 
 //define script SetupLand1DYKMarkers
 define script PlaceInitialLand1DYKS

@@ -1,2 +1,624 @@
 // Herolich1: A quest where you will collect rocks for the sculptor in exchange of gifts
 // Updates each time you progress through the gold story scrolls.
+// script partially based on TheSculptor.txt
+challenge NONE
+
+global CollectingRocksCompleted
+global StonesDelivered
+
+// ------------------------------------------------------------------------------------------
+// Check if the sculptor is dead to end the quest early
+// ------------------------------------------------------------------------------------------
+
+begin script DeadSculptor(Sculptor)
+SculptorDead = 0
+start
+	while SculptorDead == 0
+		if HEALTH of Sculptor <= 0
+			begin dialogue
+				eject good spirit
+				say HELP_TEXT_KILLING_GA_22 // GA: "I deplore this. For the record."
+				wait until read
+				eject evil spirit
+                say HELP_TEXT_KILLING_EA_04 // EA: "A killing's always good fun."
+				wait until read
+			end dialogue
+			SculptorDead = 1
+			CollectingRocksCompleted = 1
+		end if
+	end while
+end script DeadSculptor
+
+// ------------------------------------------------------------------------------------------
+// Check if the stone is still existent
+// ------------------------------------------------------------------------------------------
+
+begin script StoneStillExists(SpecialRock, Sculptor)
+RockDone = 0
+start
+	while RockDone == 0
+		if SpecialRock not exists 
+			begin dialogue
+				eject evil spirit
+				say HELP_TEXT_RANDOM_ADVISOR_20 // EA: "You failed."
+				wait until read
+				say HELP_TEXT_RANDOM_ADVISOR_21 // EA: "You didn't do it right."
+				wait until read
+			end dialogue
+			CollectingRocksCompleted = 1
+			RockDone = 1
+		end if
+	end while
+end script StoneStillExists
+
+// ------------------------------------------------------------------------------------------
+// Get the Sculptor back to work
+// ------------------------------------------------------------------------------------------
+begin script SculptorSculptsRock(Sculptor, SculpturProgress)
+WhileFlag = 0
+start
+    while CollectingRocksCompleted == 0
+		if Sculptor is FLYING and HEALTH of Sculptor <0.1
+			SculptorSculptingOn = 0
+		end if 
+		
+		if Sculptor is HELD 
+			SculptorSculptingOn = 0	
+			wait until (Sculptor is not HELD and Sculptor is not FLYING) or (HEALTH of Sculptor <= 0)
+			if HEALTH of Sculptor > 0
+				move Sculptor position to [1768.988, 28.810, 2690.706]
+				wait until [Sculptor] at [1768.988, 28.810, 2690.706] or HEALTH of Sculptor <= 0 or Sculptor is FLYING or Sculptor is HELD
+				set Sculptor focus to [SculpturProgress]
+			end if
+			SculptorSculptingOn = 1	
+		end if
+		
+		if [SculpturProgress] not near [Sculptor] radius 1
+			SculptorSculptingOn=0
+			if Sculptor is HELD 
+				wait until Sculptor is not HELD
+			end if 
+			if Sculptor is 	FLYING 
+				wait until Sculptor is not FLYING
+			end if
+				
+			move Sculptor position to [1768.988, 28.810, 2690.706] 
+			WhileFlag = 0
+			while WhileFlag == 0
+				if [Sculptor] at [1768.988, 28.810, 2690.706] or HEALTH of Sculptor <= 0
+					WhileFlag = 1
+				elsif Sculptor is HELD or Sculptor is FLYING
+					wait until Sculptor is not HELD and Sculptor is not FLYING
+					move Sculptor position to [1768.988, 28.810, 2690.706] 
+				end if
+			end while
+			if [Sculptor] at [1768.988, 28.810, 2690.706]
+				set Sculptor focus to [SculpturProgress]
+				SculptorSculptingOn=1
+			end if 
+		end if 
+	end while
+end script SculptorSculptsRock
+// ------------------------------------------------------------------------------------------
+// The main script
+// ------------------------------------------------------------------------------------------
+// CURRENT ISSUES:
+// When a new silver scroll appears, the guy starts looking the wrong way.
+begin script CollectingRocks
+RockPosition1 = marker at [2285.2,101.3,2719.6]
+RockPosition2 = marker at [1554.7,14.6,3133.9]
+RockPosition3 = marker at [1445.0,41.2,2137.9]
+RockPosition4 = marker at [2506.7,32.7,2954.6]
+
+Rock1 = create OBJECT MOBILE_STATIC_INFO_SQUAREROCK_CHALK at [RockPosition1]
+Rock2 = create OBJECT MOBILE_STATIC_INFO_ROCK_SANDSTONE at [RockPosition2]
+Rock3 = create OBJECT MOBILE_STATIC_INFO_FLATROCK_LIMESTONE at [RockPosition3]
+Rock4 = create OBJECT MOBILE_STATIC_INFO_BOULDER2_VOLCANIC at [RockPosition4]
+
+House = get SCRIPT_OBJECT_TYPE_ABODE at [1755.047, 28.810, 2691.962]
+Sculptor = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_SCULPTOR at [1762.284, 28.810, 2692.834]
+SculpturProgress = 0
+SculpturPosition = marker at [1769.958, 28.810, 2690.667]
+SculptorPosi = marker at [1768.988, 28.810, 2690.706]
+sfx = 0
+Sparkle1 = 0
+Sparkle2 = 0
+Sparkle3 = 0
+Highlight = 0
+WoodReward = 0
+WeaknessReward = 0
+WonderReward = 0
+GateStoneReward1 = 0
+GateStoneReward2 = 0
+GateStoneReward3 = 0
+CinematicsDone = 1
+
+BeginPos = 0
+BeginFoc = 0
+
+CamPos1 = marker at [1775.1,35.1,2702.8]
+CamFoc1 = marker at [1767.8,31.4,2695.5]
+
+CamPos2 = marker at [1771.1,31.8,2683.1]
+CamFoc2 = marker at [1762.8,29.3,2700.7]
+
+CamPos3 = marker at [1769.470, 31.810, 2696.257]
+CamFoc3 = marker at [1772.415, 28.818, 2680.312]
+
+CamPosWood = marker at [1753.7,45.0,2692.8]
+CamFocWood = marker at [1737.0,31.2,2717.2]
+
+CamPosWeakness = marker at [1769.9,48.6,2688.5]
+CamFocWeakness = marker at [1735.6,29.3,2670.4]
+
+CamPosWonder = marker at [1883.1,90.1,2659.6]
+CamFocWonder = marker at [1922.48,48.7,2717.17]
+NorseWonder = 0
+
+CamPosGateStones = marker at [1784.1,47.9,2675.7]
+CamFocGateStones = marker at [1770.7,37.8,2684.0]
+start
+	disable Rock1 pickup
+	disable Rock1 moveable
+	disable Rock2 pickup
+	disable Rock2 moveable
+	disable Rock3 pickup
+	disable Rock3 moveable
+	disable Rock4 pickup
+	disable Rock4 moveable
+	SculptorScriptRunning =1
+	disable Sculptor hurt by fire
+	enable Sculptor indestructible
+	disable Sculptor moveable
+	disable Sculptor pickup
+    //check if the sculpture actually exists.
+    SculpturProgress = get ROCK_OBJECT MOBILE_STATIC_INFO_SCULPTURE_IN_PROGRESS at [SculpturPosition] radius 5
+    if SculpturProgress not exists
+        SculpturProgress = create OBJECT  MOBILE_STATIC_INFO_SCULPTURE_IN_PROGRESS at [SculpturPosition]
+	    disable SculpturProgress pickup
+	    disable SculpturProgress moveable
+    end if
+	
+        ScriptStarted = 0
+
+	    run background script SculptorSculptingOutside(Sculptor)
+
+        wait until RockQuestProgression >= 1 
+
+		// Herolich1: everytime a new rockprogression is reached, a new scroll will be made, and once the rock has been delivered, it will be destroyed.
+	    Highlight = create highlight HIGHLIGHT_CHALLENGE at [1760.61,0,2692.3]
+	    ALTITUDE of Highlight = 5.5
+	    run script ChallengeHighlightNotify(Highlight, House, variable EVIL_ADVISOR, variable HELP_TEXT_GENERAL_CHALLENGE_START_09)
+
+	    ScriptStarted = 1
+
+        sfx = create special effect SPOT_VISUAL_HIGHLIGHT_ON_OBJECT on Rock1 time -1
+	    enable Rock1 pickup
+	    enable Rock1 moveable
+
+        begin cinema
+	    	start music MUSIC_TYPE_SCRIPT_GENERIC_01
+	    	enable Sculptor high graphics detail
+
+			BeginPos = marker at camera position
+			BeginFoc = marker at camera focus
+
+            move camera position to [CamPos1] time 4
+            move camera focus to [CamFoc1] time 3
+	    	wait 3 seconds
+
+	    	enable jc special SJC_PREPARE_TURN_LEFT on Sculptor
+	    	Sculptor play ANM_P_TURN_90_LEFT loop 1
+	    	wait until Sculptor played
+	    	enable jc special SJC_BLEND_ANGLE on Sculptor
+
+	    	set Sculptor focus to camera position
+
+			Sculptor play ANM_P_GOSSIP_MAN loop 1
+			say single line "Sculptor: Holy one, I need your assistance for something." // MANUAL DIALOGUE
+			wait until read
+
+			Sculptor play ANM_P_CROWD_LOST loop 1
+			say single line "Sculptor: You see, my family is put me under 'house arrest' for wandering far afield at times." // MANUAL DIALOGUE
+			wait until read
+
+			Sculptor play ANM_P_CROWD_UNIMPRESSED_1 loop 1
+			say single line "Sculptor: It's ridiculous. How else am I meant to get inspired?" // MANUAL DIALOGUE
+			wait until read
+
+			say single line "Sculptor: Regardless, I'm now unable to collect the right types of rock for my sculpting, but maybe you can help me?" // MANUAL DIALOGUE
+			wait until read
+
+			Sculptor play ANM_P_TALK1_MALE loop 1
+			say single line "Sculptor: I am currently looking for a square, white rock. Can you lend me a hand?" // MANUAL DIALOGUE
+			wait until read
+
+			set Sculptor focus to [1770.609, 28.810, 2690.894]
+			
+			SculptorSculptingOn = 1
+			
+			run background script SculptorSculpting(Sculptor)
+			say single line HELP_TEXT_NEW_CREATURE_RETRIEVE_18 //I'm definitely the best sculptor in the Village.
+			wait until read 
+
+			move camera position to [BeginPos] time 5
+			move camera focus to [BeginFoc] time 5
+
+			wait until camera ready
+			stop music
+        end cinema
+
+		enable Sculptor hurt by fire
+		disable Sculptor indestructible
+		enable Sculptor moveable
+		enable Sculptor pickup
+		
+		run background script DeadSculptor(Sculptor)
+		run background script StoneStillExists(Rock1, Sculptor)
+		run background script SculptorSculptsRock(Sculptor, SculpturProgress)
+
+	// Herolich1: TODO look into simplifying the code in this segment. 
+	while CollectingRocksCompleted == 0
+		//check if the first rock is found.
+		if [Rock1] near [1769.958, 28.810, 2690.667] radius 30 and Rock1 is not HELD and Rock1 is not FLYING and Sculptor is not FLYING and HEALTH of Sculptor > 0 and StonesDelivered == 0 
+			disable Rock1 pickup
+			SculptorSculptingOn = 0
+			StonesDelivered = 1
+			stop script "StoneStillExists"
+
+        	begin cinema
+	    		enable Sculptor high graphics detail
+
+				BeginPos = marker at camera position
+				BeginFoc = marker at camera focus
+
+        	    move camera position to [CamPos2] time 3
+        	    move camera focus to [CamFoc2] time 3
+	    		wait 3 seconds
+	    		set Sculptor focus to [Rock1]
+				Sculptor play ANM_P_CROWD_IMPRESSED_1 loop 1
+				say HELP_TEXT_NEW_CREATURE_RETRIEVE_05 //Oh that's excellent. Exactly the right kind of rock to work with.
+				wait until read
+
+	    		set Sculptor focus to camera position
+				Sculptor play ANM_P_TALK_TO_NEIGHBOUR loop 1
+				say "Sculptor: Here, take this with my thanks." // MANUAL DIALOGUE
+				wait until read
+				close dialogue
+				set Sculptor focus to [1770.609, 28.810, 2690.894]
+
+        	    move camera position to [CamPosWood] time 5
+        	    move camera focus to [CamFocWood] time 5
+
+				start sound LH_SAMPLE_G_REWARDSTING
+				// HEROLICH1 NOTE: It looks like STORE is used to create the piles of food and wood.
+				WoodReward = create STORE WOOD at [CamFocWood]
+				add resource WOOD 4999 to WoodReward
+				Sparkle1 = create special effect SPOT_VISUAL_COMMAND_SUCCEED on WoodReward time 3
+
+				wait until camera ready
+				say single line HELP_TEXT_RANDOM_ADVISOR_33 // GA: Some wood! How sweet!
+				delete Highlight
+				delete Rock1
+				wait until read
+        	end cinema
+			SculptorSculptingOn = 1
+			wait 15 seconds
+		end if
+
+		//start part two
+		if CinematicsDone == 1 and StonesDelivered == 1 and RockQuestProgression >= 2
+			CinematicsDone = 2
+	    	Highlight = create highlight HIGHLIGHT_CHALLENGE at [1760.61,0,2692.3]
+	    	ALTITUDE of Highlight = 5.5
+	    	run script ChallengeHighlightNotify(Highlight, House, variable EVIL_ADVISOR, variable HELP_TEXT_GENERAL_CHALLENGE_START_09)
+
+        	sfx = create special effect SPOT_VISUAL_HIGHLIGHT_ON_OBJECT on Rock2 time -1
+	    	enable Rock2 pickup
+	    	enable Rock2 moveable
+			SculptorSculptingOn = 0
+
+        	begin cinema
+	    		start music MUSIC_TYPE_SCRIPT_GENERIC_01
+	    		enable Sculptor high graphics detail
+	
+				BeginPos = marker at camera position
+				BeginFoc = marker at camera focus
+	
+        	    move camera position to [CamPos1] time 4
+        	    move camera focus to [CamFoc1] time 3
+	    		wait 3 seconds
+	
+	    		enable jc special SJC_PREPARE_TURN_LEFT on Sculptor
+	    		Sculptor play ANM_P_TURN_90_LEFT loop 1
+	    		wait until Sculptor played
+	    		enable jc special SJC_BLEND_ANGLE on Sculptor
+	
+	    		set Sculptor focus to camera position
+
+				Sculptor play ANM_P_GOSSIP_MAN loop 1
+				say single line "Sculptor: Hello again Holy one. I hope you don't mind me asking for your help again." // MANUAL DIALOGUE
+				wait until read
+				
+				Sculptor play ANM_P_TALK1_MALE loop 1
+				say single line "Sculptor: I am currently looking for a rough, sandstone rock. Can you help me out with that?" // MANUAL DIALOGUE
+				wait until read
+
+				set Sculptor focus to [1770.609, 28.810, 2690.894]
+
+				SculptorSculptingOn = 1
+				
+				say single line HELP_TEXT_NEW_CREATURE_RETRIEVE_18 //I'm definitely the best sculptor in the Village.
+				wait until read 
+
+				move camera position to [BeginPos] time 5
+				move camera focus to [BeginFoc] time 5
+
+				wait until camera ready
+				stop music
+        	end cinema
+			run background script StoneStillExists(Rock2, Sculptor)
+		end if
+
+		//check if the second rock is found.
+		if [Rock2] near [1769.958, 28.810, 2690.667] radius 30 and Rock2 is not HELD and Rock2 is not FLYING and Sculptor is not FLYING and HEALTH of Sculptor > 0 and StonesDelivered == 1
+			disable Rock2 pickup
+			SculptorSculptingOn = 0
+			StonesDelivered = 2
+			stop script "StoneStillExists"
+
+        	begin cinema
+	    		enable Sculptor high graphics detail
+
+				BeginPos = marker at camera position
+				BeginFoc = marker at camera focus
+
+        	    move camera position to [CamPos2] time 3
+        	    move camera focus to [CamFoc2] time 3
+	    		wait 3 seconds
+	    		set Sculptor focus to [Rock2]
+				Sculptor play ANM_P_CROWD_IMPRESSED_1 loop 1
+				say HELP_TEXT_NEW_CREATURE_RETRIEVE_05 //Oh that's excellent. Exactly the right kind of rock to work with.
+				wait until read
+
+	    		set Sculptor focus to camera position
+				Sculptor play ANM_P_TALK_TO_NEIGHBOUR loop 1
+				say "Sculptor: Here, I hope this can be of use to you." // MANUAL DIALOGUE
+				wait until read
+				close dialogue
+				set Sculptor focus to [1770.609, 28.810, 2690.894]
+
+        	    move camera position to [CamPosWeakness] time 5
+        	    move camera focus to [CamFocWeakness] time 5
+
+				start sound LH_SAMPLE_G_REWARDSTING
+				WeaknessReward = create ONE_SHOT SPELL_SEED_TYPE_CREATURE_SPELL_WEAK at [CamFocWeakness]
+				Sparkle1 = create special effect SPOT_VISUAL_COMMAND_SUCCEED on WeaknessReward time 3
+
+				wait until camera ready
+				say single line HELP_TEXT_HAND_CREATURE_SPELL_WEAK_01 // EA: Weaken Miracle. This reduces the strength of the target Creature.
+				delete Highlight
+				delete Rock2
+				wait until read
+        	end cinema
+			SculptorSculptingOn = 1
+			wait 15 seconds
+		end if
+
+		//start part three
+		if CinematicsDone == 2 and StonesDelivered == 2 and RockQuestProgression >= 3
+			CinematicsDone = 3
+	    	Highlight = create highlight HIGHLIGHT_CHALLENGE at [1760.61,0,2692.3]
+	    	ALTITUDE of Highlight = 5.5
+	    	run script ChallengeHighlightNotify(Highlight, House, variable EVIL_ADVISOR, variable HELP_TEXT_GENERAL_CHALLENGE_START_09)
+
+        	sfx = create special effect SPOT_VISUAL_HIGHLIGHT_ON_OBJECT on Rock3 time -1
+	    	enable Rock3 pickup
+	    	enable Rock3 moveable
+			SculptorSculptingOn = 0
+
+        	begin cinema
+	    		start music MUSIC_TYPE_SCRIPT_GENERIC_01
+	    		enable Sculptor high graphics detail
+	
+				BeginPos = marker at camera position
+				BeginFoc = marker at camera focus
+	
+        	    move camera position to [CamPos1] time 4
+        	    move camera focus to [CamFoc1] time 3
+	    		wait 3 seconds
+	
+	    		enable jc special SJC_PREPARE_TURN_LEFT on Sculptor
+	    		Sculptor play ANM_P_TURN_90_LEFT loop 1
+	    		wait until Sculptor played
+	    		enable jc special SJC_BLEND_ANGLE on Sculptor
+	
+	    		set Sculptor focus to camera position
+
+				Sculptor play ANM_P_GOSSIP_MAN loop 1
+				say single line "Sculptor: Once again I need your help, Holy one." // MANUAL DIALOGUE
+				wait until read
+				
+				Sculptor play ANM_P_TALK1_MALE loop 1
+				say single line "Sculptor: I am currently looking for a very flat, limestone rock. I hope I can rely on your divine action once again." // MANUAL DIALOGUE
+				wait until read
+
+				set Sculptor focus to [1770.609, 28.810, 2690.894]
+
+				SculptorSculptingOn = 1
+				
+				say single line HELP_TEXT_NEW_CREATURE_RETRIEVE_18 //I'm definitely the best sculptor in the Village.
+				wait until read 
+
+				move camera position to [BeginPos] time 5
+				move camera focus to [BeginFoc] time 5
+
+				wait until camera ready
+				stop music
+        	end cinema
+			run background script StoneStillExists(Rock3, Sculptor)
+		end if
+
+		//check if the third rock is found.
+		if [Rock3] near [1769.958, 28.810, 2690.667] radius 30 and Rock3 is not HELD and Rock3 is not FLYING and Sculptor is not FLYING and HEALTH of Sculptor > 0 and StonesDelivered == 2
+			disable Rock3 pickup
+			SculptorSculptingOn = 0
+			StonesDelivered = 3
+			stop script "StoneStillExists"
+
+        	begin cinema
+	    		enable Sculptor high graphics detail
+
+				BeginPos = marker at camera position
+				BeginFoc = marker at camera focus
+
+        	    move camera position to [CamPos2] time 3
+        	    move camera focus to [CamFoc2] time 3
+	    		wait 3 seconds
+	    		set Sculptor focus to [Rock3]
+				Sculptor play ANM_P_CROWD_IMPRESSED_1 loop 1
+				say HELP_TEXT_NEW_CREATURE_RETRIEVE_05 //Oh that's excellent. Exactly the right kind of rock to work with.
+				wait until read
+
+	    		set Sculptor focus to camera position
+				Sculptor play ANM_P_TALK_TO_NEIGHBOUR loop 1
+				say "Sculptor: I have found some old schematics in my basement and handed it to the builders. I hope you like it." // MANUAL DIALOGUE
+				wait until read
+				close dialogue
+				set Sculptor focus to [1770.609, 28.810, 2690.894]
+
+        	    move camera position to [CamPosWonder] time 5
+        	    move camera focus to [CamFocWonder] time 5
+
+				start sound LH_SAMPLE_G_REWARDSTING
+				build building at [1922.48,2717.17] desire 1.0
+				NorseWonder = get HOUSE at [1922.48,2717.17] radius 5
+				BUILT of NorseWonder = 0.4
+				Sparkle1 = create special effect SPOT_VISUAL_COMMAND_SUCCEED on NorseWonder time 3
+
+				wait until camera ready
+				say single line HELP_TEXT_NEW_INTERFACE_10 // EA: Okay. We got a Wonder. More power for us!
+				delete Highlight
+				delete Rock3
+				wait until read
+        	end cinema
+			SculptorSculptingOn = 1
+			wait 15 seconds
+		end if
+
+		//start part four
+		if CinematicsDone == 3 and StonesDelivered == 3 and RockQuestProgression >= 4
+			CinematicsDone = 4
+	    	Highlight = create highlight HIGHLIGHT_CHALLENGE at [1760.61,0,2692.3]
+	    	ALTITUDE of Highlight = 5.5
+	    	run script ChallengeHighlightNotify(Highlight, House, variable EVIL_ADVISOR, variable HELP_TEXT_GENERAL_CHALLENGE_START_09)
+
+        	sfx = create special effect SPOT_VISUAL_HIGHLIGHT_ON_OBJECT on Rock4 time -1
+	    	enable Rock4 pickup
+	    	enable Rock4 moveable
+			SculptorSculptingOn = 0
+
+        	begin cinema
+	    		start music MUSIC_TYPE_SCRIPT_GENERIC_01
+	    		enable Sculptor high graphics detail
+	
+				BeginPos = marker at camera position
+				BeginFoc = marker at camera focus
+	
+        	    move camera position to [CamPos1] time 4
+        	    move camera focus to [CamFoc1] time 3
+	    		wait 3 seconds
+	
+	    		enable jc special SJC_PREPARE_TURN_LEFT on Sculptor
+	    		Sculptor play ANM_P_TURN_90_LEFT loop 1
+	    		wait until Sculptor played
+	    		enable jc special SJC_BLEND_ANGLE on Sculptor
+	
+	    		set Sculptor focus to camera position
+
+				Sculptor play ANM_P_GOSSIP_MAN loop 1
+				say single line "Sculptor: Greetings holy one. I promise, this is the last time I'll bother you." // MANUAL DIALOGUE
+				wait until read
+				
+				Sculptor play ANM_P_TALK1_MALE loop 1
+				say single line "Sculptor: I am currently looking for a volcanic boulder. I promise, I will reward you handsomely." // MANUAL DIALOGUE
+				wait until read
+
+				set Sculptor focus to [1770.609, 28.810, 2690.894]
+
+				SculptorSculptingOn = 1
+				
+				say single line HELP_TEXT_NEW_CREATURE_RETRIEVE_18 //I'm definitely the best sculptor in the Village.
+				wait until read 
+
+				move camera position to [BeginPos] time 5
+				move camera focus to [BeginFoc] time 5
+
+				wait until camera ready
+				stop music
+        	end cinema
+			run background script StoneStillExists(Rock4, Sculptor)
+		end if
+
+		//check if the fourth rock is found.
+		if [Rock4] near [1769.958, 28.810, 2690.667] radius 30 and Rock4 is not HELD and Rock4 is not FLYING and Sculptor is not FLYING and HEALTH of Sculptor > 0 and StonesDelivered == 3
+			disable Rock4 pickup
+			SculptorSculptingOn = 0
+			stop script "StoneStillExists"
+			stop script "DeadSculptor"
+			stop script "SculptorSculptsRock"
+
+        	begin cinema
+	    		enable Sculptor high graphics detail
+
+				BeginPos = marker at camera position
+				BeginFoc = marker at camera focus
+
+        	    move camera position to [CamPos2] time 3
+        	    move camera focus to [CamFoc2] time 3
+	    		wait 3 seconds
+	    		set Sculptor focus to [Rock4]
+				Sculptor play ANM_P_CROWD_IMPRESSED_1 loop 1
+				say HELP_TEXT_NEW_CREATURE_RETRIEVE_05 //Oh that's excellent. Exactly the right kind of rock to work with.
+				wait until read
+
+	    		set Sculptor focus to camera position
+				Sculptor play ANM_P_TALK_TO_NEIGHBOUR loop 1
+				say "Sculptor: As promised, I will give you a reward. Here, have my replicas of the gatestones." // MANUAL DIALOGUE
+				wait until read
+				close dialogue
+
+        	    move camera position to [CamPosGateStones] time 5
+        	    move camera focus to [CamFocGateStones] time 5
+
+				start sound LH_SAMPLE_G_REWARDSTING
+				// HEROLICH1 NOTE: It looks like STORE is used to create the piles of food and wood.
+				GateStoneReward1 = create with angle 8.5 and scale 0.75 OBJECT MOBILE_STATIC_INFO_GATE_TOTEM_TIGER at [1758.473,28.810,2683.959]
+				GateStoneReward2 = create with angle 8.5 and scale 0.75 OBJECT MOBILE_STATIC_INFO_GATE_TOTEM_APE at [1754.240,28.810,2684.310]
+				GateStoneReward3 = create with angle 8.5 and scale 0.75 OBJECT MOBILE_STATIC_INFO_GATE_TOTEM_COW at [1750.007,28.810,2684.361]
+				Sparkle1 = create special effect SPOT_VISUAL_COMMAND_SUCCEED on GateStoneReward1 time 3
+				Sparkle2 = create special effect SPOT_VISUAL_COMMAND_SUCCEED on GateStoneReward2 time 3
+				Sparkle3 = create special effect SPOT_VISUAL_COMMAND_SUCCEED on GateStoneReward3 time 3
+	    		
+				set Sculptor focus to [GateStoneReward2]
+				Sculptor play ANM_P_CLAP_2 loop 4
+				wait until camera ready
+				say single line "Sculptor: They took me a long time to make, but I would say it's worth it." // MANUAL DIALOGUE
+				wait until read
+				delete Highlight
+				delete Rock4
+				attach Sculptor to NorseTown
+				release Sculptor
+				eject evil spirit
+				eject good spirit
+				say single line "Evil Spirit: Wait, that's it! We did all that for three lousy statues!" // MANUAL DIALOGUE
+				wait until read
+				say single line "Good Spirit: Maybe not. Why don't you try putting them down near the town center, leader? Maybe something will happen." // MANUAL DIALOGUE
+				wait until read
+				say single line "Evil Spirit: I say we crush his house for wasting our time!" // MANUAL DIALOGUE
+				wait until read
+        	end cinema
+		end if
+
+	end while
+end script CollectingRocks

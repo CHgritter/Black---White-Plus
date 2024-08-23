@@ -168,3 +168,32 @@ start
 		wait until read
 	end dialogue
 end script DisplayCoordsAndRotation
+
+begin script GetObjectCoords
+ObjectInfo = 0
+start
+    begin loop
+    	when key KB_H down
+			ObjectInfo = get object hand is over
+			if ObjectInfo exists
+				run script DisplayObjCoordsAndRotation(ObjectInfo)
+			end if
+end script GetObjectCoords
+
+begin script DisplayObjCoordsAndRotation(TheObjectInQuestion)
+	X = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of TheObjectInQuestion
+	R = SCRIPT_OBJECT_PROPERTY_TYPE_ANGLE of TheObjectInQuestion
+	Y = land height at [TheObjectInQuestion]
+	Z = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of TheObjectInQuestion
+start
+	begin dialogue
+		say "Rotation: $d" with number R with interaction
+		wait until read
+		say "Z: $d" with number Z with interaction
+		wait until read
+		say "Y: $d" with number Y with interaction
+		wait until read
+		say "X: $d" with number X with interaction
+		wait until read
+	end dialogue
+end script DisplayObjCoordsAndRotation

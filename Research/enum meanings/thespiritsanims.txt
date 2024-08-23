@@ -1,0 +1,83 @@
+ANIM_STAND	idle (useless)
+ANIM_HOVER	move about? (useless)
+ANIM_HOVERL	move about? (useless)
+ANIM_HOVERR	move about? (useless)
+ANIM_WINGS	wings? (useless)
+ANIM_LEYE	closes left eye
+ANIM_REYE	closes right eye
+ANIM_VOWELE	used for speaking (useless)
+ANIM_VOWELO	used for speaking (useless)
+ANIM_VOWELS	used for speaking (useless)
+ANIM_EM0	smile (ends early)
+ANIM_EM1	frown (ends early)
+ANIM_EM2	Sad (ends early)
+ANIM_EM3	thinking? Evil tilts his head and good closes eyes. (ends early)
+ANIM_EM4	Shock (ends early)
+ANIM_EM5	raises eyebrow (ends early)
+ANIM_EM6	angry (ends early)
+ANIM_EM7	looks to the side (ends early) (IS ACTUALLY ANIM_LOOKLR)
+ANIM_LOOKLR	Looks up for a second? (See LOOKUD) (useless)
+ANIM_LOOKUD	Looks up for a second? (See LOOKLR) (useless)
+ANIM_NOD	nods (useful)
+ANIM_SHAKE	Shakes (useful)
+ANIM_COCK	tilts head (useful)
+ANIM_HEADINHANDS	G: Head in hands (useful)  E: facepalms
+ANIM_LAUGH	laughing (useful)
+ANIM_CROSSARMS	G: rests arms on sides. E: nothing
+ANIM_SPARE	nothing (useless)
+ANIM_POINTLINTRO	Points (redundant)
+ANIM_POINTL	Points (redundant)
+ANIM_POINTRINTRO	Points (redundant)
+ANIM_POINTR	Points (redundant)
+ANIM_HOVERSTABLE	no noticeable difference (useless)
+ANIM_AVOIDL	dodges to the left
+ANIM_AVOIDR	dodges to the right
+ANIM_AVOIDU	dodges to the top
+ANIM_AVOIDD	dodges to the bottom
+ANIM_HANDSONHIPS	G: Hands indeed on hips E: nothign
+ANIM_SPARE0	shrugs (same as ANIM_SHRUG)
+ANIM_SHAKEFINGER	shakes finger at you.
+ANIM_SCRATCHHEAD	Scratches back of the head
+ANIM_SCRATCHCHIN	G: scratches chin (or beard) E: scratches the side of his head.
+ANIM_PICKNOSE	G: ??? E: Pick nose
+ANIM_POINTATCAMERA	point at camera
+ANIM_HANGHEAD	Hanging heads down in shame (same as sulk and cry)
+ANIM_SULK	Sulking.  (same as hanghead and cry)
+ANIM_CRYING	Crying  (same as sulk and hanghead)
+ANIM_GOINVISIBLE	they flash in and out of existence as they emote a bit.
+ANIM_DANCE	They do be shmovin
+ANIM_PRESSFACE G: nothing E: "Let's get out projectile throwing skill up to scratch!"
+ANIM_STROKEBEARD	G: Strokes beard E: scratches back of head.
+ANIM_COVEREYES	G: Covers eyes E: nothin
+ANIM_PRAY	G: Prays "Does the lotus position 
+ANIM_PUNCHAIR	G: Punches the air E: Does reverse air punch.
+ANIM_WAVENO	Waves bi with wide eyes.
+ANIM_DODGY	Does the "So so" motion
+ANIM_DISMISSIVEWAVE	Does a dismissive wave
+ANIM_RUDE	G: "He is crazy" E: Moves claw over neck
+ANIM_HEADSLAP	Facepalms
+ANIM_KNOCKONSCREEN	Actually flies up to you and knocks on your screen.
+ANIM_WANKER	G: nothin E: Moves claw over neck (See rude)
+ANIM_HANDGUN	G: nothin E: uses a fake gun on himself for comedy, with sound effects.
+ANIM_BURP	G: nothin E: Burps?
+ANIM_FART	G: nothin E: Does the motions of a fart
+ANIM_TRIUMPH	Celebrates.
+ANIM_SHRUG	shrugs (Same as ANIM_SPARE0)
+ANIM_CLINGL	Clings to bottom.
+ANIM_CLINGR	Clings to bottom?
+ANIM_CLINGU	Clings to bottom?
+ANIM_CLINGD	Clings to bottom.
+ANIM_GIMMEFIVE	G: Scratches head and looks around? E: Does a throwing motion and looks to the side.
+ANIM_LOOKLRSTABLE	looks around before snapping back
+ANIM_LOOKUDSTABLE	looks around before snapping back
+ANIM_CHUCKLE	Chuckling
+ANIM_BLOW	Nothing
+ANIM_SPARE5	Nothing
+ANIM_SPARE6	Nothing
+ANIM_SPARE7	Nothing
+ANIM_SPARE8	Nothing
+ANIM_SPARE9	Nothing
+ANIM_SPARE10	CRASH
+ANIM_LAST
+
+End notes: ANIM_EM7 needs to be removed from base game.

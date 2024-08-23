@@ -1,0 +1,743 @@
+	wait 5 seconds
+	Leader = create VILLAGER MALE at [1650.68, 20.189, 2321.75] // created in front of KeyStone
+	set Leader focus to [1647.53, 19.3201, 2319.18] // Focused where the camera position will be
+	attach music MUSIC_TYPE_CELTIC_CHANT_VOX to Leader
+	begin cinema
+		move camera position to [1641.93, 21.1304, 2314.74]time 5	
+		move camera focus to [1652.15, 20.958, 2322.91]time 3
+		wait until camera ready
+		Leader play ANM_PIED_PIPER_DANCE_STAND loop -1
+        say single line "ANM_PIED_PIPER_DANCE_STAND"
+        wait 5 seconds
+        Leader play ANM_PIED_PIPER_DANCE_STAND_SPIN loop -1
+        say single line "ANM_PIED_PIPER_DANCE_STAND_SPIN"
+        wait 5 seconds
+        Leader play ANM_PIED_PIPER_DANCE_WALK loop -1
+        say single line "ANM_PIED_PIPER_DANCE_WALK"
+        wait 5 seconds
+        Leader play ANM_PIED_PIPER_DANCE_WALK_SPIN loop -1
+        say single line "ANM_PIED_PIPER_DANCE_WALK_SPIN"
+        wait 5 seconds
+        Leader play ANM_PIED_PIPER_SUMMON loop -1
+        say single line "ANM_PIED_PIPER_SUMMON"
+        wait 5 seconds
+        Leader play ANM_PIED_PIPER_WALK loop -1
+        say single line "ANM_PIED_PIPER_WALK"
+        wait 5 seconds
+        Leader play ANM_P_AFRICAN_DRUMMER loop -1
+        say single line "ANM_P_AFRICAN_DRUMMER"
+        wait 5 seconds
+        Leader play ANM_P_AMBIENT1 loop -1
+        say single line "ANM_P_AMBIENT1"
+        wait 5 seconds
+        Leader play ANM_P_AMBIENT2 loop -1
+        say single line "ANM_P_AMBIENT2"
+        wait 5 seconds
+        Leader play ANM_P_ARSONIST loop -1
+        say single line "ANM_P_ARSONIST"
+        wait 5 seconds
+        Leader play ANM_P_ATTACKED_BY_LION loop -1
+        say single line "ANM_P_ATTACKED_BY_LION"
+        wait 5 seconds
+        Leader play ANM_P_ATTRACT_YOUR_ATTENTION loop -1
+        say single line "ANM_P_ATTRACT_YOUR_ATTENTION"
+        wait 5 seconds
+        Leader play ANM_P_AVOID_OBJECT_DIVE loop -1
+        say single line "ANM_P_AVOID_OBJECT_DIVE"
+        wait 5 seconds
+        Leader play ANM_P_AVOID_OBJECT_DODGE loop -1
+        say single line "ANM_P_AVOID_OBJECT_DODGE"
+        wait 5 seconds
+        Leader play ANM_P_BECKON loop -1
+        say single line "ANM_P_BECKON"
+        wait 5 seconds
+        Leader play ANM_P_BLOW_RASPBERRY loop -1
+        say single line "ANM_P_BLOW_RASPBERRY"
+        wait 5 seconds
+        Leader play ANM_P_CARRYING_BAG loop -1
+        say single line "ANM_P_CARRYING_BAG"
+        wait 5 seconds
+        Leader play ANM_P_CARRYING_POT loop -1
+        say single line "ANM_P_CARRYING_POT"
+        wait 5 seconds
+        Leader play ANM_P_CARRYING_STICKS loop -1
+        say single line "ANM_P_CARRYING_STICKS"
+        wait 5 seconds
+        Leader play ANM_P_CARRY_AXE loop -1
+        say single line "ANM_P_CARRY_AXE"
+        wait 5 seconds
+        Leader play ANM_P_CARRY_OBJECT_RUN loop -1
+        say single line "ANM_P_CARRY_OBJECT_RUN"
+        wait 5 seconds
+        Leader play ANM_P_CHOPPING_TREE loop -1
+        say single line "ANM_P_CHOPPING_TREE"
+        wait 5 seconds
+        Leader play ANM_P_CLAP_1 loop -1
+        say single line "ANM_P_CLAP_1"
+        wait 5 seconds
+        Leader play ANM_P_CLAP_2 loop -1
+        say single line "ANM_P_CLAP_2"
+        wait 5 seconds
+        Leader play ANM_P_CLAP_3 loop -1
+        say single line "ANM_P_CLAP_3"
+        wait 5 seconds
+        Leader play ANM_P_CLAP_4 loop -1
+        say single line "ANM_P_CLAP_4"
+        wait 5 seconds
+        Leader play ANM_P_CONDUCT_MEETING loop -1
+        say single line "ANM_P_CONDUCT_MEETING"
+        wait 5 seconds
+        Leader play ANM_P_COUPLE_KISS_MAN loop -1
+        say single line "ANM_P_COUPLE_KISS_MAN"
+        wait 5 seconds
+        Leader play ANM_P_COUPLE_KISS_WOMAN loop -1
+        say single line "ANM_P_COUPLE_KISS_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_CRAWL_INJURED loop -1
+        say single line "ANM_P_CRAWL_INJURED"
+        wait 5 seconds
+        Leader play ANM_P_CRAWL_INJURED_INTO loop -1
+        say single line "ANM_P_CRAWL_INJURED_INTO"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_IMPRESSED_1 loop -1
+        say single line "ANM_P_CROWD_IMPRESSED_1"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_IMPRESSED_2 loop -1
+        say single line "ANM_P_CROWD_IMPRESSED_2"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_LOST loop -1
+        say single line "ANM_P_CROWD_LOST"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_LOST_2 loop -1
+        say single line "ANM_P_CROWD_LOST_2"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_MEXICAN_WAVE loop -1
+        say single line "ANM_P_CROWD_MEXICAN_WAVE"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_UNIMPRESSED_1 loop -1
+        say single line "ANM_P_CROWD_UNIMPRESSED_1"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_UNIMPRESSED_2 loop -1
+        say single line "ANM_P_CROWD_UNIMPRESSED_2"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_WON loop -1
+        say single line "ANM_P_CROWD_WON"
+        wait 5 seconds
+        Leader play ANM_P_CROWD_WON_2 loop -1
+        say single line "ANM_P_CROWD_WON_2"
+        wait 5 seconds
+        Leader play ANM_P_DANCE_PISS_TAKE_ loop -1
+        say single line "ANM_P_DANCE_PISS_TAKE_"
+        wait 5 seconds
+        Leader play ANM_P_DANCE_STAND loop -1
+        say single line "ANM_P_DANCE_STAND"
+        wait 5 seconds
+        Leader play ANM_P_DANCE_TOGETHER_ARMLINK loop -1
+        say single line "ANM_P_DANCE_TOGETHER_ARMLINK"
+        wait 5 seconds
+        Leader play ANM_P_DANCE_TOGETHER_CIRCLING loop -1
+        say single line "ANM_P_DANCE_TOGETHER_CIRCLING"
+        wait 5 seconds
+        Leader play ANM_P_DANCE_TOGETHER_CIRCLING_PARTNER loop -1
+        say single line "ANM_P_DANCE_TOGETHER_CIRCLING_PARTNER"
+        wait 5 seconds
+        Leader play ANM_P_DANCE_X loop -1
+        say single line "ANM_P_DANCE_X"
+        wait 5 seconds
+        Leader play ANM_P_DANCE_X_PARTNER loop -1
+        say single line "ANM_P_DANCE_X_PARTNER"
+        wait 5 seconds
+        Leader play ANM_P_DEAD1 loop -1
+        say single line "ANM_P_DEAD1"
+        wait 5 seconds
+        Leader play ANM_P_DEAD1_GOTO_HEAVEN loop -1
+        say single line "ANM_P_DEAD1_GOTO_HEAVEN"
+        wait 5 seconds
+        Leader play ANM_P_DEAD1_GOTO_HELL loop -1
+        say single line "ANM_P_DEAD1_GOTO_HELL"
+        wait 5 seconds
+        Leader play ANM_P_DEAD2 loop -1
+        say single line "ANM_P_DEAD2"
+        wait 5 seconds
+        Leader play ANM_P_DEAD2_GOTO_HEAVEN loop -1
+        say single line "ANM_P_DEAD2_GOTO_HEAVEN"
+        wait 5 seconds
+        Leader play ANM_P_DEAD2_GOTO_HELL loop -1
+        say single line "ANM_P_DEAD2_GOTO_HELL"
+        wait 5 seconds
+        Leader play ANM_P_DEAD_DROWNED loop -1
+        say single line "ANM_P_DEAD_DROWNED"
+        wait 5 seconds
+        Leader play ANM_P_DEAD_IN_HAND loop -1
+        say single line "ANM_P_DEAD_IN_HAND"
+        wait 5 seconds
+        Leader play ANM_P_DRIBBLE_BALL loop -1
+        say single line "ANM_P_DRIBBLE_BALL"
+        wait 5 seconds
+        Leader play ANM_P_DROWNING loop -1
+        say single line "ANM_P_DROWNING"
+        wait 5 seconds
+        Leader play ANM_P_DYING loop -1
+        say single line "ANM_P_DYING"
+        wait 5 seconds
+        Leader play ANM_P_EAT loop -1
+        say single line "ANM_P_EAT"
+        wait 5 seconds
+        Leader play ANM_P_FAKE_FOUL_FALL loop -1
+        say single line "ANM_P_FAKE_FOUL_FALL"
+        wait 5 seconds
+        Leader play ANM_P_FARMER loop -1
+        say single line "ANM_P_FARMER"
+        wait 5 seconds
+        Leader play ANM_P_FARMER_HARVESTING loop -1
+        say single line "ANM_P_FARMER_HARVESTING"
+        wait 5 seconds
+        Leader play ANM_P_FARMER_SHOO_SHEEP loop -1
+        say single line "ANM_P_FARMER_SHOO_SHEEP"
+        wait 5 seconds
+        Leader play ANM_P_FARMER_SOWING_SEEDS loop -1
+        say single line "ANM_P_FARMER_SOWING_SEEDS"
+        wait 5 seconds
+        Leader play ANM_P_FARMER_STOKE_SHEEP loop -1
+        say single line "ANM_P_FARMER_STOKE_SHEEP"
+        wait 5 seconds
+        Leader play ANM_P_FARMER_TURNING_SOIL loop -1
+        say single line "ANM_P_FARMER_TURNING_SOIL"
+        wait 5 seconds
+        Leader play ANM_P_FISHERMAN loop -1
+        say single line "ANM_P_FISHERMAN"
+        wait 5 seconds
+        Leader play ANM_P_FRIGHT_DUCK loop -1
+        say single line "ANM_P_FRIGHT_DUCK"
+        wait 5 seconds
+        Leader play ANM_P_FRIGHT_JUMP loop -1
+        say single line "ANM_P_FRIGHT_JUMP"
+        wait 5 seconds
+        Leader play ANM_P_F_DANCE_A loop -1
+        say single line "ANM_P_F_DANCE_A"
+        wait 5 seconds
+        Leader play ANM_P_F_DANCE_B loop -1
+        say single line "ANM_P_F_DANCE_B"
+        wait 5 seconds
+        Leader play ANM_P_F_DANCE_C loop -1
+        say single line "ANM_P_F_DANCE_C"
+        wait 5 seconds
+        Leader play ANM_P_GIVE_BIRTH loop -1
+        say single line "ANM_P_GIVE_BIRTH"
+        wait 5 seconds
+        Leader play ANM_P_GOALKEEPER loop -1
+        say single line "ANM_P_GOALKEEPER"
+        wait 5 seconds
+        Leader play ANM_P_GOALKEEPER_2 loop -1
+        say single line "ANM_P_GOALKEEPER_2"
+        wait 5 seconds
+        Leader play ANM_P_GOALKEEPER_3 loop -1
+        say single line "ANM_P_GOALKEEPER_3"
+        wait 5 seconds
+        Leader play ANM_P_GOSSIP_MAN loop -1
+        say single line "ANM_P_GOSSIP_MAN"
+        wait 5 seconds
+        Leader play ANM_P_GOSSIP_WOMAN_1 loop -1
+        say single line "ANM_P_GOSSIP_WOMAN_1"
+        wait 5 seconds
+        Leader play ANM_P_GOSSIP_WOMAN_2 loop -1
+        say single line "ANM_P_GOSSIP_WOMAN_2"
+        wait 5 seconds
+        Leader play ANM_P_GOSSIP_WOMAN_3 loop -1
+        say single line "ANM_P_GOSSIP_WOMAN_3"
+        wait 5 seconds
+        Leader play ANM_P_HAMMERING loop -1
+        say single line "ANM_P_HAMMERING"
+        wait 5 seconds
+        Leader play ANM_P_HELP_SOMEONE_HELPEE loop -1
+        say single line "ANM_P_HELP_SOMEONE_HELPEE"
+        wait 5 seconds
+        Leader play ANM_P_HELP_SOMEONE_HELPER loop -1
+        say single line "ANM_P_HELP_SOMEONE_HELPER"
+        wait 5 seconds
+        Leader play ANM_P_HUG loop -1
+        say single line "ANM_P_HUG"
+        wait 5 seconds
+        Leader play ANM_P_INSPECT_OBJECT_1 loop -1
+        say single line "ANM_P_INSPECT_OBJECT_1"
+        wait 5 seconds
+        Leader play ANM_P_INSPECT_OBJECT_2 loop -1
+        say single line "ANM_P_INSPECT_OBJECT_2"
+        wait 5 seconds
+        Leader play ANM_P_INSPECT_OBJECT_3 loop -1
+        say single line "ANM_P_INSPECT_OBJECT_3"
+        wait 5 seconds
+        Leader play ANM_P_INTO_DEAD_DROWNED loop -1
+        say single line "ANM_P_INTO_DEAD_DROWNED"
+        wait 5 seconds
+        Leader play ANM_P_INTO_HAMMERING loop -1
+        say single line "ANM_P_INTO_HAMMERING"
+        wait 5 seconds
+        Leader play ANM_P_INTO_MOURNING loop -1
+        say single line "ANM_P_INTO_MOURNING"
+        wait 5 seconds
+        Leader play ANM_P_INTO_POINTING loop -1
+        say single line "ANM_P_INTO_POINTING"
+        wait 5 seconds
+        Leader play ANM_P_INTO_PRAY loop -1
+        say single line "ANM_P_INTO_PRAY"
+        wait 5 seconds
+        Leader play ANM_P_INTO_PULL_OBJECT loop -1
+        say single line "ANM_P_INTO_PULL_OBJECT"
+        wait 5 seconds
+        Leader play ANM_P_INTO_PUSH_OBJECT loop -1
+        say single line "ANM_P_INTO_PUSH_OBJECT"
+        wait 5 seconds
+        Leader play ANM_P_INTO_RUN_MAN loop -1
+        say single line "ANM_P_INTO_RUN_MAN"
+        wait 5 seconds
+        Leader play ANM_P_INTO_RUN_WOMAN loop -1
+        say single line "ANM_P_INTO_RUN_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_INTO_SAW_WOOD loop -1
+        say single line "ANM_P_INTO_SAW_WOOD"
+        wait 5 seconds
+        Leader play ANM_P_INTO_SLEDGEHAMMER loop -1
+        say single line "ANM_P_INTO_SLEDGEHAMMER"
+        wait 5 seconds
+        Leader play ANM_P_INTO_SLEEP loop -1
+        say single line "ANM_P_INTO_SLEEP"
+        wait 5 seconds
+        Leader play ANM_P_INTO_SPRINT_MAN loop -1
+        say single line "ANM_P_INTO_SPRINT_MAN"
+        wait 5 seconds
+        Leader play ANM_P_INTO_SPRINT_WOMAN loop -1
+        say single line "ANM_P_INTO_SPRINT_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_INTO_WALK_MAN loop -1
+        say single line "ANM_P_INTO_WALK_MAN"
+        wait 5 seconds
+        Leader play ANM_P_INTO_WALK_WOMAN loop -1
+        say single line "ANM_P_INTO_WALK_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_JUMP_A loop -1
+        say single line "ANM_P_JUMP_A"
+        wait 5 seconds
+        Leader play ANM_P_JUMP_AT_HAND loop -1
+        say single line "ANM_P_JUMP_AT_HAND"
+        wait 5 seconds
+        Leader play ANM_P_JUMP_AT_HAND_2 loop -1
+        say single line "ANM_P_JUMP_AT_HAND_2"
+        wait 5 seconds
+        Leader play ANM_P_KICK_BALL loop -1
+        say single line "ANM_P_KICK_BALL"
+        wait 5 seconds
+        Leader play ANM_P_KICK_BALL_PASS loop -1
+        say single line "ANM_P_KICK_BALL_PASS"
+        wait 5 seconds
+        Leader play ANM_P_KICK_BALL_PASS_PT1 loop -1
+        say single line "ANM_P_KICK_BALL_PASS_PT1"
+        wait 5 seconds
+        Leader play ANM_P_KICK_BALL_PASS_PT2 loop -1
+        say single line "ANM_P_KICK_BALL_PASS_PT2"
+        wait 5 seconds
+        Leader play ANM_P_LANDED loop -1
+        say single line "ANM_P_LANDED"
+        wait 5 seconds
+        Leader play ANM_P_LANDED_FROM_BACK loop -1
+        say single line "ANM_P_LANDED_FROM_BACK"
+        wait 5 seconds
+        Leader play ANM_P_LANDED_FROM_FEET loop -1
+        say single line "ANM_P_LANDED_FROM_FEET"
+        wait 5 seconds
+        Leader play ANM_P_LANDED_FROM_FEET_CARRY_OBJECT loop -1
+        say single line "ANM_P_LANDED_FROM_FEET_CARRY_OBJECT"
+        wait 5 seconds
+        Leader play ANM_P_LOOKING_FOR_SOMETHING loop -1
+        say single line "ANM_P_LOOKING_FOR_SOMETHING"
+        wait 5 seconds
+        Leader play ANM_P_LOOK_AT_HAND loop -1
+        say single line "ANM_P_LOOK_AT_HAND"
+        wait 5 seconds
+        Leader play ANM_P_LOVING_TOUCH loop -1
+        say single line "ANM_P_LOVING_TOUCH"
+        wait 5 seconds
+        Leader play ANM_P_MOURNING loop -1
+        say single line "ANM_P_MOURNING"
+        wait 5 seconds
+        Leader play ANM_P_M_DANCE_A loop -1
+        say single line "ANM_P_M_DANCE_A"
+        wait 5 seconds
+        Leader play ANM_P_M_DANCE_B loop -1
+        say single line "ANM_P_M_DANCE_B"
+        wait 5 seconds
+        Leader play ANM_P_M_DANCE_C loop -1
+        say single line "ANM_P_M_DANCE_C"
+        wait 5 seconds
+        Leader play ANM_P_ON_FIRE_DIE loop -1
+        say single line "ANM_P_ON_FIRE_DIE"
+        wait 5 seconds
+        Leader play ANM_P_ON_FIRE_DOUSED loop -1
+        say single line "ANM_P_ON_FIRE_DOUSED"
+        wait 5 seconds
+        Leader play ANM_P_ON_FIRE_RUN loop -1
+        say single line "ANM_P_ON_FIRE_RUN"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_HAMMERING loop -1
+        say single line "ANM_P_OUT_OF_HAMMERING"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_MOURNING loop -1
+        say single line "ANM_P_OUT_OF_MOURNING"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_POINTING loop -1
+        say single line "ANM_P_OUT_OF_POINTING"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_PRAY loop -1
+        say single line "ANM_P_OUT_OF_PRAY"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_PULL_OBJECT loop -1
+        say single line "ANM_P_OUT_OF_PULL_OBJECT"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_PUSH_OBJECT loop -1
+        say single line "ANM_P_OUT_OF_PUSH_OBJECT"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_RUN_MAN loop -1
+        say single line "ANM_P_OUT_OF_RUN_MAN"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_RUN_WOMAN loop -1
+        say single line "ANM_P_OUT_OF_RUN_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_SAW_WOOD loop -1
+        say single line "ANM_P_OUT_OF_SAW_WOOD"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_SLEDGEHAMMER loop -1
+        say single line "ANM_P_OUT_OF_SLEDGEHAMMER"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_SLEEP loop -1
+        say single line "ANM_P_OUT_OF_SLEEP"
+        wait 5 seconds
+        Leader play ANM_P_OUT_OF_WALK_WOMAN loop -1
+        say single line "ANM_P_OUT_OF_WALK_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_OVERWORKED1 loop -1
+        say single line "ANM_P_OVERWORKED1"
+        wait 5 seconds
+        Leader play ANM_P_OVERWORKED2 loop -1
+        say single line "ANM_P_OVERWORKED2"
+        wait 5 seconds
+        Leader play ANM_P_PANIC_MAN loop -1
+        say single line "ANM_P_PANIC_MAN"
+        wait 5 seconds
+        Leader play ANM_P_PANIC_WOMAN loop -1
+        say single line "ANM_P_PANIC_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_PICKUP_BALL_PT1 loop -1
+        say single line "ANM_P_PICKUP_BALL_PT1"
+        wait 5 seconds
+        Leader play ANM_P_PICKUP_BALL_PT2 loop -1
+        say single line "ANM_P_PICKUP_BALL_PT2"
+        wait 5 seconds
+        Leader play ANM_P_PICK_UP_BAG loop -1
+        say single line "ANM_P_PICK_UP_BAG"
+        wait 5 seconds
+        Leader play ANM_P_PICK_UP_POT_ON_HEAD loop -1
+        say single line "ANM_P_PICK_UP_POT_ON_HEAD"
+        wait 5 seconds
+        Leader play ANM_P_PICK_UP_STICKS loop -1
+        say single line "ANM_P_PICK_UP_STICKS"
+        wait 5 seconds
+        Leader play ANM_P_PLAY_ACCORDIAN loop -1
+        say single line "ANM_P_PLAY_ACCORDIAN"
+        wait 5 seconds
+        Leader play ANM_P_POISONED loop -1
+        say single line "ANM_P_POISONED"
+        wait 5 seconds
+        Leader play ANM_P_PRAY loop -1
+        say single line "ANM_P_PRAY"
+        wait 5 seconds
+        Leader play ANM_P_PROD_CAMPFIRE loop -1
+        say single line "ANM_P_PROD_CAMPFIRE"
+        wait 5 seconds
+        Leader play ANM_P_PULL_OBJECT loop -1
+        say single line "ANM_P_PULL_OBJECT"
+        wait 5 seconds
+        Leader play ANM_P_PUSH_OBJECT loop -1
+        say single line "ANM_P_PUSH_OBJECT"
+        wait 5 seconds
+        Leader play ANM_P_PUT_DOWN_BAG loop -1
+        say single line "ANM_P_PUT_DOWN_BAG"
+        wait 5 seconds
+        Leader play ANM_P_PUT_DOWN_STICKS loop -1
+        say single line "ANM_P_PUT_DOWN_STICKS"
+        wait 5 seconds
+        Leader play ANM_P_PUT_OUT_FIRE loop -1
+        say single line "ANM_P_PUT_OUT_FIRE"
+        wait 5 seconds
+        Leader play ANM_P_PUZZLED loop -1
+        say single line "ANM_P_PUZZLED"
+        wait 5 seconds
+        Leader play ANM_P_RUN_MAN loop -1
+        say single line "ANM_P_RUN_MAN"
+        wait 5 seconds
+        Leader play ANM_P_RUN_WITH_BALL loop -1
+        say single line "ANM_P_RUN_WITH_BALL"
+        wait 5 seconds
+        Leader play ANM_P_RUN_WOMAN loop -1
+        say single line "ANM_P_RUN_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_SAW_WOOD loop -1
+        say single line "ANM_P_SAW_WOOD"
+        wait 5 seconds
+        Leader play ANM_P_SCARED_STIFF loop -1
+        say single line "ANM_P_SCARED_STIFF"
+        wait 5 seconds
+        Leader play ANM_P_SCARED_STIFF_2 loop -1
+        say single line "ANM_P_SCARED_STIFF_2"
+        wait 5 seconds
+        Leader play ANM_P_SCORE_GOAL loop -1
+        say single line "ANM_P_SCORE_GOAL"
+        wait 5 seconds
+        Leader play ANM_P_SCRIPT1 loop -1
+        say single line "ANM_P_SCRIPT1"
+        wait 5 seconds
+        Leader play ANM_P_SCRUBBS loop -1
+        say single line "ANM_P_SCRUBBS"
+        wait 5 seconds
+        Leader play ANM_P_SCULPTOR loop -1
+        say single line "ANM_P_SCULPTOR"
+        wait 5 seconds
+        Leader play ANM_P_SHAKE_FIST_FEMALE loop -1
+        say single line "ANM_P_SHAKE_FIST_FEMALE"
+        wait 5 seconds
+        Leader play ANM_P_SHOOT_AT_GOAL loop -1
+        say single line "ANM_P_SHOOT_AT_GOAL"
+        wait 5 seconds
+        Leader play ANM_P_SHOOT_AT_GOAL_2 loop -1
+        say single line "ANM_P_SHOOT_AT_GOAL_2"
+        wait 5 seconds
+        Leader play ANM_P_SHOOT_AT_GOAL_PT_1 loop -1
+        say single line "ANM_P_SHOOT_AT_GOAL_PT_1"
+        wait 5 seconds
+        Leader play ANM_P_SHOOT_AT_GOAL_PT_2 loop -1
+        say single line "ANM_P_SHOOT_AT_GOAL_PT_2"
+        wait 5 seconds
+        Leader play ANM_P_SHRUG_SHOULDERS loop -1
+        say single line "ANM_P_SHRUG_SHOULDERS"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN1_INTO loop -1
+        say single line "ANM_P_SITTING_DOWN1_INTO"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN1_OUT_OF loop -1
+        say single line "ANM_P_SITTING_DOWN1_OUT_OF"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN1_SITTING loop -1
+        say single line "ANM_P_SITTING_DOWN1_SITTING"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN2_INTO loop -1
+        say single line "ANM_P_SITTING_DOWN2_INTO"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN2_OUT_OF loop -1
+        say single line "ANM_P_SITTING_DOWN2_OUT_OF"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN2_SITTING loop -1
+        say single line "ANM_P_SITTING_DOWN2_SITTING"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN_DANCE_SAILING1 loop -1
+        say single line "ANM_P_SITTING_DOWN_DANCE_SAILING1"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN_DANCE_SAILING2 loop -1
+        say single line "ANM_P_SITTING_DOWN_DANCE_SAILING2"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN_DANCE_SAILING3 loop -1
+        say single line "ANM_P_SITTING_DOWN_DANCE_SAILING3"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN_MALE1 loop -1
+        say single line "ANM_P_SITTING_DOWN_MALE1"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_DOWN_MALE2 loop -1
+        say single line "ANM_P_SITTING_DOWN_MALE2"
+        wait 5 seconds
+        Leader play ANM_P_SITTING_SWINGING_LEGS loop -1
+        say single line "ANM_P_SITTING_SWINGING_LEGS"
+        wait 5 seconds
+        Leader play ANM_P_SKIP02 loop -1
+        say single line "ANM_P_SKIP02"
+        wait 5 seconds
+        Leader play ANM_P_SLEDGEHAMMER loop -1
+        say single line "ANM_P_SLEDGEHAMMER"
+        wait 5 seconds
+        Leader play ANM_P_SLEEP loop -1
+        say single line "ANM_P_SLEEP"
+        wait 5 seconds
+        Leader play ANM_P_SLEEPING loop -1
+        say single line "ANM_P_SLEEPING"
+        wait 5 seconds
+        Leader play ANM_P_SPRINT_RUN_MAN loop -1
+        say single line "ANM_P_SPRINT_RUN_MAN"
+        wait 5 seconds
+        Leader play ANM_P_SPRINT_RUN_WOMAN loop -1
+        say single line "ANM_P_SPRINT_RUN_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_STAND loop -1
+        say single line "ANM_P_STAND"
+        wait 5 seconds
+        Leader play ANM_P_STAND_DESPAIR_1 loop -1
+        say single line "ANM_P_STAND_DESPAIR_1"
+        wait 5 seconds
+        Leader play ANM_P_STAND_DESPAIR_2 loop -1
+        say single line "ANM_P_STAND_DESPAIR_2"
+        wait 5 seconds
+        Leader play ANM_P_STAND_DESPAIR_3 loop -1
+        say single line "ANM_P_STAND_DESPAIR_3"
+        wait 5 seconds
+        Leader play ANM_P_STIR_POT01 loop -1
+        say single line "ANM_P_STIR_POT01"
+        wait 5 seconds
+        Leader play ANM_P_SWIM2 loop -1
+        say single line "ANM_P_SWIM2"
+        wait 5 seconds
+        Leader play ANM_P_TALK1_FEMALE loop -1
+        say single line "ANM_P_TALK1_FEMALE"
+        wait 5 seconds
+        Leader play ANM_P_TALK1_MALE loop -1
+        say single line "ANM_P_TALK1_MALE"
+        wait 5 seconds
+        Leader play ANM_P_TALK2_FEMALE loop -1
+        say single line "ANM_P_TALK2_FEMALE"
+        wait 5 seconds
+        Leader play ANM_P_TALK2_MALE loop -1
+        say single line "ANM_P_TALK2_MALE"
+        wait 5 seconds
+        Leader play ANM_P_TALKING_AND_POINTING loop -1
+        say single line "ANM_P_TALKING_AND_POINTING"
+        wait 5 seconds
+        Leader play ANM_P_TALK_TO_NEIGHBOUR loop -1
+        say single line "ANM_P_TALK_TO_NEIGHBOUR"
+        wait 5 seconds
+        Leader play ANM_P_THANK_YOU loop -1
+        say single line "ANM_P_THANK_YOU"
+        wait 5 seconds
+        Leader play ANM_P_THANK_YOU_FEMALE loop -1
+        say single line "ANM_P_THANK_YOU_FEMALE"
+        wait 5 seconds
+        Leader play ANM_P_THROWN loop -1
+        say single line "ANM_P_THROWN"
+        wait 5 seconds
+        Leader play ANM_P_THROWN_DEAD loop -1
+        say single line "ANM_P_THROWN_DEAD"
+        wait 5 seconds
+        Leader play ANM_P_THROWN_VORTEX loop -1
+        say single line "ANM_P_THROWN_VORTEX"
+        wait 5 seconds
+        Leader play ANM_P_THROW_BALL_PT_1 loop -1
+        say single line "ANM_P_THROW_BALL_PT_1"
+        wait 5 seconds
+        Leader play ANM_P_THROW_BALL_PT_2 loop -1
+        say single line "ANM_P_THROW_BALL_PT_2"
+        wait 5 seconds
+        Leader play ANM_P_THROW_ROCK loop -1
+        say single line "ANM_P_THROW_ROCK"
+        wait 5 seconds
+        Leader play ANM_P_THROW_WATER loop -1
+        say single line "ANM_P_THROW_WATER"
+        wait 5 seconds
+        Leader play ANM_P_TITANIC loop -1
+        say single line "ANM_P_TITANIC"
+        wait 5 seconds
+        Leader play ANM_P_TURN_180 loop -1
+        say single line "ANM_P_TURN_180"
+        wait 5 seconds
+        Leader play ANM_P_TURN_90_LEFT loop -1
+        say single line "ANM_P_TURN_90_LEFT"
+        wait 5 seconds
+        Leader play ANM_P_TURN_90_RIGHT loop -1
+        say single line "ANM_P_TURN_90_RIGHT"
+        wait 5 seconds
+        Leader play ANM_P_TURN_ON_THE_SPOT_LEFT loop -1
+        say single line "ANM_P_TURN_ON_THE_SPOT_LEFT"
+        wait 5 seconds
+        Leader play ANM_P_TURN_ON_THE_SPOT_RIGHT loop -1
+        say single line "ANM_P_TURN_ON_THE_SPOT_RIGHT"
+        wait 5 seconds
+        Leader play ANM_P_WAITING_FOR_BALL loop -1
+        say single line "ANM_P_WAITING_FOR_BALL"
+        wait 5 seconds
+        Leader play ANM_P_WAITING_FOR_BALL_2 loop -1
+        say single line "ANM_P_WAITING_FOR_BALL_2"
+        wait 5 seconds
+        Leader play ANM_P_WAITING_FOR_KICK_OFF loop -1
+        say single line "ANM_P_WAITING_FOR_KICK_OFF"
+        wait 5 seconds
+        Leader play ANM_P_WAITING_FOR_KICK_OFF_2 loop -1
+        say single line "ANM_P_WAITING_FOR_KICK_OFF_2"
+        wait 5 seconds
+        Leader play ANM_P_WAITING_FOR_KICK_OFF_3 loop -1
+        say single line "ANM_P_WAITING_FOR_KICK_OFF_3"
+        wait 5 seconds
+        Leader play ANM_P_WAITING_FOR_KICK_OFF_4 loop -1
+        say single line "ANM_P_WAITING_FOR_KICK_OFF_4"
+        wait 5 seconds
+        Leader play ANM_P_WAITING_IMPATEINTLY loop -1
+        say single line "ANM_P_WAITING_IMPATEINTLY"
+        wait 5 seconds
+        Leader play ANM_P_WALK_BECKON02 loop -1
+        say single line "ANM_P_WALK_BECKON02"
+        wait 5 seconds
+        Leader play ANM_P_WALK_DESPAIR_AWAY_1 loop -1
+        say single line "ANM_P_WALK_DESPAIR_AWAY_1"
+        wait 5 seconds
+        Leader play ANM_P_WALK_DESPAIR_AWAY_2 loop -1
+        say single line "ANM_P_WALK_DESPAIR_AWAY_2"
+        wait 5 seconds
+        Leader play ANM_P_WALK_DESPAIR_AWAY_3 loop -1
+        say single line "ANM_P_WALK_DESPAIR_AWAY_3"
+        wait 5 seconds
+        Leader play ANM_P_WALK_DESPAIR_TO_1 loop -1
+        say single line "ANM_P_WALK_DESPAIR_TO_1"
+        wait 5 seconds
+        Leader play ANM_P_WALK_DESPAIR_TO_2 loop -1
+        say single line "ANM_P_WALK_DESPAIR_TO_2"
+        wait 5 seconds
+        Leader play ANM_P_WALK_DESPAIR_TO_3 loop -1
+        say single line "ANM_P_WALK_DESPAIR_TO_3"
+        wait 5 seconds
+        Leader play ANM_P_WALK_INJURED loop -1
+        say single line "ANM_P_WALK_INJURED"
+        wait 5 seconds
+        Leader play ANM_P_WALK_MAN loop -1
+        say single line "ANM_P_WALK_MAN"
+        wait 5 seconds
+        Leader play ANM_P_WALK_POINT loop -1
+        say single line "ANM_P_WALK_POINT"
+        wait 5 seconds
+        Leader play ANM_P_WALK_TIRED_EYES loop -1
+        say single line "ANM_P_WALK_TIRED_EYES"
+        wait 5 seconds
+        Leader play ANM_P_WALK_TO_STAND_WOMAN loop -1
+        say single line "ANM_P_WALK_TO_STAND_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_WALK_WOMAN loop -1
+        say single line "ANM_P_WALK_WOMAN"
+        wait 5 seconds
+        Leader play ANM_P_WELL_DONE__FEMALE loop -1
+        say single line "ANM_P_WELL_DONE__FEMALE"
+        wait 5 seconds
+        Leader play ANM_P_WHITTLING_AT_STICK loop -1
+        say single line "ANM_P_WHITTLING_AT_STICK"
+        wait 5 seconds
+        Leader play ANM_P_YANKED_UNDERGROUND loop -1
+        say single line "ANM_P_YANKED_UNDERGROUND"
+        wait 5 seconds
+        Leader play ANM_P_YANKED_UNDERGROUND2 loop -1
+        say single line "ANM_P_YANKED_UNDERGROUND2"
+        wait 5 seconds
+        Leader play ANM_P_YANKED_UNDERGROUND3 loop -1
+        say single line "ANM_P_YANKED_UNDERGROUND3"
+        wait 5 seconds
+        Leader play ANM_P_YAWN loop -1
+        say single line "ANM_P_YAWN"
+        wait 5 seconds
+        Leader play ANM_P_YAWN2 loop -1
+        say single line "ANM_P_YAWN2"
+        wait 5 seconds
+        //Leader play ANM_S_PRIEST_SUCK_LIFE_FORCE loop -1
+        //say single line "ANM_S_PRIEST_SUCK_LIFE_FORCE"
+		//wait 5 seconds
+	end cinema
+	wait 10*60 seconds
+	wait until FreezeTime == 1

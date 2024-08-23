@@ -56,6 +56,7 @@ start
 		run background script RunCreatureBreederLand(1)
 		run background script TheMissionaries
 		run background script StartingCreatures // Herolich1: a script that places two or all of the starter creatures in the glade.
+		run background script CollectingRocks // Herolich1: Starts the quest for collecting a few rocks.
 	if IsSkippingCreatureGuide == 0
 		run background script MoveTheGuideAround
 	end if
@@ -99,6 +100,7 @@ start
 	end if
 		run background script MagicMushroom
 		SingingStonesStart = 1
+		RockQuestProgression = 1
 
 	if IsSkippingCreatureGuide == 0 and KeptOldCreature == 0 // Herolich1: added KeptOldCreature check so Sable quests are skipped when not skipping creature guide.
 		run script CreatureDevLeashIntro
@@ -112,6 +114,7 @@ start
 
 		LostFlockWanted = 1
 		run background script CreatureSavingPeople							// This waits until creature big enough
+		RockQuestProgression = 2
 //	run script CreatureGuideSet
 
 	if IsSkippingCreatureGuide == 0 // Herolich1: added an else statement so that the Aztec village can be taken when skipping the creature guide.
@@ -123,6 +126,7 @@ start
 	end if
 
 		run background script PiedPiper
+		RockQuestProgression = 3
 
 	if IsSkippingCreatureGuide == 0 // Herolich1: added an else statement so that Sleg can still be fought can be taken when skipping the creature guide.
 		run script GuideImpressTownNextLesson
@@ -133,6 +137,7 @@ start
 
 		run background script CreatureGuardian								
 		run background script LeaveThroughVortexL1							// This waits until OpenVortexL1 == 1 (set in TheStorm)
+		RockQuestProgression = 4
 
 	if IsOpeningVortex == 0 // Herolich1: replaced "IsSkippingCreatureGuide" with "IsOpeningVortex"
 		run script TheStorm	

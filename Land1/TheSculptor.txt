@@ -691,10 +691,14 @@ start
 			move Sculptor position to	[1768.507, 28.810, 2688.703]
 			wait until [Sculptor] near [1768.507, 28.810, 2688.703] or HEALTH of Sculptor <= 0 or Sculptor is FLYING or Sculptor is HELD
 			wait until Sculptor is not FLYING and Sculptor is not HELD
-			move Sculptor position to [1767.698, 28.810, 2692.575]
-			wait until [Sculptor] near [1767.698, 28.810, 2692.575] or HEALTH of Sculptor <= 0 or Sculptor is FLYING or Sculptor is HELD
+			// Herolich1: Changed destination to inside the house.
+			// move Sculptor position to [1767.698, 28.810, 2692.575]
+			// wait until [Sculptor] near [1767.698, 28.810, 2692.575] or HEALTH of Sculptor <= 0 or Sculptor is FLYING or Sculptor is HELD
+			move Sculptor position to [1755.047, 28.810, 2691.962]
+			wait until [Sculptor] near [1755.047, 28.810, 2691.962] or HEALTH of Sculptor <= 0 or Sculptor is FLYING or Sculptor is HELD
 		end if
 		
 		release Sculptor
+		delete Sculptor // Herolich1: Deleting so that he can appear later without wandering about, should he survive.
 
 end script TheSculptor

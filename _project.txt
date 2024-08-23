@@ -19,6 +19,7 @@ header ScriptChallengeEnums.h
 header ScriptEnums.h
 header ScriptEnumstwo.h
 header LHKeyBoard.h
+header HelpDudeAnim.h
 
 info_path ../../headers
 info info1.txt
@@ -64,6 +65,7 @@ source Land1/thehermit.txt
 source Land1/thelostflock.txt
 source Land1/TheMissionaries.txt
 source Land1/throwingstones.txt
+source Land1/CollectingRocks.txt
 source Land1/MagicMushroom.txt
 source Land1/StartingCreatures.txt
 source Land1/LeavingLand1Scene.txt

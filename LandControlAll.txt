@@ -46,9 +46,9 @@ start
 	// Cutscene means that the cutscenes itselfs will be shortened by a lot, unless they are part of the testing.
 	DevModeCutscene = 0
 
-	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_01, variable HELP_TEXT_PLUS_TITLECARD_NAME_01, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
-	//run script LandControl1
-	//stop all scripts excluding files "LandControlAll.txt"
+	run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_01, variable HELP_TEXT_PLUS_TITLECARD_NAME_01, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
+	run script LandControl1
+	stop all scripts excluding files "LandControlAll.txt"
 
 	//load map "scripts/Land1A.txt"
 	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_02, variable HELP_TEXT_PLUS_TITLECARD_NAME_02, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
@@ -61,21 +61,21 @@ start
 	//stop all scripts excluding files "LandControlAll.txt"
 
 
-	//load map "scripts/land2.txt"
-	//set fade in time 1 // To make the screen go back to normal
-	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_04, variable HELP_TEXT_PLUS_TITLECARD_NAME_04, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
-	//run script LandControl2
-	//stop all scripts excluding files "LandControlAll.txt"
+	load map "scripts/land2.txt"
+	set fade in time 1 // To make the screen go back to normal
+	run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_04, variable HELP_TEXT_PLUS_TITLECARD_NAME_04, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
+	run script LandControl2
+	stop all scripts excluding files "LandControlAll.txt"
 
 	//load map "scripts/Land2A.txt"
 	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_05, variable HELP_TEXT_PLUS_TITLECARD_NAME_05, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 1)
 	//run script LandControl2A
 	//stop all scripts excluding files "LandControlAll.txt"
 
-	//load map "scripts/land3.txt"
-	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_06, variable HELP_TEXT_PLUS_TITLECARD_NAME_06, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
-	//run script LandControl3
-	//stop all scripts excluding files "LandControlAll.txt"
+	load map "scripts/land3.txt"
+	run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_06, variable HELP_TEXT_PLUS_TITLECARD_NAME_06, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
+	run script LandControl3
+	stop all scripts excluding files "LandControlAll.txt"
 
 	//load map "scripts/Land3A.txt"
 	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_07, variable HELP_TEXT_PLUS_TITLECARD_NAME_07, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 1)
@@ -87,8 +87,6 @@ start
 	//run script LandControl3B
 	//stop all scripts excluding files "LandControlAll.txt"
 
-	LethysKilled = 1
-	LaetesKilled = 1
 	load map "scripts/land4.txt"
 	run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_09, variable HELP_TEXT_PLUS_TITLECARD_NAME_09, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
 	run script LandControl4
