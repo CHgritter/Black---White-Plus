@@ -296,14 +296,18 @@ start
 				// "spreading your good word, and the error of my ways"
 				say HELP_TEXT_PIED_PIPER_38
 				wait until read
-				attach Piper to NorseTown
-				enable Piper pickup
-				enable Piper moveable
-				disable Piper indestructible
-				release Piper
+				move Piper position to [CaveEntrance]
+				// Herolich1: Makes the guy instead leave into his cavern to help out later.
+				// attach Piper to NorseTown
+				// enable Piper pickup
+				// enable Piper moveable
+				// disable Piper indestructible
+				// release Piper
 			end cinema
 
 			run background script RewardForPiper(1)
+			delete Piper
+			PiedPiperAlive = 1
 		else
 			run background script PiperFleeFromCreature(Piper, PiperFlock, CaveFlock, CaveEntrance, Creche)
 			begin dialogue

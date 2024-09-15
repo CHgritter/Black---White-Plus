@@ -486,6 +486,7 @@ start
 	else
 		HermitFinished = 2
 		delete Hermit
+		HermitAlive = 1
 	end if
 
 end script HermitWorshipping

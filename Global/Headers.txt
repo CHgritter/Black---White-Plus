@@ -3,6 +3,7 @@ global ArkSailed // Herolich1 For CI and DE, this might be altered to take in ac
 global ChooseYourCreatureFinished
 global WonderBuilt
 global AztecVillageRetaken
+global SableQuestState // Herolich1 Addition
 global VillagerCatchCompleted
 global VillagerScore
 global TheMissionariesTimeOutDetected
@@ -27,12 +28,11 @@ global IsSkippingCreatureGuide
 //global IsKeepingOldCreature
 global LeaveLandNow
 // Herolich1: added global variables.
-// is opening vortex is the option where all guides are skipped and the vortex is open right away.
-// Has old Creature shows whether the profile had a creature already.
-// Kept old Creature is to see if you have replaced your old creature.
+// IsOpeningVortex is the option where all guides are skipped and the vortex is open right away.
+// HasOldCreature shows whether the profile had a creature already.
+// KeptOldCreature is to see if you have replaced your old creature.
 global IsOpeningVortex
 global HasOldCreature
-// Herolich1: placed here instead of in land 1 setup because otherwise Creature Development can't find it.
 global KeptOldCreature
 
 // for gold reminders while script is running
@@ -48,6 +48,9 @@ global GodGreenKilled       // 0 alive 1 dead
 global GodPurpleKilled      // 0 alive 1 dead
 global GodCyanKilled        // 0 alive 1 dead
 global GodOrangeKilled      // 0 alive 1 dead 2 dissapointed
+// Herolich1: a Simplified global for dealing with extreme cases
+global Path                 // 0 Normal 1 Savior 2 Nemesis 3 TrueNemesis
+
 // Herolich1: a few globals for CI specifically
 global MadinoAssisted       // Gives: Just get a good bowling score, instead of needing to win.
 global TykeAssisted         // Gives: Dunno
@@ -70,7 +73,6 @@ global RufusAssisted        // Gives: Have Rufus hint about a secret path existi
 global MercurioAssisted     // Gives: either an easier battle, or the battle gets skipped depending on what your own creature faced in the main story. (like if Mercurio had tried fighting a Creature of Nemesis, and got beat by it, and then your creature wins. That could be enough proof for him.)
 // Herolich1: a few globals for DE specifically
 global BrotherhoodStance    // 0 Friendly 1 Hostile
-global Path                 // 0 Normal 1 Savior 2 Nemesis 3 TrueNemesis
 
 // Herolich1: DevMode is for testing stuff.
 global DevMode

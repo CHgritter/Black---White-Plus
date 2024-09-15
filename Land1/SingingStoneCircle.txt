@@ -806,7 +806,16 @@ start
 
 			wait until camera ready
  		end cinema
-		release Hippy
+		// Herolich1: This part is to make the Hippy leave to stay alive.
+		move Hippy position to [2552.1997, 21.2620, 2251.8638]
+		wait until [Hippy] near [2552.1997, 21.2620, 2251.8638] radius 2 or HEALTH of Hippy <= 0
+
+		if not HEALTH of Hippy <= 0
+		stop script "SingingCircleHealthofHippy"
+		stop script "SingingCircleHealthofHippyHut"
+			delete Hippy
+			HippyAlive = 1
+		end if
 	end if
 end script SingingStoneCircleEnd
 

@@ -1255,6 +1255,8 @@ start
 
 	end cinema
 
+	SailorsAlive = 1
+
 //	reward
 //	run script rewardfromsky(variable REWARD_STORM, RewardPos, 0, 1)
 	run script GiveSpellDispenserReward(RewardPos, variable MAGIC_TYPE_WATER, 0.0, 0, 0)

@@ -1,1 +1,1539 @@
 // Herolich1: A quest for the Aztec town that builds on the fact that the people know about gods and creatures, but have gone a very long time without them.
+// Quest is heavily influenced by the surival of certain characters.
+challenge NONE
+
+global GIMTigerActive
+global GIMTigerAsleep
+global GIMShieldNotActive
+global GIMNumberOfActiveStones
+global GIMCrew1Distracted
+global GIMCrew2Distracted
+global GIMGuardDuty
+global GIMLocksUnlocked
+global GIMLockCheck
+global GIMLockAssistance
+global GIMConcentration
+
+// ------------------------------------------------------------------------------------------
+// Handle shield stones
+// ------------------------------------------------------------------------------------------
+
+begin script HandleShieldStones(Stone, StonePos, ShieldPos)
+RayActive = 0
+Ray = 0
+AntiInfluence = 0
+StoneDed = 0
+start
+	Ray = create special effect SPOT_VISUAL_MAGIC_BEAM at [StonePos] + [0.0, 5.0, 0.0] time -1
+	add Ray target at [ShieldPos]
+	RayActive = 1
+	GIMNumberOfActiveStones++
+	AntiInfluence = create anti influence on Stone radius 10
+	while StoneDed == 0
+		if not Stone exists or not [Stone] near [StonePos] radius 1
+			delete Ray
+			RayActive = 0
+			GIMNumberOfActiveStones--
+			wait 3 seconds
+			delete Stone with explode
+			StoneDed = 1
+		end if
+	end while
+end script HandleShieldStones
+
+// ------------------------------------------------------------------------------------------
+// Handle the shield
+// ------------------------------------------------------------------------------------------
+
+begin script GIMShieldSegment(GuardingStonePosition1, GuardingStonePosition2, GuardingStone1, GuardingStone2)
+ShieldPosition = marker at [2171.962, 2.596, 3121.675]
+Shield = 0
+ShieldState = 0
+start
+	set GuardingStone1 focus to [ShieldPosition]
+	set GuardingStone2 focus to [ShieldPosition]
+	run background script HandleShieldStones(GuardingStone1, GuardingStonePosition1, ShieldPosition)
+	run background script HandleShieldStones(GuardingStone2, GuardingStonePosition2, ShieldPosition)
+	wait 4 seconds
+	Shield = cast SPELL_SHIELD spell at [ShieldPosition] from camera position radius 50*GIMNumberOfActiveStones time -1 curl 0
+	while GIMNumberOfActiveStones != 0
+		if ShieldState != GIMNumberOfActiveStones
+			ShieldState = GIMNumberOfActiveStones
+			set Shield radius ShieldState*50
+		end if
+	end while
+	GIMShieldNotActive = 1
+	set Shield radius 0
+	wait 1 second
+	delete Shield
+end script GIMShieldSegment
+
+// ------------------------------------------------------------------------------------------
+// Handle BookKeeper Guards
+// ------------------------------------------------------------------------------------------
+
+begin script GIMGuardsWait(Guard, Leader, Campfire, Crew)
+StopGuarding = 0
+Beam = 0
+start
+    disable Guard moveable
+	disable Guard pickup
+    disable Leader moveable
+	disable Leader pickup
+	while StopGuarding == 0
+		if GIMCrew1Distracted != 0 and Crew == 1 or GIMCrew2Distracted != 0 and Crew == 2 or HEALTH of Leader <= 0 or HEALTH of Guard <= 0
+			StopGuarding = 1
+		elsif [MyCreature] near [Campfire] radius 25
+			Leader play ANM_P_TALKING_AND_POINTING loop 3
+			Guard play ANM_PIED_PIPER_SUMMON loop -1
+			set Guard focus to [MyCreature]
+			set Leader focus to [MyCreature]
+			say single line "Leader: Leave this place, Creature. This is no place for your kind." // MANUAL DIALOG
+			Beam = create special effect SPOT_VISUAL_MAGIC_BEAM on Guard time 5
+			add Beam target on MyCreature
+			move MyCreature position to [1896.50, 29.48, 2520.06] radius 10
+			wait 5 seconds
+			release MyCreature
+		else
+			set Guard focus to [Campfire]
+			set Leader focus to [Campfire]
+			Leader play ANM_P_CONDUCT_MEETING loop 1
+			Guard play ANM_P_PROD_CAMPFIRE loop 1
+			wait until Guard played and Leader played
+		end if
+	end while
+end script GIMGuardsWait
+
+// ------------------------------------------------------------------------------------------
+// Handle BookKeeper Chanters
+// ------------------------------------------------------------------------------------------
+
+begin script GIMProtectStone(GuardingStonePosition, GuardingStone, Chanter1, Chanter2, Chanter3, Crew)
+sfx = 0
+start
+    disable Chanter1 moveable
+	disable Chanter1 pickup
+    disable Chanter2 moveable
+	disable Chanter2 pickup
+    disable Chanter3 moveable
+	disable Chanter3 pickup
+	disable GuardingStone moveable
+	sfx = create special effect SPOT_VISUAL_MAGIC_FX_ON_OBJECT at [GuardingStonePosition]+[0,2,0] time -1
+	set Chanter1 focus to [GuardingStonePosition]
+	set Chanter2 focus to [GuardingStonePosition]
+	set Chanter3 focus to [GuardingStonePosition]
+	begin loop 
+		Chanter1 play ANM_P_DANCE_PISS_TAKE_ loop 1
+		Chanter2 play ANM_P_DANCE_PISS_TAKE_ loop 1
+		Chanter3 play ANM_P_DANCE_PISS_TAKE_ loop 1
+		wait until Chanter1 played
+		until GIMCrew1Distracted != 0 and Crew == 1 or GIMCrew2Distracted != 0 and Crew == 2 or HEALTH of Chanter1 <= 0 or HEALTH of Chanter2 <= 0 or HEALTH of Chanter3 <= 0
+	end loop
+	enable GuardingStone moveable
+	delete sfx
+end script GIMProtectStone
+
+// ------------------------------------------------------------------------------------------
+// BookKeepers Revenge guy handlers
+// TODO Allow the guys to be picked up and yeeted, with them returning to base.
+// ------------------------------------------------------------------------------------------
+
+begin script GIMRevengeGuy(BookKeeper, DancePosition, FireFocus)
+AtPosition = 0
+Dead = 0
+start
+	while Dead == 0
+		wait until BookKeeper is not FLYING or BookKeeper is not HELD
+		if HEALTH of BookKeeper > 0
+			if [BookKeeper] at [DancePosition]
+				if AtPosition == 0
+					GIMConcentration++
+					set BookKeeper focus to [FireFocus]
+					AtPosition = 1
+				end if
+				BookKeeper play ANM_P_DANCE_PISS_TAKE_ loop 1
+			else
+				if AtPosition == 1
+					GIMConcentration--
+					AtPosition = 0
+				end if
+				move BookKeeper position to [DancePosition]
+				wait until [BookKeeper] at [DancePosition] or BookKeeper is FLYING or BookKeeper is HELD
+			end if
+		else
+			if AtPosition == 1
+				GIMConcentration--
+				AtPosition = 0
+			end if
+			release BookKeeper
+			Dead = 1
+		end if
+	end while
+end script GIMRevengeGuy
+
+// ------------------------------------------------------------------------------------------
+// BookKeepers Revenge
+// ------------------------------------------------------------------------------------------
+
+begin script GIMBookKeepersRevenge(TotalSurvivors)
+	StoragePitPos = marker at [2487.55, 52.6, 2571.21]
+	MyCitadel = get CITADEL at [1915.05,2508.89] radius 5
+	StoragePit = 0
+	FireballPosition = marker at [1915.0500, 18.0900, 2508.8899] + [35,0,0]
+	VengefullFlock = 0
+	BookKeeper = 0
+	xPos = 0
+	zPos = 0
+	Iteration = 1
+	SFX = 0
+	Spell = 0
+	CurrentTime = 0
+start
+	wait until SableQuestState == 5
+	if GIMGuardDuty == 2
+		if TotalSurvivors != 0
+			VengefullFlock = flock at [FireballPosition]
+			while size of VengefullFlock != TotalSurvivors
+				zPos = -1 + Iteration/(TotalSurvivors+1) * 2
+				xPos = 1 - 1 *(zPos*zPos)
+				Iteration++
+				BookKeeper = create VILLAGER VILLAGER_INFO_CRUSADER at [FireballPosition] + [xPos*5, 0, zPos*5]
+				attach BookKeeper to VengefullFlock
+				run background script GIMRevengeGuy(BookKeeper, marker at [FireballPosition] + [xPos*5, 0, zPos*5], FireballPosition)
+			end while
+			set VengefullFlock focus to [FireballPosition]
+			SPEED of VengefullFlock = 0.5
+			// Herolich1: TODO Add cinematic
+			while size of VengefullFlock != 0
+				if GIMConcentration != 0
+					CurrentTime = 5+15/GIMConcentration
+					SFX = create special effect SPOT_VISUAL_EVIL_SMOKE at [FireballPosition] + [0,20,0] time CurrentTime
+					SCRIPT_OBJECT_PROPERTY_TYPE_SCALE of SFX = 7.0
+					wait CurrentTime seconds
+					Spell = cast SPELL_FIREBALL_LEVEL_1 spell at [MyCitadel] from [FireballPosition] + [0,20,0] radius 1.0 time 20 curl 1
+					wait 5 seconds
+				end if
+			end while
+			// Herolich1: TODO Add cinematic
+		end if
+	elsif GIMCrew1Distracted == 2 or GIMCrew2Distracted == 2
+		// Herolich1: TODO Add cinematic
+		StoragePit = get HOUSE at [StoragePitPos] radius 10
+		remove resource RESOURCE_TYPE_WOOD 900000 from StoragePit
+	end if
+	SableQuestState = 6
+end script GIMBookKeepersRevenge
+
+// ------------------------------------------------------------------------------------------
+// Setup BookKeepers
+// ------------------------------------------------------------------------------------------
+
+begin script GIMSetupBookKeepers(BookKeeperTeam1, BookKeeperTeam2, BookKeeperTeam1Position, BookKeeperTeam2Position, GuardingStonePosition1, GuardingStonePosition2, GuardingStone1, GuardingStone2)
+BookKeeperChanter1 = 0
+BookKeeperChanter2 = 0
+BookKeeperChanter3 = 0
+BookKeeperGuard = 0
+BookKeeperLeader = 0
+House1 = 0
+House2 = 0
+House3 = 0
+House4 = 0
+House5 = 0
+House6 = 0
+BeginPos = 0
+BeginFoc = 0
+Survivors = 0
+Team1Distracted = 0
+Team2Distracted = 0
+start
+	House1 = get HOUSE at [2332.170, 56.576, 3116.741]
+	House2 = get HOUSE at [2338.915, 55.385, 3122.785]
+	House3 = get HOUSE at [2346.527, 54.189, 3127.373]
+	House4 = get HOUSE at [2015.254, 29.161, 3154.911]
+	House5 = get HOUSE at [2007.562, 31.220, 3148.030]
+	House6 = get HOUSE at [1998.771, 31.448, 3145.790]
+
+	BookKeeperLeader = create VILLAGER VILLAGER_INFO_CRUSADER at [BookKeeperTeam1Position] + [2,0,4]
+	attach BookKeeperLeader to BookKeeperTeam1
+	BookKeeperGuard = create VILLAGER VILLAGER_INFO_CRUSADER at [BookKeeperTeam1Position] + [4,0,2]
+	attach BookKeeperGuard to BookKeeperTeam1
+	run background script GIMGuardsWait(BookKeeperGuard, BookKeeperLeader, BookKeeperTeam1Position, 1)
+
+	BookKeeperChanter1 = create VILLAGER VILLAGER_INFO_CRUSADER at [GuardingStonePosition1] + [4,0,2]
+	attach BookKeeperChanter1 to BookKeeperTeam1
+	BookKeeperChanter2 = create VILLAGER VILLAGER_INFO_CRUSADER at [GuardingStonePosition1] + [4,0,4]
+	attach BookKeeperChanter2 to BookKeeperTeam1
+	BookKeeperChanter3 = create VILLAGER VILLAGER_INFO_CRUSADER at [GuardingStonePosition1] + [2,0,4]
+	attach BookKeeperChanter3 to BookKeeperTeam1
+	run background script GIMProtectStone(GuardingStonePosition1, GuardingStone1, BookKeeperChanter1, BookKeeperChanter2, BookKeeperChanter3, 1)
+
+	BookKeeperLeader = create VILLAGER VILLAGER_INFO_CRUSADER at [BookKeeperTeam2Position] + [-2,0,-4]
+	attach BookKeeperLeader to BookKeeperTeam2
+	BookKeeperGuard = create VILLAGER VILLAGER_INFO_CRUSADER at [BookKeeperTeam2Position] + [-4,0,-2]
+	attach BookKeeperGuard to BookKeeperTeam2
+	run background script GIMGuardsWait(BookKeeperGuard, BookKeeperLeader, BookKeeperTeam2Position, 2)
+
+	BookKeeperChanter1 = create VILLAGER VILLAGER_INFO_CRUSADER at [GuardingStonePosition2] + [-4,0,-2]
+	attach BookKeeperChanter1 to BookKeeperTeam2
+	BookKeeperChanter2 = create VILLAGER VILLAGER_INFO_CRUSADER at [GuardingStonePosition2] + [-4,0,-4]
+	attach BookKeeperChanter2 to BookKeeperTeam2
+	BookKeeperChanter3 = create VILLAGER VILLAGER_INFO_CRUSADER at [GuardingStonePosition2] + [-2,0,-4]
+	attach BookKeeperChanter3 to BookKeeperTeam2
+	run background script GIMProtectStone(GuardingStonePosition2, GuardingStone2, BookKeeperChanter1, BookKeeperChanter2, BookKeeperChanter3, 2)
+
+	while GIMGuardDuty == 0
+		if size of BookKeeperTeam1 < 5 or size of BookKeeperTeam2 < 5
+			GIMCrew1Distracted = 2
+			GIMCrew2Distracted = 2
+		end if
+
+		if (HEALTH of House1 < 1 or HEALTH of House2 < 1 or HEALTH of House3 < 1) and GIMCrew1Distracted == 0
+			GIMCrew1Distracted = 2
+			SPEED of BookKeeperTeam1 = 0.5
+			wait 2 seconds
+			state BookKeeperTeam1 LIVING_MOVE_IN_FLOCK
+			move BookKeeperTeam1 position to [BookKeeperTeam1Position]
+			wait until BookKeeperTeam1 within flock distance
+			BookKeeperTeam1 play ANM_P_PANIC_MAN loop -1
+		end if
+		if (HEALTH of House4 < 1 or HEALTH of House5 < 1 or HEALTH of House6 < 1) and GIMCrew2Distracted == 0
+			GIMCrew2Distracted = 2
+			SPEED of BookKeeperTeam2 = 0.5
+			wait 2 seconds
+			state BookKeeperTeam2 LIVING_MOVE_IN_FLOCK
+			move BookKeeperTeam2 position to [BookKeeperTeam2Position]
+			wait until BookKeeperTeam2 within flock distance
+			BookKeeperTeam2 play ANM_P_PANIC_MAN loop -1
+		end if
+
+		if GIMCrew1Distracted == 1 and Team1Distracted == 0
+			SPEED of BookKeeperTeam1 = 0.5
+			wait 2 seconds
+			state BookKeeperTeam1 LIVING_MOVE_IN_FLOCK
+			move BookKeeperTeam1 position to [2510.43,45.140,3376.24]
+			wait until BookKeeperTeam1 within flock distance
+			BookKeeperTeam1 play ANM_P_CROWD_LOST loop -1
+			Team1Distracted = 1
+		end if
+
+		if GIMCrew2Distracted == 1 and Team2Distracted == 0
+			SPEED of BookKeeperTeam2 = 0.5
+			wait 2 seconds
+			state BookKeeperTeam2 LIVING_MOVE_IN_FLOCK
+			move BookKeeperTeam2 position to [1995,28.8,3175] + [-10,0,10]
+			wait until BookKeeperTeam2 within flock distance
+			BookKeeperTeam2 play ANM_P_CROWD_IMPRESSED_1 loop -1
+			set BookKeeperTeam2 focus to [1995,28.8,3175]
+			Team2Distracted = 1
+		end if
+
+		if GIMShieldNotActive == 1 
+			begin cinema
+				BeginPos = marker at camera position
+				BeginFoc = marker at camera focus
+
+				state BookKeeperLeader LIVING_IN_SCRIPT
+				enable BookKeeperLeader high graphics detail
+
+				set camera lens 55
+				move camera position to [BookKeeperLeader] + [2,1.5,2] time 3
+				move camera focus to [BookKeeperLeader] + [0,1,0] time 3
+
+				wait until camera ready
+
+				set BookKeeperLeader focus to camera position
+
+				if GIMCrew1Distracted == 1 and GIMCrew2Distracted == 1
+					say single line "BookKeeper: I see... I will admit, you're a clever one. Very well, take the prophecy. Just leave us be." // MANUAL DIALOG
+					BookKeeperLeader play ANM_P_CROWD_IMPRESSED_2 loop 2
+				else
+					say single line "BookKeeper: What god do you think you are! We shall be claiming our reparations from your town." // MANUAL DIALOG
+					BookKeeperLeader play ANM_P_CROWD_UNIMPRESSED_1 loop 2
+				end if
+				wait until read
+
+				move camera position to [BeginPos] time 3
+				move camera focus to [BeginFoc] time 2
+
+				wait until camera ready
+				disable BookKeeperLeader high graphics detail
+			end cinema
+			GIMGuardDuty = 1
+		end if
+
+		if GIMCrew1Distracted == 2 and GIMCrew2Distracted == 2
+			if HEALTH of BookKeeperLeader <= 0
+				BookKeeperLeader = get VILLAGER in BookKeeperTeam2
+			end if
+			if not BookKeeperLeader exists
+				BookKeeperLeader = get VILLAGER in BookKeeperTeam1
+			end if
+			if BookKeeperLeader exists 
+				begin cinema
+					BeginPos = marker at camera position
+					BeginFoc = marker at camera focus
+
+
+					state BookKeeperLeader LIVING_IN_SCRIPT
+					enable BookKeeperLeader high graphics detail
+
+					set camera lens 55
+					move camera position to [BookKeeperLeader] + [2,1.5,2] time 3
+					move camera focus to [BookKeeperLeader] + [0,1,0] time 3
+
+					wait until camera ready
+
+					set BookKeeperLeader focus to camera position
+
+					say single line "BookKeeper: How dare you! Fine then, have your way. But this is not the end..." // MANUAL DIALOG
+					BookKeeperLeader play ANM_P_CROWD_UNIMPRESSED_2 loop 2
+					wait until read
+
+					move camera position to [BeginPos] time 3
+					move camera focus to [BeginFoc] time 2
+
+					wait until camera ready
+					disable BookKeeperLeader high graphics detail
+				end cinema
+			end if
+			GIMGuardDuty = 2
+			Survivors = size of BookKeeperTeam1 + size of BookKeeperTeam2
+		end if
+	end while
+	BookKeeperChanter1=get first in BookKeeperTeam1
+	while BookKeeperChanter1 exists
+		delete BookKeeperChanter1 with fade
+		BookKeeperChanter1=get next in BookKeeperTeam1 after BookKeeperChanter1
+	end while
+	BookKeeperChanter1=get first in BookKeeperTeam2
+	while BookKeeperChanter1 exists
+		delete BookKeeperChanter1 with fade
+		BookKeeperChanter1=get next in BookKeeperTeam2 after BookKeeperChanter1
+	end while
+
+	run script GIMBookKeepersRevenge(Survivors)
+end script GIMSetupBookKeepers
+
+// ------------------------------------------------------------------------------------------
+// Tiger Pathing
+// ------------------------------------------------------------------------------------------
+
+begin script MoveTigers(Tiger, Pos1, Pos2)
+TigerDead = 0
+start
+    disable Tiger moveable
+	disable Tiger pickup
+	SPEED of Tiger = 1
+	enable Tiger high graphics detail
+	while TigerDead == 0
+		begin loop
+			move Tiger position to [Pos2]
+			wait until [Tiger] at [Pos2]
+			wait 2 seconds
+			move Tiger position to [Pos1]
+			wait until [Tiger] at [Pos1]
+			wait 2 seconds
+			until HEALTH of Tiger <= 0 or Tiger in MyCreature hand or GIMTigerAsleep == 1
+		end loop
+
+		wait until not Tiger in MyCreature hand
+
+		if GIMTigerAsleep == 1
+			HEALTH of Tiger = 0 // Herolich1: TODO Make sure the tigers actually sleep.
+			wait 10 seconds
+			TigerDead = 1
+		elsif HEALTH of Tiger > 0 and Tiger exists
+			wait until not Tiger is FLYING
+		else
+    		wait 2 seconds
+            GIMTigerActive--
+			TigerDead = 1
+		end if
+	end while
+	delete Tiger
+end script MoveTigers
+
+// ------------------------------------------------------------------------------------------
+// Tiger Pathing
+// ------------------------------------------------------------------------------------------
+
+begin script GIMHandleTigers(Tiger1, Tiger2, Tiger3, Tiger4)
+TigerPosition1 = marker at [2427.528, 33.105, 2741.402]
+TigerPosition2 = marker at [2502.733, 30.404, 2743.817]
+TigerPosition3 = marker at [2507.745, 34.699, 2789.231]
+TigerPosition4 = marker at [2442.906, 41.153, 2830.948]
+TigerPosition5 = marker at [2465.478, 35.837, 2784.654]
+TigerPosition6 = marker at [2411.568, 36.201, 2773.618]
+TigerPosition7 = marker at [2534.841, 31.490, 2861.985]
+TigerPosition8 = marker at [2560.039, 32.155, 2768.599]
+start
+	Tiger1 = create ANIMAL ANIMAL_INFO_TIGER at [TigerPosition1]
+	Tiger2 = create ANIMAL ANIMAL_INFO_TIGER at [TigerPosition3]
+	Tiger3 = create ANIMAL ANIMAL_INFO_TIGER at [TigerPosition5]
+	Tiger4 = create ANIMAL ANIMAL_INFO_TIGER at [TigerPosition7]
+    GIMTigerActive = 4
+	run background script MoveTigers(Tiger1, TigerPosition1, TigerPosition2)
+	run background script MoveTigers(Tiger2, TigerPosition3, TigerPosition4)
+	run background script MoveTigers(Tiger3, TigerPosition5, TigerPosition6)
+	run background script MoveTigers(Tiger4, TigerPosition7, TigerPosition8)
+    wait until GIMTigerActive == 0
+end script GIMHandleTigers
+
+// ------------------------------------------------------------------------------------------
+// Create Rock Keys
+// ------------------------------------------------------------------------------------------
+
+begin script GIMHandleRockKeys(Rock, RockPosition, LockPos, Time)
+FocusPoint = marker at [2223,16,3146]
+LockCorrect = 0
+sfx = 0
+Lock = 0
+SculptorAid = 0
+start
+	Rock = create OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [RockPosition]
+	set Rock focus to [FocusPoint]
+	wait until SableQuestState == 3
+	Lock = create special effect SPOT_VISUAL_SINGING_STONES_HEAL at [LockPos]+[0,1,0] time -1
+	SCALE of Lock = 13.5
+	begin loop
+		if Rock not exists
+			Rock = create OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [RockPosition]
+			set Rock focus to [FocusPoint]
+			if LockCorrect == 1
+				GIMLocksUnlocked--
+				LockCorrect = 0
+			end if
+		end if
+
+		if GIMLockAssistance == 1 and SculptorAid not exists
+			SculptorAid = create special effect SPOT_VISUAL_MAGIC_BEAM on Lock time -1
+			add SculptorAid target on Rock
+		end if
+
+		//if [Rock] not at [RockPosition]
+		//or [Rock] not near [1552,88,2388] radius 10
+		//or [Rock] not near [2950,59,2249] radius 10
+		//or [Rock] not near [1671,41,2244] radius 10
+		//or [Rock] not near [2094,32,2802] radius 10
+		//or [Rock] not near [1388,34,2561] radius 10
+		//	delete Rock with explode
+		if [Rock] near [LockPos] radius 10 and LockCorrect == 0
+			GIMLocksUnlocked++
+			LockCorrect = 1
+		end if
+		
+		if [Rock] not near [LockPos] radius 10 and LockCorrect == 1
+			GIMLocksUnlocked--
+			LockCorrect = 0
+		end if
+
+		if GIMLockCheck == 1 and LockCorrect == 0
+			delete SculptorAid
+			sfx = create special effect SPOT_VISUAL_EVIL_SMOKE on Rock time 10
+			wait 10 seconds
+			delete Rock with explode
+		end if
+		until GIMLockCheck == 1 and LockCorrect == 1
+	end loop
+	delete SculptorAid
+	wait Time seconds
+	sfx = create special effect SPOT_VISUAL_HIGHLIGHT_ON_OBJECT on Rock time -1
+    disable Rock moveable
+	disable Rock pickup
+end script GIMHandleRockKeys
+
+// ------------------------------------------------------------------------------------------
+// Check all locks
+// ------------------------------------------------------------------------------------------
+
+begin script GIMHandleLocks(lock1Pos, lock2Pos, lock3Pos, lock4Pos, lock5Pos)
+GIMCaveUnlocked = 0
+start
+	begin loop
+		if get OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [lock1Pos] radius 10 exists
+		and get OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [lock2Pos] radius 10 exists
+		and get OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [lock3Pos] radius 10 exists
+		and get OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [lock4Pos] radius 10 exists
+		and get OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [lock5Pos] radius 10 exists
+			GIMLockCheck = 1
+			begin cinema
+    			set camera position to [lock1Pos]+[10,5,10]
+				set camera focus to [lock1Pos]
+				wait 2 seconds
+    			set camera position to [lock2Pos]+[10,5,10]
+				set camera focus to [lock2Pos]
+				wait 2 seconds
+    			set camera position to [lock3Pos]+[10,5,10]
+				set camera focus to [lock3Pos]
+				wait 2 seconds
+    			set camera position to [lock4Pos]+[10,5,10]
+				set camera focus to [lock4Pos]
+				wait 2 seconds
+    			set camera position to [lock5Pos]+[10,5,10]
+				set camera focus to [lock5Pos]
+				wait 2 seconds
+				if GIMLocksUnlocked == 5
+					eject good spirit
+					say single line "Good Advisor: We did it! The puzzle has been solved!" // MANUAL DIALOG
+					wait until read
+					GIMCaveUnlocked = 1
+				else
+					eject good spirit
+					say single line "Good Advisor: Oh no, looks like we got some of these wrong..." // MANUAL DIALOG
+					wait until read
+    				set fade red 0 green 0 blue 0 time 2
+    				wait until fade ready
+    				set camera position to [2202.270, 26.030, 3131.506]
+    				set camera focus to [2239.754, 16.080, 3151.141]
+					set fade in time 2
+    				wait until fade ready
+					say single line "Good Advisor: Let's try again." // MANUAL DIALOG
+					wait until read
+					GIMLockCheck = 0
+				end if
+			end cinema
+		end if
+		until GIMCaveUnlocked == 1
+	end loop
+end script GIMHandleLocks
+// ------------------------------------------------------------------------------------------
+// Advisor Comments
+// ------------------------------------------------------------------------------------------
+
+begin script GIMPlayAdvisorComments
+TigerComment = 0
+GuardComment = 0
+ShieldComment = 0
+StoneComment = 0
+start
+    while SableQuestState == 0
+        if get ANIMAL ANIMAL_INFO_TIGER at hand position radius 5.5 exists and TigerComment == 0
+            TigerComment = 1
+            begin dialogue
+                eject good spirit
+                say single line "Good Advisor: I'm afraid you can't pick up these tigers. You'll have to use something else." // MANUAL DIALOG
+                wait until read
+                eject evil spirit
+                say single line "Evil Advisor: Try using a miracle, or a rock!" // MANUAL DIALOG
+                wait until read
+            end dialogue
+        end if
+        if (hand position near [2344.616,54.024,3107.784] radius 5.5 or hand position near [2001.200,29.077,3158.688] radius 5.5) and GuardComment == 0
+            GuardComment = 1
+            begin dialogue
+                eject evil spirit
+                say single line "Evil Advisor: Who are those guys?" // MANUAL DIALOG
+                wait until read
+            end dialogue
+        end if
+        if (hand position near [2305.556, 89.754, 3170.757] radius 5.5 or hand position near [2060.013, 83.436, 3124.712] radius 5.5) and ShieldComment == 0
+            ShieldComment = 1
+            begin dialogue
+                eject good spirit
+                say single line "Good Advisor: Interesting... a shield created by such power..." // MANUAL DIALOG
+                wait until read
+            end dialogue
+        end if
+    end while
+    while SableQuestState == 1
+        if (hand position near [2344.616,54.024,3107.784] radius 5.5 or hand position near [2001.200,29.077,3158.688] radius 5.5) and GuardComment < 2
+            GuardComment = 2
+            begin dialogue
+                eject good spirit
+                say single line "Good Advisor: They are quite powerful, and refuse to believe in you." // MANUAL DIALOG
+                wait until read
+                eject evil spirit
+                say single line "Evil Advisor: Why don't we try trashing their houses? That should distract them!" // MANUAL DIALOG
+                wait until read
+            end dialogue
+        end if
+        if (hand position near [2305.556, 89.754, 3170.757] radius 5.5 or hand position near [2060.013, 83.436, 3124.712] radius 5.5) and ShieldComment < 2
+            ShieldComment = 2
+            begin dialogue
+                eject good spirit
+                say single line "Good Advisor: We need to knock down this rock. But with these guards here we can't..." // MANUAL DIALOG
+                wait until read
+            end dialogue
+        end if
+    end while
+    while SableQuestState == 2
+        if (hand position near [2305.556, 89.754, 3170.757] radius 5.5 or hand position near [2060.013, 83.436, 3124.712] radius 5.5) and ShieldComment < 3
+            ShieldComment = 3
+            begin dialogue
+                eject evil spirit
+                say single line "Evil Advisor: With those guards gone, we can get down the business!" // MANUAL DIALOG
+                wait until read
+            end dialogue
+        end if
+    end while
+end script GIMPlayAdvisorComments
+// ------------------------------------------------------------------------------------------
+// Main Quest
+// ------------------------------------------------------------------------------------------
+
+begin script GodInMemory
+
+Sculptor = 0
+Sailor1 = 0
+Sailor2 = 0
+Hermit = 0
+Hippy = 0
+Sable = 0
+Piper = 0
+Highlight = 0
+YourPosse = 0
+Cauldron = 0
+CauldronSFX = 0
+ValleyPos = marker at [2103.74, 28.42, 2533.23]
+TigerSectionStatus = 0
+ShieldSectionStatus = 0
+CauldronCollected = 0
+WhiteMushroom = 0
+BlueMushroom = 0
+DeleteMushroom = 0
+WoodCollected = 0
+WoodGift = 0
+CollectedWood = 0
+BookKeeperTeam1 = 0 //Team Mine
+BookKeeperTeam2 = 0 //Team Beach
+BookKeeperTeam1Position = marker at [2344.616,54.024,3107.784]
+BookKeeperTeam2Position = marker at [2001.200,29.077,3158.688]
+Campfire = 0
+Dust = 0
+
+GuardingStonePosition1 = marker at [2305.556, 89.754, 3170.757]
+GuardingStonePosition2 = marker at [2060.013, 83.436, 3124.712]
+GuardingStone1 = 0
+GuardingStone2 = 0
+
+Tiger1 = 0
+Tiger2 = 0
+Tiger3 = 0
+Tiger4 = 0
+
+Stone1 = 0
+Stone2 = 0
+Stone3 = 0
+Stone4 = 0
+Stone5 = 0
+
+lock1 = 0
+lock2 = 0
+lock3 = 0
+lock4 = 0
+lock5 = 0
+
+lock1Pos = marker at [1552,88,2388]
+lock2Pos = marker at [2950,59,2249]
+lock3Pos = marker at [1671,41,2244]
+lock4Pos = marker at [2094,32,2802]
+lock5Pos = marker at [1388,34,2561]
+
+start
+wait until SableQuestReady == 1
+Sable = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [1997.156,46.047,2478.508]
+set Sable focus to [1993.301,44.751,2478.492]
+disable Sable moveable
+disable Sable pickup
+enable Sable indestructible
+Sable play ANM_P_BECKON loop -1
+
+Highlight = create highlight HIGHLIGHT_CHALLENGE at [1997.156,46.047,2478.508]
+ALTITUDE of Highlight = 5.5
+run script ChallengeHighlightNotify(Highlight, Sable, variable EVIL_ADVISOR, variable HELP_TEXT_SPECIFIC_CHALLENGE_START_12) //EA: Hey. Sable the Creature Trainer is trying to attract our attention. 
+
+run map script line "CREATE_ABODE(1, \"2332.170, 3116.741\", \"JAPANESE_ABODE_A\", 976, 1000, 0, 0)"
+run map script line "CREATE_ABODE(1, \"2338.915, 3122.785\", \"JAPANESE_ABODE_C\", 257, 1200, 0, 0)"
+run map script line "CREATE_ABODE(1, \"2346.527, 3127.373\", \"JAPANESE_ABODE_D\", 497, 1000, 0, 0)"
+run map script line "CREATE_ABODE(1, \"2015.254, 3154.911\", \"JAPANESE_ABODE_B\", 4260, 1100, 0, 0)"
+run map script line "CREATE_ABODE(1, \"2007.562, 3148.030\", \"JAPANESE_ABODE_B\", 3600, 1300, 0, 0)"
+run map script line "CREATE_ABODE(1, \"1998.771, 3145.790\", \"JAPANESE_ABODE_F\", 3120, 1100, 0, 0)"
+GuardingStone1 = create OBJECT MOBILE_STATIC_INFO_SINGING_STONE_1 at [GuardingStonePosition1]
+GuardingStone2 = create OBJECT MOBILE_STATIC_INFO_SINGING_STONE_1 at [GuardingStonePosition2]
+//Stone1 = create OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [2225,16,3160]
+//Stone2 = create OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [2231,16,3158]
+//Stone3 = create OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [2236,16,3154]
+//Stone4 = create OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [2236,16,3146]
+//Stone5 = create OBJECT MOBILE_STATIC_INFO_WEEPING_STONE at [2236,16,3142]
+
+
+Campfire = create OBJECT MOBILE_STATIC_INFO_BONFIRE at [BookKeeperTeam1Position]
+	Campfire = create OBJECT MOBILE_STATIC_INFO_BONFIRE at [BookKeeperTeam2Position]
+	BookKeeperTeam1 = flock at [BookKeeperTeam1Position]
+	set BookKeeperTeam1 properties inner 10 outer 10
+	BookKeeperTeam2 = flock at [BookKeeperTeam2Position]
+	set BookKeeperTeam2 properties inner 10 outer 10
+    run background script GIMSetupBookKeepers(BookKeeperTeam1, BookKeeperTeam2, BookKeeperTeam1Position, BookKeeperTeam2Position, GuardingStonePosition1, GuardingStonePosition2, GuardingStone1, GuardingStone2)
+	run background script GIMShieldSegment(GuardingStonePosition1, GuardingStonePosition2, GuardingStone1, GuardingStone2)
+	run background script GIMHandleTigers(Tiger1, Tiger2, Tiger3, Tiger4)
+    run background script GIMPlayAdvisorComments
+	run background script GIMHandleRockKeys(Stone1, marker at [2225,16,3160], lock1Pos, 1)
+	run background script GIMHandleRockKeys(Stone2, marker at [2231,16,3158], lock2Pos, 3)
+	run background script GIMHandleRockKeys(Stone3, marker at [2236,16,3154], lock3Pos, 5)
+	run background script GIMHandleRockKeys(Stone4, marker at [2238,16,3148], lock4Pos, 7)
+	run background script GIMHandleRockKeys(Stone5, marker at [2236,16,3142], lock5Pos, 9)
+
+    YourPosse = flock at [2436.792,52.260,2555.593]
+	set YourPosse properties inner 5 outer 10
+
+    begin cinema
+        start music MUSIC_TYPE_SCRIPT_CREATURE_GUIDE
+		enable Sable high graphics detail
+        Sable play ANM_P_STAND_DESPAIR_2 loop 3
+        move camera position to [1993.301,44.751,2478.492] time 4
+        move camera focus to [1997.156,46.047,2478.508] time 4
+
+        wait until camera ready
+
+        say single line "Sable: The entire village... Gone. I thought the prophecy would protect us... were we wrong?" // MANUAL DIALOGUE
+        wait until read
+
+		//disable jc special SJC_BLEND_ANGLE on Sable					// Villager turn
+		//enable jc special SJC_PREPARE_ROTATE180 on Sable
+
+		set Sable focus to [ValleyPos]
+
+		//Sable play ANM_P_TURN_180 loop 1
+		//wait until Sable played
+
+		Sable play ANM_P_TALKING_AND_POINTING loop 3
+        say single line "Sable: I'm sure you're wanting some answers, holy one. And so do I. Meet me at the Aztec village. We'll tell you all that we know." // MANUAL DIALOGUE
+        wait until read
+        close dialogue
+
+        move Sable position to [ValleyPos]
+        move camera position to [1993.301,74.751,2478.492] time 4
+        move camera focus to [2135.416,64.123,2599.792] time 4
+        set fade red 0 green 0 blue 0 time 4
+        wait until fade ready
+
+        set camera position to [2436.792,52.260,2555.593]
+        set camera focus to [2424.467,53.260,2548.134]
+        set Sable position to [2430.503,52.260,2552.167]
+        set Sable focus to [2436.792,52.260,2555.593]
+        set fade in time 3
+        wait until fade ready
+
+        say single line "Sable: Insert some lore here about the source of the prophecy, the ones who shared it, kinda, anda about my role." // MANUAL DIALOGUE
+        wait until read
+        close dialogue
+
+        set fade red 0 green 0 blue 0 time 2
+        wait until fade ready
+
+        set camera position to [1741.916,54.840,2776.234] // gate scene
+        set camera focus to [1799.201,42.325,2840.822]
+        move camera position to [1799.304,55.348,2752.523] time 16 // gate scene
+        move camera focus to [1779.748,42.791,2832.522] time 16
+        set fade in time 2
+        wait until fade ready
+
+        say HELP_TEXT_FINAL_BEGINNING_60 //These mighty Gates have been closed for millennia.
+        wait until read
+        say HELP_TEXT_FINAL_BEGINNING_61 //But we knew one day a god would come.
+        wait until read
+        say HELP_TEXT_FINAL_BEGINNING_62 //One with the power to find and place the Gate Stones.
+        wait until read
+        say HELP_TEXT_FINAL_BEGINNING_63 //And one who deserves a Creature from within.
+        wait until read
+
+        set fade red 0 green 0 blue 0 time 2
+        wait until fade ready
+        close dialogue
+        set camera position to [2436.792,52.260,2555.593]
+        set camera focus to [2424.467,53.260,2548.134]
+        set fade in time 2
+        wait until fade ready
+
+		Sable play ANM_P_GOSSIP_WOMAN_1 loop 4
+        say single line "Sable: Talk about my plan to go pay these guys a visit." // MANUAL DIALOGUE
+        wait until read
+        close dialogue
+
+        attach Sable to YourPosse
+        if HermitAlive == 0 and HippyAlive == 0 and SailorsAlive == 0 and SculptorAlive == 0 and PiedPiperAlive == 0
+            say single line "Sable: TEMP I will need your help, Holy one. It is just us." // MANUAL DIALOGUE
+            wait until read
+            close dialogue
+        else
+            if HippyAlive == 1
+                Hippy = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HIPPY at [2444.622,52.260,2554.413]
+                set Hippy focus to [2436.902,52.260,2555.006]
+                attach Hippy to YourPosse
+				enable Hippy high graphics detail
+    			disable Hippy moveable
+				disable Hippy pickup
+				enable Hippy indestructible
+            end if
+            if SailorsAlive == 1
+                Sailor1 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [2444.552,52.260,2553.018]
+                Sailor2 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [2444.552,52.260,2552.018]
+                set Sailor1 focus to [Sailor2]
+                set Sailor2 focus to [Sailor1]
+                attach Sailor1 to YourPosse
+                attach Sailor2 to YourPosse
+				enable Sailor1 high graphics detail
+				enable Sailor2 high graphics detail
+				disable Sailor1 moveable
+				disable Sailor2 moveable
+				disable Sailor1 pickup
+				disable Sailor2 pickup
+				enable Sailor1 indestructible
+				enable Sailor2 indestructible
+            end if
+            if PiedPiperAlive == 1
+                Piper = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_PIED_PIPER at [2442.503,52.260,2549.350]
+                set Piper focus to [2436.902,52.260,2555.006]
+                attach Piper to YourPosse
+				enable Piper high graphics detail
+				disable Piper moveable
+				disable Piper pickup
+				enable Piper indestructible
+            end if
+            if HermitAlive == 1
+                Hermit = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HERMIT at [2444.139,52.260,2550.604]
+                set Hermit focus to [2436.902,52.260,2555.006]
+                attach Hermit to YourPosse
+				enable Hermit high graphics detail
+				disable Hermit moveable
+				disable Hermit pickup
+				enable Hermit indestructible
+            end if
+            if SculptorAlive == 1
+                Sculptor = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_SCULPTOR at [2444.693,52.260,2555.595]
+                set Sculptor focus to [2436.902,52.260,2555.006]
+                attach Sculptor to YourPosse
+				enable Sculptor high graphics detail
+				disable Sculptor moveable
+				disable Sculptor pickup
+				enable Sculptor indestructible
+            end if
+
+            say single line "Sable: TEMP We got some people who want to help" // MANUAL DIALOGUE
+            wait until read
+            close dialogue
+
+            set Sable focus to [2463.784,48.260,2546.401]
+		    Sable play ANM_P_INTO_POINTING loop 1
+            Hippy play ANM_P_SITTING_DOWN_DANCE_SAILING3 loop -1
+            Sailor1 play ANM_P_TALK1_MALE loop -1
+            Sailor2 play ANM_P_TALK2_MALE loop -1
+            Piper play ANM_P_AMBIENT1 loop -1
+            Hermit play ANM_P_PRAY loop -1
+            Sculptor play ANM_P_AMBIENT2 loop -1
+            move camera position to [2436.902,52.260,2555.006] time 2
+            move camera focus to [2463.784,48.260,2546.401] time 2
+            wait until camera ready
+
+            say single line "Sable: TEMP I'm sure we can rely on them for help." // MANUAL DIALOGUE
+            wait until read
+            close dialogue
+
+            move camera position to [2436.792,52.260,2555.593] time 2
+            move camera focus to [2424.467,53.260,2548.134] time 2
+            wait until camera ready
+        end if
+		Sable play ANM_P_GOSSIP_WOMAN_2 loop 1
+        say single line "Sable: TEMP For now, we need to try to reach the archives." // MANUAL DIALOGUE
+        wait until read
+	    SPEED of YourPosse = 0.5
+
+        move camera position to [2424.645,47.366,2597.683]+[0,2,0] time 6
+        move camera focus to [2429.219,38.915,2647.216]+[0,1,0] time 6
+        move Sable position to [2426.069,47.028,2604.157] 
+        move Hippy position to [2424.631,46.905,2604.549]
+        wait until camera ready and [Sable] at [2426.069,47.028,2604.157]
+        set Sable focus to [2452.659,38.190,2768.608]
+        Sable play ANM_P_TALKING_AND_POINTING loop 3
+        say single line "Sable: TEMP First, we need to get past the tigers... The BookKeepers must've released them once the storm started." // MANUAL DIALOGUE
+        wait until read
+
+        if Hippy exists
+            wait until [Hippy] at [2424.631,46.905,2604.549]
+            set Hippy focus to [2452.659,38.190,2768.608]
+            Hippy play ANM_P_LOOKING_FOR_SOMETHING loop -1
+            say single line "Hippy: TEMP Well man, maybe we can put these cats to sleep." // MANUAL DIALOGUE
+            wait until read
+            set Sable focus to [Hippy]
+            say single line "Sable: TEMP And how do you suggest we do that?" // MANUAL DIALOGUE
+            wait until read
+            say single line "Hippy: TEMP If you can get me my cauldron, I could cook something up, dude." // MANUAL DIALOGUE
+            wait until read
+		    Sable play ANM_P_GOSSIP_WOMAN_2 loop 1
+            say single line "Sable: TEMP I suppose that's worth a shot. It's up to you, holy one." // MANUAL DIALOGUE
+            wait until read
+            set Sable focus to [2452.659,38.190,2768.608]
+			Cauldron = create MOBILE_OBJECT MOBILE_OBJECT_CAULDRON at [2189.115, 27.470, 2316.725]
+			disable Cauldron moveable
+			disable Cauldron pickup
+			CauldronSFX = create special effect SPOT_VISUAL_COMMAND_SUCCEED on Cauldron time -1
+        else
+            say single line "Sable: TEMP I can't get through like this. I hope you can do something..." // MANUAL DIALOGUE
+            wait until read
+        end if
+        stop music
+        Hippy play ANM_P_LOOKING_FOR_SOMETHING loop -1
+    end cinema
+
+	Highlight = create highlight HIGHLIGHT_CHALLENGE at [2425.400,47.000,2605.500]
+	ALTITUDE of Highlight = 5.5
+
+	// handle the tiger section completion and cauldron
+
+    while TigerSectionStatus == 0
+		if Cauldron clicked and CauldronCollected == 0
+			CauldronCollected = 1
+			begin cinema
+				start sound LH_SAMPLE_G_REWARDSTING
+				wait 2 seconds
+        		set fade red 0 green 0 blue 0 time 2
+        		wait until fade ready
+				delete CauldronSFX
+        		set camera position to [2424.645,47.366,2597.683]+[0,2,0]
+        		set camera focus to [2429.219,38.915,2647.216]+[0,1,0]
+				set Cauldron position to [2425.400,47.000,2605.500]+[1,0,1]
+    		    set Sable focus to [Cauldron]
+    		    set Hippy focus to [Cauldron]
+        		set fade in time 2
+        		wait until fade ready
+				Hippy play ANM_P_CROWD_IMPRESSED_1
+				say single line "Hippy: TEMP There it is! I was looking for it for ages. Thanks man." // MANUAL DIALOGUE
+            	wait until read
+        		move Sailor1 position to [Cauldron] + [3,0,1]
+        		move Sailor2 position to [Cauldron] + [3,0,2]
+            	say single line "Sable: TEMP That's the first step done. Now what?" // MANUAL DIALOGUE
+            	wait until read
+    		    set Hippy focus to [Sable]
+				say single line "Hippy: TEMP Now I need three mushrooms. Two blue ones, and one white." // MANUAL DIALOGUE
+            	wait until read
+				if Sailor1 exists
+					wait until [Sailor1] at [Cauldron] + [3,0,1] and [Sailor2] at [Cauldron] + [3,0,2]
+    		    	set Sailor1 focus to [Cauldron]
+    		    	set Sailor2 focus to [Cauldron]
+            		say single line "Sailor: TEMP We might have a few on hand." // MANUAL DIALOGUE
+            		wait until read
+            		say single line "Sable: TEMP Briliant. Let's do this, then." // MANUAL DIALOGUE
+            		wait until read
+					WhiteMushroom = 1
+					BlueMushroom = 2
+				else
+            		say single line "Sable: TEMP I'm sure you can find it, right Holy one?" // MANUAL DIALOGUE
+            		wait until read
+				end if
+    		    set Hippy focus to [Cauldron]
+    		end cinema
+		end if
+
+		if get MOBILE_OBJECT MOBILE_OBJECT_INFO_CHAMPI at [Hippy] radius 10 exists and WhiteMushroom < 1 and CauldronCollected == 1
+		DeleteMushroom = get MOBILE_OBJECT MOBILE_OBJECT_INFO_CHAMPI at [Hippy] radius 10
+		Hippy play ANM_P_CLAP_4
+		begin dialogue
+			say single line "Hippy: TEMP That's the one I need." // MANUAL DIALOGUE
+            wait until read
+		end dialogue
+		delete DeleteMushroom with fade
+		WhiteMushroom++
+		end if
+
+		if get MOBILE_OBJECT MOBILE_OBJECT_INFO_MAGIC_MUSHROOM at [Hippy] radius 10 exists and BlueMushroom < 2 and CauldronCollected == 1
+		DeleteMushroom = get MOBILE_OBJECT MOBILE_OBJECT_INFO_MAGIC_MUSHROOM at [Hippy] radius 10
+		Hippy play ANM_P_CLAP_4
+		begin dialogue
+			say single line "Hippy: TEMP That's the one I need." // MANUAL DIALOGUE
+            wait until read
+		end dialogue
+		delete DeleteMushroom with fade
+		BlueMushroom++
+		end if
+
+		if WhiteMushroom == 1 and BlueMushroom == 2
+			begin cinema
+    		    move camera position to [2424.645,47.366,2597.683]+[0,2,0] time 2
+    		    move camera focus to [2429.219,38.915,2647.216]+[0,1,0] time 2
+				wait until camera ready
+				say single line "Hippy: TEMP The brew is done... now, allow me..." // MANUAL DIALOGUE
+            	wait until read
+				Hippy play ANM_P_BECKON
+				wait 2 seconds
+        		move camera position to [2463.645,70.366,2752.683] time 3
+        		move camera focus to [2466.219,34.915,2794.216] time 3
+				wait 2 seconds
+				GIMTigerAsleep = 1
+				wait until camera ready
+				say single line "Hippy: TEMP There we go. That takes care of that." // MANUAL DIALOGUE
+            	wait until read
+    		    move camera position to [2424.645,47.366,2597.683]+[0,2,0] time 2
+    		    move camera focus to [2429.219,38.915,2647.216]+[0,1,0] time 2
+    		    set Sailor1 focus to [2424.645,47.366,2597.683]
+    		    set Sailor2 focus to [2424.645,47.366,2597.683]
+    		    set Hippy focus to [2424.645,47.366,2597.683]
+    		    set Sable focus to [2424.645,47.366,2597.683]
+				wait until camera ready
+    		end cinema
+			TigerSectionStatus = 1
+		elsif GIMTigerActive == 0
+			begin cinema
+    		    move camera position to [2424.645,47.366,2597.683]+[0,2,0] time 2
+    		    move camera focus to [2429.219,38.915,2647.216]+[0,1,0] time 2
+    		    set Sable focus to [2424.645,47.366,2597.683]
+    		    set Hippy focus to [2424.645,47.366,2597.683]
+    		    set Sailor1 focus to [2424.645,47.366,2597.683]
+    		    set Sailor2 focus to [2424.645,47.366,2597.683]
+				Hippy play ANM_P_AMBIENT2 loop -1
+				wait until camera ready
+				Sable play ANM_P_TALK2_FEMALE loop 2
+            	say single line "Sable: TEMP Well, that takes care of that." // MANUAL DIALOGUE
+            	wait until read
+				close dialogue
+        		if Hippy exists
+					say single line "Hippy: TEMP That ain't good karmma, dude." // MANUAL DIALOGUE
+            		wait until read
+				end if
+				delete CauldronSFX
+    		end cinema
+			TigerSectionStatus = 1
+		end if
+	end while
+	begin cinema
+	    SPEED of Sable = 0.5
+        start music MUSIC_TYPE_SCRIPT_CREATURE_GUIDE
+		move Sable position to [2284.997,30.477,2930.445]
+		set Sable anim ANM_P_WALK_BECKON02
+        say single line "Sable: TEMP Let's get going." // MANUAL DIALOGUE
+        wait until read
+		close dialogue
+		move Sailor1 position to [2282.590,29.852,2927.834]
+		move Sailor2 position to [2283.635,30.051,2927.640]
+		move Hippy position to [2286.265,30.642,2928.612]
+    	move camera position to [2424.645,47.366,2597.683]+[0,12,0] time 2
+    	move camera focus to [2429.219,38.915,2647.216]+[0,11,0] time 2
+        set fade red 0 green 0 blue 0 time 2
+        wait until fade ready
+		set Sable position to [2284.997,30.477,2930.445]
+		set Sailor1 position to [2282.590,29.852,2927.834]
+		set Sailor2 position to [2283.635,30.051,2927.640]
+		set Piper position to [2286.265,30.642,2928.612]
+		set Hippy position to [2282.590,29.852,2927.834]+[0,0,-2]
+		set Hermit position to [2283.635,30.051,2927.640]+[0,0,-2]
+		set Sculptor position to [2286.265,30.642,2928.612]+[0,0,-2]
+		set YourPosse focus to [2194.622,4.224,3125.347]
+        set fade in time 1
+		if GIMGuardDuty == 0
+        	set camera position to [1963.884, 23.683, 3159.740]+[0,12,0]
+        	set camera focus to [2021.592, 29.009, 3153.871]
+        	wait until fade ready
+        	say single line "Sable: TEMP While we walk, let me tell you about what we're dealing with." // MANUAL DIALOGUE
+        	wait until read
+        	say single line "Sable: TEMP They are only known to use as the BookKeepers. They are the ones who told us the prophecy." // MANUAL DIALOGUE
+        	wait until read
+        	set camera position to [2344.554, 46.735, 3063.400]+[0,12,0]
+        	set camera focus to [2348.360, 53.919, 3128.210]
+        	say single line "Sable: TEMP They are quite stingy with their knowledge, and keep it to themselves in some secret place." // MANUAL DIALOGUE
+        	wait until read
+        	set camera position to [2186.739, 69.136, 2928.587]+[0,50,0]
+        	set camera focus to [2168.047, 9.534, 3169.807]
+        	say single line "Sable: TEMP The key to which is out of our reach..." // MANUAL DIALOGUE
+        	wait until read
+        	set camera position to [2285.561,30.140,2923.236]+[0,2,0]
+        	set camera focus to [2280.391,27.501,2945.364]
+        	say single line "Sable: TEMP We'll need to distract them, and break their concentration..." // MANUAL DIALOGUE
+        	wait until read
+		else
+        	set camera position to [2285.561,30.140,2923.236]+[0,2,0]
+        	set camera focus to [2280.391,27.501,2945.364]
+        	wait until fade ready
+    		set Sable focus to [2285.561,30.140,2923.236]
+        	say single line "Sable: TEMP Now, I would talk about the BookKeepers... but you already got that done." // MANUAL DIALOGUE
+        	wait until read
+		end if
+		if GIMShieldNotActive == 0
+        	set fade red 0 green 0 blue 0 time 1
+        	wait until fade ready
+			close dialogue
+        	set camera position to [2017.724, 48.350, 3119.919]+[0,45,0]
+        	set camera focus to [2275.779, 36.075, 3141.236]
+        	set fade in time 1
+        	wait until fade ready
+        	say single line "Sable: TEMP As for the key, it is being guarded by these shield generating stones." // MANUAL DIALOGUE
+        	wait until read
+        	set camera position to [2337.311, 77.906, 3195.132]+[0,12,0]
+        	set camera focus to [2119.524, 63.161, 3030.214]
+        	say single line "Sable: TEMP They look tough, but I think a good hit can do it." // MANUAL DIALOGUE
+        	wait until read
+        	set camera position to [2285.561,30.140,2923.236]+[0,2,0]
+        	set camera focus to [2280.391,27.501,2945.364]
+			if (Piper exists or Hermit exists) and GIMGuardDuty == 0
+        		say single line "Sable: TEMP Any ideas?" // MANUAL DIALOGUE
+        		wait until read
+			elsif GIMGuardDuty == 0
+        		say single line "Sable: TEMP I hope you can figure something out, leader." // MANUAL DIALOGUE
+        		wait until read
+			else
+        		say single line "Sable: TEMP And that's about it." // MANUAL DIALOGUE
+        		wait until read
+			end if
+			if GIMCrew2Distracted == 0 and Piper exists
+				set Piper focus to [Sable]
+    			set Sable focus to [Piper]
+        		say single line "Pied Piper: TEMP I think I might now a tune to entrance the guards for a while." // MANUAL DIALOGUE
+        		wait until read
+        		say single line "Sable: TEMP Hmmm... I guess it's better than nothing." // MANUAL DIALOGUE
+        		wait until read
+        		say single line "Pied Piper: TEMP Just let me know when to start." // MANUAL DIALOGUE
+        		wait until read
+    			set Piper focus to [2285.561,30.140,2923.236]
+        	    say single line "Click on the Pied Piper to start his distraction." // MANUAL DIALOGUE
+        	    wait until read
+			end if
+			if GIMCrew1Distracted == 0 and Hermit exists
+				set Hermit focus to [Sable]
+    			set Sable focus to [Hermit]
+        		say single line "Hermit: TEMP I can cause a fire. I know a good place for it." // MANUAL DIALOGUE
+        		wait until read
+        		say single line "Sable: TEMP That would help a lot. What do you need?" // MANUAL DIALOGUE
+        		wait until read
+        		say single line "Hermit: TEMP Only 5000 wood. It needs to be a big fire." // MANUAL DIALOGUE
+        		wait until read
+				if Sailor1 exists
+    			    set Sailor1 focus to [Sable]
+    			    set Sailor2 focus to [Sable]
+        	    	say single line "Sailor: TEMP Don't worry, oh mighty one. We can provide the wood you need." // MANUAL DIALOGUE
+        	    	wait until read
+        	    	say single line "Hermit: TEMP Alright, that will work well, as long as that ogre is out of the way." // MANUAL DIALOGUE
+        	    	wait until read
+    				set Hermit focus to [2285.561,30.140,2923.236]
+        	    	say single line "Hermit: TEMP Just say the word, and I'll get movin." // MANUAL DIALOGUE
+        	    	wait until read
+					WoodCollected = 5000
+				else
+    				set Hermit focus to [2285.561,30.140,2923.236]
+        	    	say single line "Hermit: TEMP Put the wood down here, and I'll be ready to go." // MANUAL DIALOGUE
+        	    	wait until read
+				end if
+        	    say single line "Click on the Hermit to start his distraction." // MANUAL DIALOGUE
+        	    wait until read
+			end if
+        	say single line "Sable: TEMP Good luck, Holy one." // MANUAL DIALOGUE
+        	wait until read
+		else
+        	say single line "Sable: TEMP More than that, you also got rid of the shield. Only one more step remains." // MANUAL DIALOGUE
+        	wait until read
+		end if
+		stop music
+	end cinema
+	SableQuestState = 1
+	while GIMGuardDuty == 0
+		if WoodCollected < 5000 and GIMCrew1Distracted == 0
+			WoodGift = get STORE WOODSTORE at [Hermit] radius 10
+			if WoodGift exists
+				CollectedWood = get resource WOOD in WoodGift
+				delete WoodGift with fade
+
+				WoodCollected += CollectedWood
+				if WoodCollected >= 5000
+					begin cinema
+        				move camera position to [2285.561,30.140,2923.236]+[0,5,0] time 3
+        				move camera focus to [Hermit] time 3
+						wait until camera ready
+						say single line "Hermit: TEMP That's it. I got enough wood now." // MANUAL DIALOGUE
+						wait until read
+						say single line "Hermit: TEMP Now I just need to reach the mine." // MANUAL DIALOGUE
+						wait until read
+						move camera position to [2531.561,45.140,3357.236]+[0,5,0] time 3
+        				move camera focus to [2510,49,3377] time 3
+						wait until camera ready
+						if CreatureGuardianFinished == 0
+							say single line "Hermit: TEMP But I can't do that while that ogre is still breathing." // MANUAL DIALOGUE
+							wait until read
+						end if
+						say single line "Hermit: TEMP When you're ready, just let me know." // MANUAL DIALOGUE
+						wait until read
+					end cinema
+				else
+					begin dialogue
+						say single line "Hermit: TEMP Still need some more wood if we want to do this." // MANUAL DIALOGUE
+						wait until read
+					end dialogue
+				end if
+			end if
+		end if
+
+		if Hermit clicked and GIMCrew1Distracted == 0
+			if WoodCollected < 5000
+				begin dialogue
+					say single line "Hermit: TEMP I'll need some more wood before I can go." // MANUAL DIALOGUE
+					wait until read
+				end dialogue
+			else
+				if CreatureGuardianFinished == 0
+					begin dialogue
+						say single line "Hermit: TEMP I dunno if you've noticed, but that Ogre is still breathing. Fix that." // MANUAL DIALOGUE
+						wait until read
+					end dialogue
+				else
+					begin cinema
+						say single line "Hermit: TEMP It's time for a fire show they won't forget!" // MANUAL DIALOGUE
+						wait until read
+						move Hermit position to [2292.590,37.852,2825.834]
+        				set fade red 0 green 0 blue 0 time 1
+        				wait until fade ready
+						start music MUSIC_TYPE_SCRIPT_HERMIT
+						set Hermit position to [2531.561,45.140,3357.236]
+						set Hermit focus to [2511.43,45.140,3378.24]
+						set camera position to [2531.561,45.140,3357.236]+[0,5,0]
+        				set camera focus to [2510,49,3377]
+        				set fade in time 2
+        				wait until fade ready
+						Hermit play ANM_P_ARSONIST loop 1
+						wait 2 seconds
+						wait until Hermit played
+						move Hermit position to [2283.635,30.051,2927.640]+[0,0,-2]
+						//add kaboom!
+						say single line HELP_TEXT_HERMIT_30 //Who's your Daddy? Who's your Daddy now? Oh yeah. Look at that!
+						wait until read
+        				set fade red 0 green 0 blue 0 time 1
+        				wait until fade ready
+						close dialogue
+        				set camera position to [2344.554, 46.735, 3063.400]+[0,12,0]
+        				set camera focus to [2348.360, 53.919, 3128.210]
+        				set fade in time 2
+        				wait until fade ready
+						GIMCrew1Distracted = 1
+						say single line "BookKeeper: Someone's trying to find and attack our archives! Stop Them!" // MANUAL DIALOG
+						wait until read
+						stop music
+					end cinema
+				end if
+			end if
+			clear clicked object
+		end if
+		
+		if Piper clicked and GIMCrew2Distracted == 0
+			begin dialogue
+				say single line "Pied Piper: TEMP Alright, here I go." // MANUAL DIALOGUE
+        		wait until read
+			end dialogue
+			move Piper position to [2195,2.8,3111]
+			wait until [Piper] at [2195,2.8,3111]
+			move Piper position to [2065,24.8,3166]
+			wait until [Piper] at [2065,24.8,3166]
+			wait 1 second
+			SPEED of Piper=0.2
+			move Piper position to [1995,28.8,3175]
+			set Piper anim ANM_PIED_PIPER_DANCE_WALK
+			attach music MUSIC_TYPE_SCRIPT_PIPER_TUNE to Piper
+			wait until [Piper] at [1995,28.8,3175]
+			Piper play ANM_PIED_PIPER_DANCE_STAND loop -1
+			GIMCrew2Distracted = 1
+			clear clicked object
+		end if
+	end while
+	SableQuestState = 2
+	detach music from Piper
+	move Piper position to [2286.265,30.642,2928.612]
+	SPEED of Piper = 1.0
+	wait until GIMShieldNotActive == 1
+	SableQuestState = 3
+	begin cinema
+        set camera position to [2285.561,30.140,2923.236]+[0,2,0]
+        set camera focus to [2280.391,27.501,2945.364]
+        say single line "Sable: TEMP Alright, that should do it." // MANUAL DIALOGUE
+        wait until read
+        say single line "Sable: TEMP We now need to unlock the entrance." // MANUAL DIALOGUE
+        wait until read
+        say single line "Sable: TEMP The Bookkeepers made a highly complex system for this, where each stone is linked to a landmark." // MANUAL DIALOGUE
+        wait until read
+        say single line "Sable: TEMP You need to place each in the correct location, else it won't work." // MANUAL DIALOGUE
+        wait until read
+		if Sculptor exists
+        	say single line "Sable: TEMP The Sculptor will assist you with that." // MANUAL DIALOGUE
+		else
+        	say single line "Sable: TEMP He knows more about rocks than anyone on this island, I know that for sure.." // MANUAL DIALOGUE
+		end if
+        wait until read
+		if (Piper exists or Hermit exists or Sailor1 exists or Hippy exists)
+        	say single line "Sable: TEMP The rest of us will wait for you at the entrance." // MANUAL DIALOGUE
+		else
+        	say single line "Sable: TEMP I shall wait for you at the entrance." // MANUAL DIALOGUE
+		end if
+        wait until read
+		move Sculptor position to [2195,2.8,3111]
+		move Sable position to [2292.590,37.852,2825.834]
+		move Sailor1 position to [2292.590,37.852,2825.834]
+		move Sailor2 position to [2292.590,37.852,2825.834]
+		move Hippy position to [2292.590,37.852,2825.834]
+		move Piper position to [2292.590,37.852,2825.834]
+		move Hermit position to [2292.590,37.852,2825.834]
+        set fade red 0 green 0 blue 0 time 2
+        wait until fade ready
+        set camera position to [2202.270, 26.030, 3131.506]
+        //set camera focus to [2239.754, 16.080, 3151.141]
+		set Sculptor position to [2221,16,3144]
+		set Sable position to [2356.215, 53.247, 3120.743]
+		set Sailor1 position to [2358.454, 53.590, 3118.630]
+		set Sailor2 position to [2356.896, 53.535, 3117.864]
+		set Hippy position to [2353.416, 53.218, 3119.134]
+		set Piper position to [2352.472, 52.891, 3124.374]
+		set Hermit position to [2354.966, 53.417, 3117.722]
+		set YourPosse focus to [CaveEntrance2]
+		set camera focus to [Sculptor]
+		set Sculptor focus to [2202.270, 26.030, 3131.506]
+        set fade in time 2
+        wait until fade ready
+		if Sculptor exists
+        	say single line "Sculptor: TEMP The BookKeepers use these rocks as their way to lock the entrance." // MANUAL DIALOGUE
+        	wait until read
+        	say single line "Sculptor: TEMP To unlock them, you will need to find five magical circles unlocked by destroying the shield." // MANUAL DIALOGUE
+        	wait until read
+        	say single line "Sculptor: TEMP In those you place one of these keys, and if you got the correct combination, it will unlock." // MANUAL DIALOGUE
+        	wait until read
+        	say single line "Sculptor: TEMP Good thing for us that I have done some reading on these rocks." // MANUAL DIALOGUE
+        	wait until read
+			set Sculptor focus to [2236,16,3154]
+			move camera position to [2202.270, 26.030, 3131.506]+[0,5,0] time 4
+			wait until camera ready
+			GIMLockAssistance = 1
+			set Sculptor focus to [2202.270, 26.030, 3131.506]
+        	say single line "Sculptor: TEMP There. This should help you out. Good luck, almighty one." // MANUAL DIALOGUE
+        	wait until read
+		else
+			eject good spirit
+			say single line "Good Advisor: Add dialog here" // MANUAL DIALOG
+			wait until read
+		end if
+		move Sculptor position to [2352.475, 52.927, 3121.268]
+		set Sculptor focus to [CaveEntrance2]
+	end cinema
+	SableQuestState = 4
+	run script GIMHandleLocks(lock1Pos, lock2Pos, lock3Pos, lock4Pos, lock5Pos)
+	set Sculptor position to [2352.475, 52.927, 3121.268]
+
+	begin cinema
+		//Herolich1: TODO finish cinematic
+        set fade red 0 green 0 blue 0 time 2
+        wait until fade ready
+        set camera position to [2353.972, 57.692, 3109.157] //Mine Segment
+        set camera focus to [2357.822, 52.530, 3129.676]
+		set fade in time 2
+		open CaveEntrance1
+		open CaveEntrance2
+		start sound LH_SCRIPT_SAMPLE_CAVEDOOR_SLIDE AUDIO_SFX_BANK_TYPE_SCRIPT_SFX at [2359.843,52.556,3127.707]
+		wait 2 seconds
+		start sound LH_SCRIPT_SAMPLE_CAVEDOOR_SLAM AUDIO_SFX_BANK_TYPE_SCRIPT_SFX at [2359.843,52.556,3127.707]
+        wait until fade ready
+		wait 4 seconds
+		move Sculptor position to [2359.843,52.556,3127.707]
+		move Sable position to [2359.843,52.556,3127.707]
+		move Sailor1 position to [2359.843,52.556,3127.707]
+		move Sailor2 position to [2359.843,52.556,3127.707]
+		move Hippy position to [2359.843,52.556,3127.707]
+		move Piper position to [2359.843,52.556,3127.707]
+		move Hermit position to [2359.843,52.556,3127.707]
+		move camera position to [2462.491, 30.820, 3004.575]+[0,80,0] time 6
+		move camera focus to [2362.169, 73.928, 3149.358] time 6
+		wait 4.5 seconds
+		move game time get game time +12 time 5
+		wait 5 seconds
+
+		set Sculptor position to [2252.891,22.736,3302.261]
+		set Sable position to [2258.855,22.406,3303.246]
+		set Sailor1 position to [2276.015,22.780,3307.216]  // right dude
+		set Sailor2 position to [2276.430,22.780,3305.481]  // left dude
+		set Hippy position to [2267.053,22.762,3309.741]
+		set Piper position to [2252.912,22.694,3298.400]
+		set Hermit position to [2267.745,22.644,3307.973]
+
+		set Sculptor focus to [Piper]
+		set Sable focus to [2277.013, 23.450, 3323.143]
+		set Sailor1 focus to [2283.130,16.507,3313.251]
+		set Sailor2 focus to [2283.130,16.507,3313.251]
+		set Hippy focus to [Hippy]
+		set Piper focus to [Sculptor]
+		set Hermit focus to [Hermit]
+		
+		move camera position to [2426.240, 7.004, 3413.033]+[0,110,0] time 4
+		move camera focus to [2290.633, 54.396, 3272.695] time 4
+		wait 3 seconds
+		move camera position to [2277.013, 23.450, 3323.143]+[0,10,0] time 4
+		move camera focus to [2255.053, 22.704, 3296.101] time 4
+		wait until camera ready
+
+        say single line "Sable: TEMP Here we are." // MANUAL DIALOGUE
+        wait until read
+        say single line "Sable: TEMP Now, where is the-" // MANUAL DIALOGUE
+		move camera focus to [2266.638,24.120,3345.261] time 3
+		start music MUSIC_TYPE_SCRIPT_EPIC_03
+		shake camera at [2266.638,24.120,3345.261] radius 150.0 amplitude 0.25 time 5
+		Dust = create special effect SPOT_VISUAL_SMOKE at [2266.638,24.120,3345.261] time 5
+		SCRIPT_OBJECT_PROPERTY_TYPE_SCALE of Dust = 7.0
+
+		start sound LH_SCRIPT_SAMPLE_CREATUREGATESTONEMOVE_01 AUDIO_SFX_BANK_TYPE_SCRIPT_SFX
+		while get ALTITUDE of TibetanTotemOfKnowledge < 0
+			ALTITUDE of TibetanTotemOfKnowledge+=0.25
+		end while
+		move Sable position to [2266.823,24.120,3336.915]
+        wait until read
+        say single line "Sable: TEMP Guess unlocking the path must've unlocked the pillar as well." // MANUAL DIALOGUE
+        wait until read
+		wait until [Sable] at [2266.823,24.120,3336.915]
+		set Sable focus to [TibetanTotemOfKnowledge]
+        say single line "Sable: TEMP Now, let me try to see if I can decipher this..." // MANUAL DIALOGUE
+        wait until read
+        start music MUSIC_TYPE_SCRIPT_CREATURE_GUIDE
+        say single line "Sable: TEMP *Reading the pillar.* And to you, my followers, I promise..." // MANUAL DIALOGUE
+        wait until read
+        set fade red 0 green 0 blue 0 time 2
+        wait until fade ready
+		close dialogue
+
+        set camera position to [1469.513, 15.567, 2056.167]+[0,20,0] //intro Segment
+        set camera focus to [1609.986, 14.222, 2267.731]
+		set fade in time 2
+        wait until fade ready
+        say single line "???: TEMP I promise that once the balance starts to shift, a new god will be born." // MANUAL DIALOGUE
+		move camera position to [1632.379, 15.567, 2306.095]+[0,20,0] time 10
+		wait 3 seconds
+		move camera focus to [1851.261, 21.848, 2476.988] time 7
+        wait until read
+        say single line "???: TEMP One of either Black or White, who shall stand against he who wishes to bring Eternity." // MANUAL DIALOGUE
+        wait until read
+        set camera position to [1907.582, 26.015, 2562.663]+[0,30,0] //norse town
+        set camera focus to [1830.301, 30.493, 2677.173]
+        say single line "???: TEMP When they come, give them a Temple to call their own. Teach them all you know." // MANUAL DIALOGUE
+        wait until read
+        set camera position to [2594.696, 54.971, 2619.008]+[0,50,0] //aztec town
+        set camera focus to [2451.165, 52.260, 2575.244]
+        say single line "???: TEMP And be faithful that they can stop the rise of this threat, before it kills all gods." // MANUAL DIALOGUE
+        wait until read
+        set camera position to [2379.016, 51.224, 2572.420]+[0,100,0] //dead guide
+        set camera focus to [-1050.722, -10.000, -1124.982]
+        say single line "???: TEMP Do know, however, I cannot promise more than that. Your safety and survival are in your own hands." // MANUAL HELP_TEXT_DIALOG_CONTINUEGAME
+        wait until read
+		set camera position to [2147.826, 81.381, 3103.167] // show the glade.
+		set camera focus to [2238.217, 18.187, 3155.706]
+        say single line "???: TEMP And most important of all, they must have a Creature." // MANUAL DIALOGUE
+        wait until read
+        set camera position to [MyCreature]+[10,10,10] //Show your creature
+        set camera focus to [MyCreature]
+        say single line "???: TEMP Which Creature, I do not know. But they shall hold a piece of the Creed inside them." // MANUAL DIALOGUE
+        wait until read
+        set camera position to [1950.294, 26.915, 2548.881]+[0,30,0] //temple vortex Segment
+        set camera focus to [1910.785, 29.480, 2503.289]
+        say single line "???: TEMP They will be the one to do it." // MANUAL DIALOGUE
+        wait until read
+		move camera focus to [1700.2275, 11.4005, 2520.1829] time 3
+        say single line "???: TEMP The one able to change Eternity." // MANUAL DIALOGUE
+        wait until read
+        set fade red 0 green 0 blue 0 time 2
+        wait until fade ready
+		
+		set camera position to [2265,28,3316]
+		set camera focus to [Sable]
+		set Sable focus to [2265,28,3316]
+		set fade in time 2
+        wait until fade ready
+        say single line "Sable: TEMP That, is my word." // MANUAL DIALOGUE
+        wait until read
+	end cinema
+	SableQuestState = 5
+end script GodInMemory

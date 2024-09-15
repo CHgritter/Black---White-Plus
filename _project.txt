@@ -24,7 +24,7 @@ header HelpDudeAnim.h
 info_path ../../headers
 info info1.txt
 info info2.txt
-info InfoScript1.txt
+info Custom/InfoScript1.txt
 info _constants.txt
 
 source_path .
@@ -68,6 +68,7 @@ source Land1/throwingstones.txt
 source Land1/CollectingRocks.txt
 source Land1/MagicMushroom.txt
 source Land1/StartingCreatures.txt
+source Land1/GodInMemory.txt
 source Land1/LeavingLand1Scene.txt
 source Land1/LandControl1.txt
 ### hero's new land test. ###
@@ -76,11 +77,11 @@ source Land1/LandControl1.txt
 ### Land 2 ###
 source Land2/setupland2.txt
 source Land2/SlaversWarning.txt
+source Land2/land2ComputerAI.txt
 source Land2/sacrifice.txt
 source Land2/baywatch.txt
 source Land2/Land2ShieldChallenge.txt
 source Land2/Land2FireballChallenge.txt
-source Land2/land2ComputerAI.txt
 source Land2/beginland2.txt
 source Land2/LearnWorshipping.txt
 source Land2/greedyfarmer.txt

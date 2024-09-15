@@ -162,6 +162,40 @@ start
 end script KillChild
 
 //------------------------------------------------------------------------------------------------------------------------
+// Herolich1: Burn the town down, made by Daniels118
+//------------------------------------------------------------------------------------------------------------------------
+begin script BurnArea(Position, Radius, Speed)
+	Cx = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of Position
+	Cz = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of Position
+	XStep = 10
+	ZStep = XStep * 0.757 //0.707
+	CellRadius = XStep / 2
+	CurrOffset = 0
+	x0 = Cx - Radius + CellRadius
+	z0 = Cz - Radius + CellRadius
+	x1 = Cx + Radius - CellRadius
+	z1 = Cz + Radius - CellRadius
+	X = x0
+	Z = z0
+	Building = 0
+start
+	//@noyield
+	while X < x1
+		Z = z0 + CurrOffset
+		//@noyield
+		while Z < z1
+			Building = get SCRIPT_OBJECT_TYPE_ABODE at [X, 0, Z] radius CellRadius
+			if Building exists
+				enable Building on fire Speed
+			end if
+			Z += ZStep
+		end while
+		X += XStep
+		CurrOffset = CellRadius - CurrOffset
+	end while
+end script BurnArea
+
+//------------------------------------------------------------------------------------------------------------------------
 begin script HealerKilledOrBanished(Healer, Town, IsKilled)
 
 start
@@ -242,40 +276,6 @@ start
 	    run script ComputerPlayerConfrontPlayer(3, variable "If I were you, I would have let him be. But let me guess: you work in mysterious ways!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_04
 	end if
 end script HealerKilledOrBanished
-
-//------------------------------------------------------------------------------------------------------------------------
-// Herolich1: Burn the town down, made by Daniels118
-//------------------------------------------------------------------------------------------------------------------------
-begin script BurnArea(Position, Radius, Speed)
-	Cx = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of Position
-	Cz = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of Position
-	XStep = 10
-	ZStep = XStep * 0.757 //0.707
-	CellRadius = XStep / 2
-	CurrOffset = 0
-	x0 = Cx - Radius + CellRadius
-	z0 = Cz - Radius + CellRadius
-	x1 = Cx + Radius - CellRadius
-	z1 = Cz + Radius - CellRadius
-	X = x0
-	Z = z0
-	Building = 0
-start
-	//@noyield
-	while X < x1
-		Z = z0 + CurrOffset
-		//@noyield
-		while Z < z1
-			Building = get SCRIPT_OBJECT_TYPE_ABODE at [X, 0, Z] radius CellRadius
-			if Building exists
-				enable Building on fire Speed
-			end if
-			Z += ZStep
-		end while
-		X += XStep
-		CurrOffset = CellRadius - CurrOffset
-	end while
-end script BurnArea
 //------------------------------------------------------------------------------------------------------------------------
 begin script FirstTimeBanished(Healer, Town)
 start

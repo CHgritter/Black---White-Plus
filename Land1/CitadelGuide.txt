@@ -217,9 +217,10 @@ end script CitadelGuideCinema
 // Anvance Did you know script
 //------------------------------------------------------------------------------------------------------------------------
 
-begin script CitadelGuide
-	dyk18 = marker at [1924.0012, 30.0401, 2621.2017]				// zoom, rotate and dbl click
-	dyk22 = marker at [1890.6465, 29.4800, 2505.0425]				// shortcut to outside temple
+begin script CitadelGuide(dyk18, dyk22)
+//	Herolich1: moved DYK signs to the control to allow them to exist if quests are skipped
+//	dyk18 = marker at [1924.0012, 30.0401, 2621.2017]				// zoom, rotate and dbl click
+//	dyk22 = marker at [1890.6465, 29.4800, 2505.0425]				// shortcut to outside temple
 //	dyk22 = marker at [1890.6750, 28.8100, 2533.2220]				// OLD POS shortcut to outside temple
 
 start

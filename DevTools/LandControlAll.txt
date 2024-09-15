@@ -150,6 +150,7 @@ start
 			if BuildingInfo exists
 				run script DisplayCoordsAndRotation(BuildingInfo)
 			end if
+    end loop
 end script GetBuildingCoords
 
 begin script DisplayCoordsAndRotation(TheBuildingInQuestion)
@@ -178,6 +179,7 @@ start
 			if ObjectInfo exists
 				run script DisplayObjCoordsAndRotation(ObjectInfo)
 			end if
+    end loop
 end script GetObjectCoords
 
 begin script DisplayObjCoordsAndRotation(TheObjectInQuestion)
@@ -197,3 +199,63 @@ start
 		wait until read
 	end dialogue
 end script DisplayObjCoordsAndRotation
+
+begin script GetCameraCoords
+start
+    begin loop
+    	when key KB_Y Down
+			run script ShowCameraCoords
+    end loop
+end script GetCameraCoords
+
+begin script ShowCameraCoords
+X1 = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of camera position
+Y1 = land height at camera position
+Z1 = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of camera position
+X2 = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of camera focus
+Y2 = land height at camera focus
+Z2 = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of camera focus
+start
+	begin dialogue
+		say "$d" with number Z1 with interaction
+		wait until read
+		say "$d" with number Y1 with interaction
+		wait until read
+		say "$d" with number X1 with interaction
+		wait until read
+		say "Position" with interaction
+		wait until read
+		clear dialogue
+		say "$d" with number Z2 with interaction
+		wait until read
+		say "$d" with number Y2 with interaction
+		wait until read
+		say "$d" with number X2 with interaction
+		wait until read
+		say "focus" with interaction
+		wait until read
+	end dialogue
+end script ShowCameraCoords
+
+begin script GetHandCoords
+start
+    begin loop
+    	when key KB_G Down
+			run script ShowHandCoords
+    end loop
+end script GetHandCoords
+
+begin script ShowHandCoords
+X1 = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of hand position
+Y1 = land height at hand position
+Z1 = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of hand position
+start
+	begin dialogue
+		say "$d" with number Z1 with interaction
+		wait until read
+		say "$d" with number Y1 with interaction
+		wait until read
+		say "$d" with number X1 with interaction
+		wait until read
+	end dialogue
+end script ShowHandCoords

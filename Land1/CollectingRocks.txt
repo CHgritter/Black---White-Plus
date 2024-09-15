@@ -215,22 +215,22 @@ start
 	    	set Sculptor focus to camera position
 
 			Sculptor play ANM_P_GOSSIP_MAN loop 1
-			say single line "Sculptor: Holy one, I need your assistance for something." // MANUAL DIALOGUE
+			say single line "Sculptor: Holy one, I need your assistance for something." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_01
 			wait until read
 
 			Sculptor play ANM_P_CROWD_LOST loop 1
-			say single line "Sculptor: You see, my family is put me under 'house arrest' for wandering far afield at times." // MANUAL DIALOGUE
+			say single line "Sculptor: You see, my family is put me under 'house arrest' for wandering far afield at times." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_02
 			wait until read
 
 			Sculptor play ANM_P_CROWD_UNIMPRESSED_1 loop 1
-			say single line "Sculptor: It's ridiculous. How else am I meant to get inspired?" // MANUAL DIALOGUE
+			say single line "Sculptor: It's ridiculous. How else am I meant to get inspired?" // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_03
 			wait until read
 
-			say single line "Sculptor: Regardless, I'm now unable to collect the right types of rock for my sculpting, but maybe you can help me?" // MANUAL DIALOGUE
+			say single line "Sculptor: Regardless, I'm now unable to collect the right types of rock for my sculpting, but maybe you can help me?" // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_04
 			wait until read
 
 			Sculptor play ANM_P_TALK1_MALE loop 1
-			say single line "Sculptor: I am currently looking for a square, white rock. Can you lend me a hand?" // MANUAL DIALOGUE
+			say single line "Sculptor: I am currently looking for a square, white rock. Can you lend me a hand?" // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_05
 			wait until read
 
 			set Sculptor focus to [1770.609, 28.810, 2690.894]
@@ -282,7 +282,7 @@ start
 
 	    		set Sculptor focus to camera position
 				Sculptor play ANM_P_TALK_TO_NEIGHBOUR loop 1
-				say "Sculptor: Here, take this with my thanks." // MANUAL DIALOGUE
+				say "Sculptor: Here, take this with my thanks." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_06
 				wait until read
 				close dialogue
 				set Sculptor focus to [1770.609, 28.810, 2690.894]
@@ -337,11 +337,11 @@ start
 	    		set Sculptor focus to camera position
 
 				Sculptor play ANM_P_GOSSIP_MAN loop 1
-				say single line "Sculptor: Hello again Holy one. I hope you don't mind me asking for your help again." // MANUAL DIALOGUE
+				say single line "Sculptor: Hello again Holy one. I hope you don't mind me asking for your help again." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_07
 				wait until read
 				
 				Sculptor play ANM_P_TALK1_MALE loop 1
-				say single line "Sculptor: I am currently looking for a rough, sandstone rock. Can you help me out with that?" // MANUAL DIALOGUE
+				say single line "Sculptor: I am currently looking for a rough, sandstone rock. Can you help me out with that?" // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_08
 				wait until read
 
 				set Sculptor focus to [1770.609, 28.810, 2690.894]
@@ -383,7 +383,7 @@ start
 
 	    		set Sculptor focus to camera position
 				Sculptor play ANM_P_TALK_TO_NEIGHBOUR loop 1
-				say "Sculptor: Here, I hope this can be of use to you." // MANUAL DIALOGUE
+				say "Sculptor: Here, I hope this can be of use to you." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_09
 				wait until read
 				close dialogue
 				set Sculptor focus to [1770.609, 28.810, 2690.894]
@@ -436,11 +436,11 @@ start
 	    		set Sculptor focus to camera position
 
 				Sculptor play ANM_P_GOSSIP_MAN loop 1
-				say single line "Sculptor: Once again I need your help, Holy one." // MANUAL DIALOGUE
+				say single line "Sculptor: Once again I need your help, Holy one." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_10
 				wait until read
 				
 				Sculptor play ANM_P_TALK1_MALE loop 1
-				say single line "Sculptor: I am currently looking for a very flat, limestone rock. I hope I can rely on your divine action once again." // MANUAL DIALOGUE
+				say single line "Sculptor: I am currently looking for a very flat, limestone rock. I hope I can rely on your divine action once again." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_11
 				wait until read
 
 				set Sculptor focus to [1770.609, 28.810, 2690.894]
@@ -482,7 +482,7 @@ start
 
 	    		set Sculptor focus to camera position
 				Sculptor play ANM_P_TALK_TO_NEIGHBOUR loop 1
-				say "Sculptor: I have found some old schematics in my basement and handed it to the builders. I hope you like it." // MANUAL DIALOGUE
+				say "Sculptor: I have found some old schematics in my basement and handed it to the builders. I hope you like it." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_12
 				wait until read
 				close dialogue
 				set Sculptor focus to [1770.609, 28.810, 2690.894]
@@ -537,11 +537,11 @@ start
 	    		set Sculptor focus to camera position
 
 				Sculptor play ANM_P_GOSSIP_MAN loop 1
-				say single line "Sculptor: Greetings holy one. I promise, this is the last time I'll bother you." // MANUAL DIALOGUE
+				say single line "Sculptor: Greetings holy one. I promise, this is the last time I'll bother you." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_13
 				wait until read
 				
 				Sculptor play ANM_P_TALK1_MALE loop 1
-				say single line "Sculptor: I am currently looking for a volcanic boulder. I promise, I will reward you handsomely." // MANUAL DIALOGUE
+				say single line "Sculptor: I am currently looking for a volcanic boulder. I promise, I will reward you handsomely." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_14
 				wait until read
 
 				set Sculptor focus to [1770.609, 28.810, 2690.894]
@@ -584,7 +584,7 @@ start
 
 	    		set Sculptor focus to camera position
 				Sculptor play ANM_P_TALK_TO_NEIGHBOUR loop 1
-				say "Sculptor: As promised, I will give you a reward. Here, have my replicas of the gatestones." // MANUAL DIALOGUE
+				say "Sculptor: As promised, I will give you a reward. Here, have my replicas of the gatestones." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_15
 				wait until read
 				close dialogue
 
@@ -603,20 +603,24 @@ start
 				set Sculptor focus to [GateStoneReward2]
 				Sculptor play ANM_P_CLAP_2 loop 4
 				wait until camera ready
-				say single line "Sculptor: They took me a long time to make, but I would say it's worth it." // MANUAL DIALOGUE
+				say single line "Sculptor: They took me a long time to make, but I would say it's worth it." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_16
 				wait until read
 				delete Highlight
 				delete Rock4
-				attach Sculptor to NorseTown
-				release Sculptor
+				//attach Sculptor to NorseTown
+				//release Sculptor
+				move Sculptor position to [1755.047, 28.810, 2691.962]
 				eject evil spirit
 				eject good spirit
-				say single line "Evil Spirit: Wait, that's it! We did all that for three lousy statues!" // MANUAL DIALOGUE
+				say single line "Evil Spirit: Wait, that's it! We did all that for three lousy statues!" // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_17
 				wait until read
-				say single line "Good Spirit: Maybe not. Why don't you try putting them down near the town center, leader? Maybe something will happen." // MANUAL DIALOGUE
+				say single line "Good Spirit: Maybe not. Why don't you try putting them down near the town center, leader? Maybe something will happen." // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_18
 				wait until read
-				say single line "Evil Spirit: I say we crush his house for wasting our time!" // MANUAL DIALOGUE
+				say single line "Evil Spirit: I say we crush his house for wasting our time!" // MANUAL DIALOGUE HELP_TEXT_PLUS_COLLECTINGROCKS_19
 				wait until read
+				wait until [Sculptor] near [House] radius 2
+				delete Sculptor
+				SculptorAlive = 1
         	end cinema
 		end if
 

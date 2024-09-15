@@ -41,6 +41,16 @@ global AztecTown
 global GlobalHealSpell
 global ChosenCreature // Herolich1: Chosen Creature is used for StarterCreature script.
 global RockQuestProgression // Herolich1: The amount of rocks ready to be needed.
+// Herolich1: these globals are to determine who can help you. DDTDD
+global HermitAlive
+global HippyAlive
+global SailorsAlive
+global SculptorAlive
+global PiedPiperAlive
+global SableQuestReady
+global CaveEntrance1
+global CaveEntrance2
+global TibetanTotemOfKnowledge
 
 //define script SetupLand1DYKMarkers
 define script PlaceInitialLand1DYKS
@@ -109,6 +119,10 @@ start
 	end if
 
 	PiperCave = get FEATURE at [1970.8000, 64.4613, 2812.1201]
+	CaveEntrance1 = get FEATURE FEATURE_INFO_MINE_ENTRANCE at [2260.398,22.599,3292.703]
+	CaveEntrance2 = get FEATURE FEATURE_INFO_MINE_ENTRANCE at [2359.843,52.556,3127.707]
+	TibetanTotemOfKnowledge = get FEATURE FEATURE_INFO_TIBT_LARGE_PILLER at [2266.638,24.120,3345.261]
+	ALTITUDE of TibetanTotemOfKnowledge = -20
 	LostBrotherHousePos = marker at [1713.8300, 18.0900, 2592.5901]
 	LostBrotherHouse = get HOUSE at [LostBrotherHousePos]
 	GateKeyPostPos = marker at [1750.3295, 34.7301, 2770.4932]

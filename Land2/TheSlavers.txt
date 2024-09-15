@@ -493,6 +493,26 @@ start
 end script CreateSlavers
 
 //------------------------------------------------------------------------------------------------------------------------
+// Herolich1: Khazar goes and kills the Slavers
+//------------------------------------------------------------------------------------------------------------------------
+begin script KhazarGetsMad(SlaverPosse)
+ThrowThemInTheSea = marker at [1959.6,20.0,2184.5]
+Thrownin = 0
+TargetSlaver = 0 
+start
+	begin loop
+		TargetSlaver = get first in SlaverPosse
+		if TargetSlaver exists
+			force computer player 2 action "DIRECTPickupAndDropObject" TargetSlaver ThrowThemInTheSea
+			wait until computer player 2 ready
+			detach TargetSlaver from SlaverPosse
+			wait 0.5 seconds
+		end if
+	until size of SlaverPosse <= 0
+	end loop
+end script KhazarGetsMad
+
+//------------------------------------------------------------------------------------------------------------------------
 // The slavers have killed 10 people
 //------------------------------------------------------------------------------------------------------------------------
 begin script SlaversKilledEnough(SlaverPosse, SlaveFlock, Town)
@@ -517,26 +537,6 @@ start
 		run script ComputerPlayerConfrontPlayer(3, variable "Maybe this is an omen, hmm?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_09
 	end if
 end script SlaversKilledEnough
-
-//------------------------------------------------------------------------------------------------------------------------
-// Herolich1: Khazar goes and kills the Slavers
-//------------------------------------------------------------------------------------------------------------------------
-begin script KhazarGetsMad(SlaverPosse)
-ThrowThemInTheSea = marker at [1959.6,20.0,2184.5]
-Thrownin = 0
-TargetSlaver = 0 
-start
-	begin loop
-		TargetSlaver = get first in SlaverPosse
-		if TargetSlaver exists
-			force computer player 2 action "DIRECTPickupAndDropObject" TargetSlaver ThrowThemInTheSea
-			wait until computer player 2 ready
-			detach TargetSlaver from SlaverPosse
-			wait 0.5 seconds
-		end if
-	until size of SlaverPosse <= 0
-	end loop
-end script KhazarGetsMad
 //------------------------------------------------------------------------------------------------------------------------
 // All the slavers are dead
 //------------------------------------------------------------------------------------------------------------------------

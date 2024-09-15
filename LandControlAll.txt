@@ -30,9 +30,365 @@ start
 	end cinema
 end script TitleCard
 
-//------------------------------------------------------------------------------------------------------------------------
+// Herolich1: this is for measurements.
+begin script DevToolEnabler
+start
+run background script GetObjectCoords
+run background script GetCameraCoords
+run background script GetHandCoords
+//run background script CreateDudes
+run background script LoopCameraShot
+//run background script CreateDudesForScenes
+run background script FinishBuilding
+end script DevToolEnabler
+
+begin script FinishBuilding
+AbodeInfo = 0
+CitadelInfo = 0
+FieldInfo = 0
+WorshipInfo = 0
+start
+    begin loop
+    	when key KB_J down
+			AbodeInfo = get HOUSE at hand position radius 5.5
+			CitadelInfo = get CITADEL at hand position radius 5.5
+			FieldInfo = get FIELD at hand position radius 5.5
+			WorshipInfo = get WORSHIP at hand position radius 5.5
+			//if ObjectInfo exists and ObjectInfo type SCRIPT_OBJECT_TYPE_ABODE SCRIPT_FIND_TYPE_ANY
+			BUILT of CitadelInfo = 1.0
+			BUILT of CitadelInfo = 1.0
+			BUILT of FieldInfo = 1.0
+			BUILT of WorshipInfo = 1.0
+			HEALTH of CitadelInfo = 1.0
+			HEALTH of CitadelInfo = 1.0
+			HEALTH of FieldInfo = 1.0
+			HEALTH of WorshipInfo = 1.0
+			//end if
+    end loop
+end script FinishBuilding
+
+begin script DisplayObjCoordsAndRotation(TheObjectInQuestion)
+	X = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of TheObjectInQuestion
+	R = SCRIPT_OBJECT_PROPERTY_TYPE_ANGLE of TheObjectInQuestion
+	Y = land height at [TheObjectInQuestion]
+	Z = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of TheObjectInQuestion
+start
+	begin dialogue
+		say "Rotation: $d" with number R
+		say "$d" with number Z
+		say "$d" with number Y
+		say "$d for object" with number X with interaction
+		wait until read
+	end dialogue
+end script DisplayObjCoordsAndRotation
+
+begin script GetObjectCoords
+ObjectInfo = 0
+start
+    begin loop
+    	when key KB_H down
+			ObjectInfo = get object hand is over
+			if ObjectInfo exists
+				run script DisplayObjCoordsAndRotation(ObjectInfo)
+			else
+				ObjectInfo = get FIELD at hand position radius 5.5
+				if ObjectInfo exists
+					run script DisplayObjCoordsAndRotation(ObjectInfo)
+				end if
+			end if
+    end loop
+end script GetObjectCoords
+
+begin script GetCameraCoords
+start
+    begin loop
+    	when key KB_Y down
+			run script ShowCameraCoords
+    end loop
+end script GetCameraCoords
+
+begin script ShowCameraCoords
+CamPos = marker at camera position
+FocPos = marker at camera focus
+X1 = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of CamPos
+Y1 = land height at [CamPos]
+Z1 = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of CamPos
+X2 = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of FocPos
+Y2 = land height at [FocPos]
+Z2 = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of FocPos
+start
+	begin dialogue
+		say "$d" with number Z1
+		say "$d" with number Y1
+		say "$d" with number X1
+		say "Position" with interaction
+		wait until read
+		clear dialogue
+		say "$d" with number Z2
+		say "$d" with number Y2
+		say "$d" with number X2
+		say "focus" with interaction
+		wait until read
+	end dialogue
+end script ShowCameraCoords
+
+begin script GetHandCoords
+start
+    begin loop
+    	when key KB_G down
+			run script ShowHandCoords
+    end loop
+end script GetHandCoords
+
+begin script ShowHandCoords
+HandPos = marker at hand position
+X1 = SCRIPT_OBJECT_PROPERTY_TYPE_XPOS of HandPos
+Y1 = land height at [HandPos]
+Z1 = SCRIPT_OBJECT_PROPERTY_TYPE_ZPOS of HandPos
+start
+	begin dialogue
+		say "$d" with number Z1
+		say "$d" with number Y1
+		say "$d" with number X1
+		say "hand" with interaction
+		wait until read
+	end dialogue
+end script ShowHandCoords
+
+begin script FreezeOnShot(point1, point2)
+start
+	begin cinema
+		move camera position to [point1] time 2
+		move camera focus to [point2] time 2
+		wait until camera ready
+	end cinema
+end script FreezeOnShot
+
+begin script LoopCameraShot
+
+position01 = marker at [1993.301,44.751,2478.492] //Scene 1
+focus01 = marker at [2013.357,50.520,2479.013] + [0,-10,0]
+
+position02 = marker at [1993.301,74.751,2478.492] //Scene 1
+focus02 = marker at [2135.416,64.123,2599.792]
+
+position03 = marker at [2436.792,52.260,2555.593] //Scene 2
+focus03 = marker at [2424.467,52.260,2548.134] + [0,-2,0]
+
+position04 = marker at [2433.951,52.260,2541.205]
+focus04 = marker at [2440.728,38.337,2802.191]
+
+position05 = marker at [1741.916,54.840,2776.234] // gate scene
+focus05 = marker at [1799.201,52.325,2840.822] + [0,-10,0]
+
+position06 = marker at [1799.304,55.348,2752.523] // gate scene
+focus06 = marker at [1779.748,52.791,2832.522] + [0,-10,0]
+
+position07 = marker at [2436.902,52.260,2555.006] // Scene 3
+focus07 = marker at [2463.784,52.260,2546.401] + [0,-4,0]
+
+position08 = marker at [2485.136,54.170,2695.725] // Tigers
+focus08 = marker at [2468.808,36.224,2780.622]
+
+position09 = marker at [2424.645,47.366,2597.683] // Scene 4
+focus09 = marker at [2429.219,38.915,2647.216]
+
+position10 = marker at [2130.086,65.438,3002.331] // Show hideout
+focus10 = marker at [2189.854,6.213,3141.947]
+
+position11 = marker at [2285.561,30.140,2923.236] // Scene 5
+focus11 = marker at [2280.391,27.501,2945.364]
+
+position12 = marker at [2258.050,19.964,2991.027] // Scene 6
+focus12 = marker at [2251.798,18.430,3004.402]
+
+position13 = marker at [2336.445, 49.418, 3010.404] // Scene 7 Show entrance
+focus13 = marker at [2355.714, 53.493, 3117.329]
+
+position14 = marker at [2202.270, 26.030, 3131.506] // Scene 8 Pick a rock
+focus14 = marker at [2239.754, 16.080, 3151.141]
+
+position15 = marker at [2353.972, 52.692, 3109.157] // Scene 9 Get the right rock, get in
+focus15 = marker at [2357.822, 52.530, 3129.676]
+
+//position16 = marker at [2258.050,19.964,2991.027] // Scene 10 show the other side.
+//focus16 = marker at [2251.798,18.430,3004.402]
+
+start
+	begin loop
+		while key KB_1 down
+        	when key KB_3 down
+				run script FreezeOnShot(position01,focus01)
+        	when key KB_4 down
+				run script FreezeOnShot(position02,focus02)
+        	when key KB_5 down
+				run script FreezeOnShot(position03,focus03)
+        	when key KB_6 down
+				run script FreezeOnShot(position04,focus04)
+        	when key KB_7 down
+				run script FreezeOnShot(position05,focus05)
+        	when key KB_8 down
+				run script FreezeOnShot(position06,focus06)
+        	when key KB_9 down
+				run script FreezeOnShot(position07,focus07)
+        	when key KB_0 down
+				run script FreezeOnShot(position08,focus08)
+		end while
+		while key KB_2 down
+        	when key KB_3 down
+				run script FreezeOnShot(position09,focus09)
+        	when key KB_4 down
+				run script FreezeOnShot(position10,focus10)
+        	when key KB_5 down
+				run script FreezeOnShot(position11,focus11)
+        	when key KB_6 down
+				run script FreezeOnShot(position12,focus12)
+        	when key KB_7 down
+				run script FreezeOnShot(position13,focus13)
+        	when key KB_8 down
+				run script FreezeOnShot(position14,focus14)
+        	when key KB_9 down
+				run script FreezeOnShot(position15,focus15)
+		end while
+	end loop
+end script LoopCameraShot
+
+begin script CreateDudes
+DudePosition = marker at [1915.0500, 18.0900, 2508.8899] + [35,0,0]
+Sculptor = 0
+Sailor1 = 0
+Sailor2 = 0
+Hermit = 0
+Hippy = 0
+Sable = 0
+Piper = 0
+BookKeeperChanter1 = 0
+BookKeeperChanter2 = 0
+BookKeeperChanter3 = 0
+start
+	Sculptor = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_SCULPTOR at [DudePosition] + [5,0,0.5]
+	Sailor1 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [DudePosition] + [5,0,-0.5]
+	Sailor2 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [DudePosition] + [4.5,0,1.5]
+	Hermit = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HERMIT at [DudePosition] + [4.5,0,-1.5]
+	Hippy = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HIPPY at [DudePosition] + [3.5,0,2]
+	Sable = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [DudePosition] + [3.5,0,-2]
+	Piper = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_PIED_PIPER at [DudePosition] + [2,0,2.75]
+	BookKeeperChanter1 = create VILLAGER VILLAGER_INFO_CRUSADER at [DudePosition] + [2,0,-2.75]
+	BookKeeperChanter2 = create VILLAGER VILLAGER_INFO_CRUSADER at [DudePosition] + [0,0,3]
+	BookKeeperChanter3 = create VILLAGER VILLAGER_INFO_CRUSADER at [DudePosition] + [0,0,-3]
+	//run map script line "CREATE_ABODE(1, \"2332.170, 3116.741\", \"JAPANESE_ABODE_A\", 976, 1000, 0, 0)"
+    //run map script line "CREATE_ABODE(1, \"2338.915, 3122.785\", \"JAPANESE_ABODE_C\", 257, 1200, 0, 0)"
+    //run map script line "CREATE_ABODE(1, \"2346.527, 3127.373\", \"JAPANESE_ABODE_D\", 497, 1000, 0, 0)"
+	//run map script line "CREATE_ABODE(1, \"2015.254, 3154.911\", \"JAPANESE_ABODE_B\", 4260, 1100, 0, 0)"
+    //run map script line "CREATE_ABODE(1, \"2007.562, 3148.030\", \"JAPANESE_ABODE_B\", 3600, 1300, 0, 0)"
+    //run map script line "CREATE_ABODE(1, \"1998.771, 3145.790\", \"JAPANESE_ABODE_F\", 3120, 1100, 0, 0)"
+	begin loop
+		state Sculptor LIVING_IN_SCRIPT
+		state Sailor1 LIVING_IN_SCRIPT
+		state Sailor2 LIVING_IN_SCRIPT
+		state Hermit LIVING_IN_SCRIPT
+		state Hippy LIVING_IN_SCRIPT
+		state Sable LIVING_IN_SCRIPT
+		state Piper LIVING_IN_SCRIPT
+		state BookKeeperChanter1 LIVING_IN_SCRIPT 
+		state BookKeeperChanter2 LIVING_IN_SCRIPT 
+		state BookKeeperChanter3 LIVING_IN_SCRIPT 
+		set Sculptor focus to [DudePosition]
+		set Sailor1 focus to [DudePosition]
+		set Sailor2 focus to [DudePosition]
+		set Hermit focus to [DudePosition]
+		set Hippy focus to [DudePosition]
+		set Sable focus to [DudePosition]
+		set Piper focus to [DudePosition]
+		set BookKeeperChanter1 focus to [DudePosition]
+		set BookKeeperChanter2 focus to [DudePosition]
+		set BookKeeperChanter3 focus to [DudePosition]
+	end loop
+end script CreateDudes
+
+begin script CreateDudesForScenes
+Scene1Focus = marker at [1993.301,44.751,2478.492]
+Scene1Sable = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [1997.156,46.047,2478.508]
+
+Scene2Focus = marker at [2436.792,52.260,2555.593]
+Scene2Sable = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [2430.503,52.260,2552.167]
+
+Scene3Focus = marker at [2436.902,52.260,2555.006]
+Scene3Hippy = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HIPPY at [2444.622,52.260,2554.413]
+Scene3Sailor1 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [2444.552,52.260,2552.518] + [0,0,0.5]
+Scene3Sailor2 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [2444.552,52.260,2552.518] + [0,0,-0.5]
+Scene3Piper = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_PIED_PIPER at [2442.503,52.260,2549.350]
+Scene3Hermit = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HERMIT at [2444.139,52.260,2550.604]
+Scene3Sculptor = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_SCULPTOR at [2444.693,52.260,2555.595]
+
+Scene4Focus = marker at [2452.659,38.190,2768.608]
+Scene4Sable = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [2426.069,47.028,2604.157]
+Scene4Hippy = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HIPPY at [2424.631,46.905,2604.549]
+
+Scene5Focus = marker at [2194.622,4.224,3125.347]
+Scene5Sable = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [2284.997,30.477,2930.445]
+Scene5Sailor1 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [2282.590,29.852,2927.834]
+Scene5Sailor2 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [2283.635,30.051,2927.640]
+Scene5Piper = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_PIED_PIPER at [2286.265,30.642,2928.612]
+
+Scene6Focus = marker at [2194.622,4.224,3125.347]
+Scene6Sable = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [2253.354,19.611,2997.027]
+Scene6Hermit = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HERMIT at [2254.775,19.514,2996.994]
+
+start
+	Scene1Sable play ANM_P_STAND_DESPAIR_1 loop -1
+	Scene2Sable play ANM_P_STAND_DESPAIR_2 loop -1
+	Scene3Hippy play ANM_P_SITTING_DOWN_DANCE_SAILING3 loop -1
+	Scene3Sailor1 play ANM_P_TALK1_MALE loop -1
+	Scene3Sailor2 play ANM_P_TALK2_MALE loop -1
+	Scene3Piper play ANM_P_AMBIENT1 loop -1
+	Scene3Hermit play ANM_P_PRAY loop -1
+	Scene3Sculptor play ANM_P_AMBIENT2 loop -1
+	Scene4Sable play ANM_P_TALKING_AND_POINTING loop -1
+	Scene4Hippy play ANM_P_LOOKING_FOR_SOMETHING loop -1
+	Scene5Sable play ANM_P_GOSSIP_WOMAN_1 loop -1
+	Scene5Sailor1 play ANM_P_F_DANCE_A loop -1
+	Scene5Sailor2 play ANM_P_M_DANCE_A loop -1
+	Scene5Piper play ANM_PIED_PIPER_DANCE_STAND_SPIN loop -1
+	Scene6Sable play ANM_P_PUZZLED loop -1
+	Scene6Hermit play ANM_P_AMBIENT1 loop -1
+	begin loop
+		set Scene1Sable focus to [Scene1Focus]
+		set Scene2Sable focus to [Scene2Focus]
+		set Scene3Hippy focus to [Scene3Focus]
+		set Scene3Sailor1 focus to [Scene3Sailor2]
+		set Scene3Sailor2 focus to [Scene3Sailor1]
+		set Scene3Piper focus to [Scene3Focus]
+		set Scene3Hermit focus to [Scene3Focus]
+		set Scene3Sculptor focus to [Scene3Focus]
+		set Scene4Sable focus to [Scene4Focus]
+		set Scene4Hippy focus to [Scene4Focus]
+		set Scene5Sable focus to [Scene5Focus]
+		set Scene5Sailor1 focus to [Scene5Focus]
+		set Scene5Sailor2 focus to [Scene5Focus]
+		set Scene5Piper focus to [Scene5Focus]
+		set Scene6Sable focus to [Scene6Focus]
+		set Scene6Hermit focus to [Scene6Focus]
+	end loop
+end script CreateDudesForScenes
+
 //------------------------------------------------------------------------------------------------------------------------
 begin script LandControlAll
+PauseGameForDev = 1
+Sculptor = 0
+Sailor1 = 0
+Sailor2 = 0
+Hermit = 0
+Hippy = 0
+Sable = 0
+Piper = 0
+YourPosse = 0
+CaveEntrance1Test = 0
+CaveEntrance2Test = 0
+TibetanTotemOfKnowledgeTest = 0
+Dust = 0
+MyCitadel = 0
+CreatureHeight = 0
 start
 
 	// Herolich1's dev mode
@@ -45,8 +401,176 @@ start
 	DevMode = 0
 	// Cutscene means that the cutscenes itselfs will be shortened by a lot, unless they are part of the testing.
 	DevModeCutscene = 0
+	//run script DevToolEnabler
 
-	run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_01, variable HELP_TEXT_PLUS_TITLECARD_NAME_01, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
+	
+	//build building at [1915.05,2508.89] desire 1.0
+	//MyCitadel = get CITADEL at [1915.05,2508.89] radius 5
+	//BUILT of MyCitadel = 1
+	//load my_creature at [1896.50, 2520.06]
+	//MyCreature = get player 1 creature
+	//CaveEntrance1Test = get FEATURE FEATURE_INFO_MINE_ENTRANCE at [2260.398,22.599,3292.703]
+	//CaveEntrance2Test = get FEATURE FEATURE_INFO_MINE_ENTRANCE at [2359.843,52.556,3127.707]
+	//TibetanTotemOfKnowledgeTest= get FEATURE FEATURE_INFO_TIBT_LARGE_PILLER at [2266.638,24.120,3345.261]
+	//ALTITUDE of TibetanTotemOfKnowledgeTest= -20
+	//Sable = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_CREATURE_TRAINER at [1997.156,46.047,2478.508]
+    //Hippy = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HIPPY at [2444.622,52.260,2554.413]
+    //Sailor1 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [2444.552,52.260,2553.018]
+    //Sailor2 = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_NORSE_SAILOR at [2444.552,52.260,2552.018]
+    //Piper = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_PIED_PIPER at [2442.503,52.260,2549.350]
+	//Hermit = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_HERMIT at [2444.139,52.260,2550.604]
+	//Sculptor = create SCRIPT_OBJECT_TYPE_VILLAGER VILLAGER_INFO_SCULPTOR at [2444.693,52.260,2555.595]
+    //YourPosse = flock at [2436.792,52.260,2555.593]
+	//set YourPosse properties inner 5 outer 10
+    //attach Sable to YourPosse
+	//attach Hippy to YourPosse
+	//attach Sailor1 to YourPosse
+	//attach Sailor2 to YourPosse
+	//attach Piper to YourPosse
+	//attach Hermit to YourPosse
+	//attach Sculptor to YourPosse
+	//
+	//set Sculptor position to [2352.475, 52.927, 3121.268]
+	//set Sable position to [2356.215, 53.247, 3120.743]
+	//set Sailor1 position to [2358.454, 53.590, 3118.630]
+	//set Sailor2 position to [2356.896, 53.535, 3117.864]
+	//set Hippy position to [2353.416, 53.218, 3119.134]
+	//set Piper position to [2352.472, 52.891, 3124.374]
+	//set Hermit position to [2354.966, 53.417, 3117.722]
+	//set YourPosse focus to [2359.843,52.556,3127.707]
+	//SPEED of YourPosse = 0.5
+	//
+	//wait 100 second
+	//open CaveEntrance1Test
+	//open CaveEntrance2Test
+	//begin cinema
+    //    set fade red 0 green 0 blue 0 time 2
+    //    wait until fade ready
+    //    set camera position to [2353.972, 57.692, 3109.157] //Mine Segment
+    //    set camera focus to [2357.822, 52.530, 3129.676]
+	//	set fade in time 2
+	//	start sound LH_SCRIPT_SAMPLE_CAVEDOOR_SLIDE AUDIO_SFX_BANK_TYPE_SCRIPT_SFX at [2359.843,52.556,3127.707]
+	//	wait 2 seconds
+	//	start sound LH_SCRIPT_SAMPLE_CAVEDOOR_SLAM AUDIO_SFX_BANK_TYPE_SCRIPT_SFX at [2359.843,52.556,3127.707]
+    //    wait until fade ready
+	//	wait 4 seconds
+	//	move Sculptor position to [2359.843,52.556,3127.707]
+	//	move Sable position to [2359.843,52.556,3127.707]
+	//	move Sailor1 position to [2359.843,52.556,3127.707]
+	//	move Sailor2 position to [2359.843,52.556,3127.707]
+	//	move Hippy position to [2359.843,52.556,3127.707]
+	//	move Piper position to [2359.843,52.556,3127.707]
+	//	move Hermit position to [2359.843,52.556,3127.707]
+	//	move camera position to [2462.491, 30.820, 3004.575]+[0,80,0] time 6
+	//	move camera focus to [2362.169, 73.928, 3149.358] time 6
+	//	wait 4.5 seconds
+	//	move game time get game time +12 time 5
+	//	wait 5 seconds
+//
+	//	set Sculptor position to [2252.891,22.736,3302.261]
+	//	set Sable position to [2258.855,22.406,3303.246]
+	//	set Sailor1 position to [2276.015,22.780,3307.216]  // right dude
+	//	set Sailor2 position to [2276.430,22.780,3305.481]  // left dude
+	//	set Hippy position to [2267.053,22.762,3309.741]
+	//	set Piper position to [2252.912,22.694,3298.400]
+	//	set Hermit position to [2267.745,22.644,3307.973]
+//
+	//	set Sculptor focus to [Piper]
+	//	set Sable focus to [2277.013, 23.450, 3323.143]
+	//	set Sailor1 focus to [2283.130,16.507,3313.251]
+	//	set Sailor2 focus to [2283.130,16.507,3313.251]
+	//	set Hippy focus to [Hippy]
+	//	set Piper focus to [Sculptor]
+	//	set Hermit focus to [Hermit]
+	//	
+	//	move camera position to [2426.240, 7.004, 3413.033]+[0,110,0] time 4
+	//	move camera focus to [2290.633, 54.396, 3272.695] time 4
+	//	wait 3 seconds
+	//	move camera position to [2277.013, 23.450, 3323.143]+[0,10,0] time 4
+	//	move camera focus to [2255.053, 22.704, 3296.101] time 4
+	//	wait until camera ready
+//
+    //    say single line "Sable: TEMP Here we are." // MANUAL DIALOGUE
+    //    wait until read
+    //    say single line "Sable: TEMP Now, where is the-" // MANUAL DIALOGUE
+	//	move camera focus to [2266.638,24.120,3345.261] time 3
+	//	start music MUSIC_TYPE_SCRIPT_EPIC_03
+	//	shake camera at [2266.638,24.120,3345.261] radius 150.0 amplitude 0.25 time 5
+	//	Dust = create special effect SPOT_VISUAL_SMOKE at [2266.638,24.120,3345.261] time 5
+	//	SCRIPT_OBJECT_PROPERTY_TYPE_SCALE of Dust = 7.0
+//
+	//	start sound LH_SCRIPT_SAMPLE_CREATUREGATESTONEMOVE_01 AUDIO_SFX_BANK_TYPE_SCRIPT_SFX
+	//	while get ALTITUDE of TibetanTotemOfKnowledgeTest< 0
+	//		ALTITUDE of TibetanTotemOfKnowledgeTest+=0.25
+	//	end while
+	//	move Sable position to [2266.823,24.120,3336.915]
+    //    wait until read
+    //    say single line "Sable: TEMP Guess unlocking the path must've unlocked the pillar as well." // MANUAL DIALOGUE
+    //    wait until read
+	//	wait until [Sable] at [2266.823,24.120,3336.915]
+	//	set Sable focus to [TibetanTotemOfKnowledgeTest]
+    //    say single line "Sable: TEMP Now, let me try to see if I can decipher this..." // MANUAL DIALOGUE
+    //    wait until read
+    //    start music MUSIC_TYPE_SCRIPT_CREATURE_GUIDE
+    //    say single line "Sable: TEMP *Reading the pillar.* And to you, my followers, I promise..." // MANUAL DIALOGUE
+    //    wait until read
+    //    set fade red 0 green 0 blue 0 time 2
+    //    wait until fade ready
+	//	close dialogue
+//
+    //    set camera position to [1469.513, 15.567, 2056.167]+[0,20,0] //intro Segment
+    //    set camera focus to [1609.986, 14.222, 2267.731]
+	//	set fade in time 2
+    //    wait until fade ready
+    //    say single line "???: TEMP I promise that once the balance starts to shift, a new god will be born." // MANUAL DIALOGUE
+	//	move camera position to [1632.379, 15.567, 2306.095]+[0,20,0] time 10
+	//	wait 3 seconds
+	//	move camera focus to [1851.261, 21.848, 2476.988] time 7
+    //    wait until read
+    //    say single line "???: TEMP One of either Black or White, who shall stand against he who wishes to bring Eternity." // MANUAL DIALOGUE
+    //    wait until read
+    //    set camera position to [1907.582, 26.015, 2562.663]+[0,30,0] //norse town
+    //    set camera focus to [1830.301, 30.493, 2677.173]
+    //    say single line "???: TEMP When they come, give them a Temple to call their own. Teach them all you know." // MANUAL DIALOGUE
+    //    wait until read
+    //    set camera position to [2594.696, 54.971, 2619.008]+[0,50,0] //aztec town
+    //    set camera focus to [2451.165, 52.260, 2575.244]
+    //    say single line "???: TEMP And be faithful that they can stop the rise of this threat, before it kills all gods." // MANUAL DIALOGUE
+    //    wait until read
+    //    set camera position to [2379.016, 51.224, 2572.420]+[0,100,0] //dead guide
+    //    set camera focus to [-1050.722, -10.000, -1124.982]
+    //    say single line "???: TEMP Do know, however, I cannot promise more than that. Your safety and survival are in your own hands." // MANUAL HELP_TEXT_DIALOG_CONTINUEGAME
+    //    wait until read
+	//	set camera position to [2147.826, 81.381, 3103.167] // show the glade.
+	//	set camera focus to [2238.217, 18.187, 3155.706]
+    //    say single line "???: TEMP And most important of all, they must have a Creature." // MANUAL DIALOGUE
+    //    wait until read
+	//	CreatureHeight = SCRIPT_OBJECT_PROPERTY_TYPE_HEIGHT of MyCreature
+    //    set camera position to [MyCreature]+[10,10+CreatureHeight,10] //Show your creature
+    //    set camera focus to [MyCreature]+[0,CreatureHeight*0.7,0]
+    //    say single line "???: TEMP Which Creature, I do not know. But they shall hold a piece of the Creed inside them." // MANUAL DIALOGUE
+    //    wait until read
+    //    set camera position to [1950.294, 26.915, 2548.881]+[0,30,0] //temple vortex Segment
+    //    set camera focus to [1910.785, 29.480, 2503.289]
+    //    say single line "???: TEMP They will be the one to do it." // MANUAL DIALOGUE
+    //    wait until read
+	//	move camera focus to [1700.2275, 11.4005, 2520.1829] time 3
+    //    say single line "???: TEMP The one able to change Eternity." // MANUAL DIALOGUE
+    //    wait until read
+    //    set fade red 0 green 0 blue 0 time 2
+    //    wait until fade ready
+	//	
+	//	set camera position to [2265,28,3316]
+	//	set camera focus to [Sable]
+	//	set Sable focus to [2265,28,3316]
+	//	set fade in time 2
+    //    wait until fade ready
+    //    say single line "Sable: TEMP That, is my word." // MANUAL DIALOGUE
+    //    wait until read
+	//	stop music
+	//end cinema
+	wait until PauseGameForDev == 1
+	//run script TitleCard(variable HELP_TEXT_PLUS_TITLECARD_LAND_01, variable HELP_TEXT_PLUS_TITLECARD_NAME_01, variable HELP_TEXT_PLUS_TITLECARD_CREDIT_01, 0)
 	run script LandControl1
 	stop all scripts excluding files "LandControlAll.txt"
 

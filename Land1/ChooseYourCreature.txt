@@ -242,7 +242,7 @@ end script RemindAboutQuarryRock
 //  Start of Choose your creature - Meet the Creature trainer..... *************************************************
 //------------------------------------------------------------------------------------------------------------------------
 
-begin script ChooseYourCreature
+begin script ChooseYourCreature(dyk27)
 
 	ApeMarker = marker at [0,0,0]
 	CowMarker = marker at [0,0,0]
@@ -268,7 +268,8 @@ begin script ChooseYourCreature
 	SFX=0
 
 	Ark = 0
-	dyk27 = marker at [1753.7001, 33.6099, 2784.8096]				// do the gold scrolls
+//	Herolich1: moved DYK signs to the control to allow them to exist if quests are skipped
+//	dyk27 = marker at [1753.7001, 33.6099, 2784.8096]				// do the gold scrolls
 
 start
 
@@ -845,7 +846,7 @@ start
 
 		else
 			//set fade red 0 green 0 blue 0 time 2
-			wait 2 seconds			 
+			wait 1 seconds			 
 		end if
 
 		set camera position to [1753.323, 49.477, 2811.133]					// Camera pos look at gate chain
@@ -882,6 +883,7 @@ start
 		start music MUSIC_TYPE_SCRIPT_EPIC_03
 		camera path TRACK00
 		wait until camera ready
+		delete Plinth
 
 		force CreatureTiger CREATURE_SIT TigerBasePos
 		move CreatureCow position to [CowBasePos]

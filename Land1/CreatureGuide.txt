@@ -1538,7 +1538,7 @@ end script GuideImpressTownNextLesson
 //------------------------------------------------------------------------------------------------------------------------
 //--GuideImpressTownLesson----------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
-begin script GuideImpressTownLesson
+begin script GuideImpressTownLesson(dyk12, dyk77)
 	StoragePitPos = marker at [2487.55, 52.6, 2571.21]
 	ImpressVillagePos = marker at [2421.95, 40.42, 2634.93]
 	GuideSpellPos = marker at [2421.95, 40.42, 2634.93]
@@ -1546,7 +1546,8 @@ begin script GuideImpressTownLesson
 	TapCameraPos = marker at [2404.3057, 82.8934, 2620.2568]		// View the one shot
 	TapCameraFoc = marker at [2454.0808, 31.4947, 2619.1067]		// View the one shot
 	SpellCreatePos = marker at [2458.78, 39.0, 2611.89]
-	DidYouKnowPos = marker at [SpellCreatePos]+[2.5, 0.0, 2.5]
+//	Herolich1: moved DYK signs to the control to allow them to exist if quests are skipped
+//	dyk12 = marker at [SpellCreatePos]+[2.5, 0.0, 2.5]
 	Highlight = 0
 	ScriptTimer = create timer for 0 seconds
 	Town = 0
@@ -1559,8 +1560,9 @@ begin script GuideImpressTownLesson
 	InHand = 0														// Needed to put spell in hand
 	CastFoodSpellReminder = create timer for 0 seconds
 	TimeDelay = 30													// Change to 30 seconds
-	dyk12 = marker at [2480.5950, 34.1700, 2655.3870]				// creature will cast miracle seed
-	dyk77 = marker at [2468.9717, 52.2600, 2572.0420]				// How to impress town
+//	dyk12 = marker at [2480.5950, 34.1700, 2655.3870]				// creature will cast miracle seed //Herolich1: Ignore this one. Seems to be an old position
+//	Herolich1: moved DYK signs to the control to allow them to exist if quests are skipped
+//	dyk77 = marker at [2468.9717, 52.2600, 2572.0420]				// How to impress town
 	CastSpell = 0
 	SFX = 0
 	
@@ -1673,7 +1675,7 @@ start
 		// "This is a food Miracle One Shots"
 		say HELP_TEXT_NEW_DEVELOPMENT_STAGE_GUIDE_IMPRESSES_TOWN_17
 //		GuideSpell = create SCRIPT_OBJECT_TYPE_ONE_SHOT_SPELL SPELL_SEED_TYPE_FOOD at [SafeSpellCreatePos]
-		run background script DidYouKnow(DidYouKnowPos, variable HELP_TEXT_DYK_12, variable DYK_CREATURE)				// creature will cast miracle seed
+		run background script DidYouKnow(dyk12, variable HELP_TEXT_DYK_12, variable DYK_CREATURE)				// creature will cast miracle seed
 
 		ALTITUDE of GuideSpell = 0
 		wait until read
@@ -2217,6 +2219,8 @@ end		script	MoveTheGuideAround
 //------------------------------------------------------------------------------------------------------------------------
 //--CreatureDevelopmentSet----------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------
+// Herolich1: commented out since it is unused and causes issues
+/*
 begin script CreatureGuideSet
 start
 	run script MeetTheGuide
@@ -2226,3 +2230,4 @@ start
 	run script CreatureDevGuideTeachesFight
 	run script TheStorm
 end script CreatureGuideSet
+*/

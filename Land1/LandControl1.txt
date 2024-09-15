@@ -3,21 +3,38 @@ challenge LandControl1
 begin script LandControl1
 
  dyk76 = marker at [1751.1938, 0.0000, 2466.3926]				// fish farms
+ dyk31 = marker at [1856.0084, 33.1886, 2618.5925]				// use signposts
+ dyk18 = marker at [1924.0012, 30.0401, 2621.2017]				// zoom, rotate and dbl click
+ dyk22 = marker at [1890.6465, 29.4800, 2505.0425]				// shortcut to outside temple
+ dyk27 = marker at [1753.7001, 33.6099, 2784.8096]				// do the gold scrolls
+ dyk12 = marker at [2458.78, 39.0, 2611.89]+[2.5, 0.0, 2.5]		// creature will cast miracle seed
+ dyk77 = marker at [2468.9717, 52.2600, 2572.0420]				// How to impress town
  MyCitadel = 0
  CreatureGates = 0
  CreatureActive = 0
+Plinth = get FEATURE at [1774.50,2793.30]
 
 start
 	run script SetupLand1
 		run background script SingingStoneCircle							// Places Stones and wait until SingingStonesStart == 1
 
 	if IsSkippingToCreatureSelect == 0
-		run script FollowUs
-		run script CitadelGuide
+		if DevMode <= 1
+			begin dialogue
+				say single line "pressed the wrong button, dumb dumb."
+				wait 10 seconds
+			end dialogue
+		end if
+		run script FollowUs(dyk31)
+		run script CitadelGuide(dyk18, dyk22)
 	else
 		build building at [1915.05,2508.89] desire 1.0
 		MyCitadel = get CITADEL at [1915.05,2508.89] radius 5
 		BUILT of MyCitadel = 1
+		// Herolich1: added DYK signs when skipping.
+		run background script DidYouKnow(dyk31, variable HELP_TEXT_DYK_31, variable DYK_MISC)			// expain dyks
+		run background script DidYouKnow(dyk18, variable HELP_TEXT_DYK_18, variable DYK_NAVIGATION)			// zoom, rotate and dbl click
+		run background script DidYouKnow(dyk22, variable HELP_TEXT_DYK_22, variable DYK_NAVIGATION)			// shortcut to outside temple
 	end if
 
 	run background script DidYouKnow(dyk76,variable HELP_TEXT_DYK_76, variable DYK_VILLAGE_LIFE)			// fish farms
@@ -27,7 +44,7 @@ start
 		run background script TheLostFlock
 	
 	if IsSkippingToCreatureSelect == 0
-		run script ChooseYourCreature
+		run script ChooseYourCreature(dyk27)
 	else
 		GateKey1 = get OBJECT MOBILE_STATIC_INFO_GATE_TOTEM_APE at [LostBrotherHouse] radius 20
 		delete GateKey1
@@ -35,6 +52,8 @@ start
 		delete GateKey2
 		QuarryRock = get OBJECT MOBILE_STATIC_INFO_GATE_TOTEM_BLANK at [QuarryPos] radius 30
 		delete QuarryRock
+		// Herolich1: added DYK signs when skipping.
+		run background script DidYouKnow(dyk27,variable HELP_TEXT_DYK_27, variable DYK_MISC)			// do the gold scrolls
 		// Herolich1 DevMode: If devmode is greater than zero and account already has a creature, the creature intro is skipped
 		// This is for the vortex option, to get into the game faster. There is no dev mode for the parts prior to this due to it
 		// not needing as much work. This is best used when skipping to the next land as fast as possible. (The vortex option.)
@@ -51,11 +70,12 @@ start
 			ChosenCreature = 0
 			ChooseYourCreatureFinished = 1
 			load my_creature at [1850.00, 1300.00]  // arbitrary position
+			delete Plinth
 		end if
 	end if
 		run background script RunCreatureBreederLand(1)
 		run background script TheMissionaries
-		run background script StartingCreatures // Herolich1: a script that places two or all of the starter creatures in the glade.
+		//run background script StartingCreatures // Herolich1: a script that places two or all of the starter creatures in the glade.
 		run background script CollectingRocks // Herolich1: Starts the quest for collecting a few rocks.
 	if IsSkippingCreatureGuide == 0
 		run background script MoveTheGuideAround
@@ -76,7 +96,7 @@ start
 			if MyCreature exists
 				CreatureActive = 1
 			else
-				say single line "Please go into the skirmish menu or quit and reopen the game so your creature gets recognized." //MANUAL DIALOG HELP_TEXT_PLUS_REPLACE_OLD_CREATURE
+				say single line "Please go into the skirmish menu or quit and reopen the game so your creature gets recognized." //MANUAL DIALOG HELP_TEXT_PLUS_REPLACE_OLD_CREATURE_01
 			end if
 		end while
 		set fade red 0 green 0 blue 0 time 2
@@ -120,9 +140,11 @@ start
 	if IsSkippingCreatureGuide == 0 // Herolich1: added an else statement so that the Aztec village can be taken when skipping the creature guide.
 		run script MeetTheGuide
 		run script GuideAsksToMeetYourCreature
-		run script GuideImpressTownLesson
+		run script GuideImpressTownLesson(dyk12, dyk77)
 	else
 		GuideNotImpressing = 1
+		run background script DidYouKnow(dyk77,variable HELP_TEXT_DYK_77, variable DYK_VILLAGE_LIFE)			// Impress town
+		run background script DidYouKnow(dyk12, variable HELP_TEXT_DYK_12, variable DYK_CREATURE)				// creature will cast miracle seed
 	end if
 
 		run background script PiedPiper
@@ -137,6 +159,7 @@ start
 
 		run background script CreatureGuardian								
 		run background script LeaveThroughVortexL1							// This waits until OpenVortexL1 == 1 (set in TheStorm)
+		run background script GodInMemory
 		RockQuestProgression = 4
 
 	if IsOpeningVortex == 0 // Herolich1: replaced "IsSkippingCreatureGuide" with "IsOpeningVortex"

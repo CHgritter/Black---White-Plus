@@ -176,7 +176,7 @@ end script WeAreWayAhead
 //------------------------------------------------------------------------------------------------------------------------
 //  Follow us starts here  - yep this is the INTRO !!!*************************************************************
 //------------------------------------------------------------------------------------------------------------------------
-begin script FollowUs
+begin script FollowUs(dyk31)
 
   	Mother = create VILLAGER VILLAGER_INFO_NORSE_HOUSEWIFE_FEMALE at [1578.4329, 12.7274, 2220.5413]
     Father = create VILLAGER VILLAGER_INFO_NORSE_SHEPHERD_MALE at [1577.8221, 12.5128, 2221.0671]
@@ -283,7 +283,8 @@ begin script FollowUs
 	TempleFoc	 = marker at [1914.2778, 29.8864, 2509.3811]
 
 
-	dyk31 = marker at [1856.0084, 33.1886, 2618.5925]				// use signposts
+//	Herolich1: moved DYK signs to the control to allow them to exist if quests are skipped
+//	dyk31 = marker at [1856.0084, 33.1886, 2618.5925]				// use signposts
 	DYKHighlight = 0
 	NoNoTick = 0
 	HandState = 0
