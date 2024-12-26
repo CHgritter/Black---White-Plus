@@ -37,34 +37,37 @@ begin script ComputerPlayerConfrontPlayer(CompNumber, HelpText, DisplayText)
 	Count=0
 
 start
-	begin loop
-		//position 10 metres from camera
-		move computer player CompNumber to facing camera position distance 25 speed 350 //Herolich1: Makes Gods less in your face
-		wait 0.3 seconds
-	until get StartTimer time since set > 10
-		set computer player CompNumber position to facing camera position distance 25 //Herolich1: Makes Gods less in your face
-	until computer player CompNumber position near camera position radius 25 //Herolich1: Makes Gods less in your face
-	end loop
+	if KhazarGone == 0 and CompNumber == 2
+	or LethysGone == 0 and CompNumber == 3
+		begin loop
+			//position 10 metres from camera
+			move computer player CompNumber to facing camera position distance 25 speed 350 //Herolich1: Makes Gods less in your face
+			wait 0.3 seconds
+		until get StartTimer time since set > 10
+			set computer player CompNumber position to facing camera position distance 25 //Herolich1: Makes Gods less in your face
+		until computer player CompNumber position near camera position radius 25 //Herolich1: Makes Gods less in your face
+		end loop
 
-	if DisplayText == 1
-		begin dialogue
-			say single line constant HelpText
-			wait until read
-		end dialogue
-	elsif DisplayText == 2 // Herolich1: For say string
-		begin dialogue
-			say single line string HelpText
-			wait until read
-		end dialogue
-	else
-		if CompNumber == 3
-			start say extra sound constant HelpText
+		if DisplayText == 1
+			begin dialogue
+				say single line constant HelpText
+				wait until read
+			end dialogue
+		elsif DisplayText == 2 // Herolich1: For say string
+			begin dialogue
+				say single line string HelpText
+				wait until read
+			end dialogue
 		else
-			start say sound constant HelpText
+			if CompNumber == 3
+				start say extra sound constant HelpText
+			else
+				start say sound constant HelpText
+			end if
 		end if
-	end if
 
-	release computer player CompNumber
+		release computer player CompNumber
+	end if
 
 end script ComputerPlayerConfrontPlayer
 
@@ -270,6 +273,8 @@ start
 		if KhazarGone == 0
 			if ToPlayer == 1
 				run background script KhazarConfrontPlayer(variable constant from HELP_TEXT_L2_GOD_REACTION_26 to HELP_TEXT_L2_GOD_REACTION_31, 1)
+			elsif ToPlayer == 2
+				run background script KhazarConfrontPlayer(HELP_TEXT_L2_GOD_REACTION_09, 1) // Herolich1: TODO Add the custom lines
 			end if
 		end if
 	end if 

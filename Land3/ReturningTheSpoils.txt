@@ -1,1 +1,5 @@
 // Herolich1: A lethys centered quest.
+// After Lethys begs for mercy, a new scroll appears near his temple. 
+// Upon clicking it, you will get given the option to give the Egyptian town back. 
+// If you accept, Lethys will reward you with scaffolds for both his towns to make your own, and a miracle dispenser.
+// Unlocks other Lethys quests.

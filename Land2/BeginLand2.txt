@@ -521,16 +521,20 @@ end script GiveOneShots
 //------------------------------------------------------------------------------------------------------------------------
 // This script sends the computer player between positions to place down scaffolds then moves to a position to 
 // trigger the Miracle challenges.
+// Herolich1: added the Workshop.
 //------------------------------------------------------------------------------------------------------------------------
 begin script GiveOtherScaffolds
 	Scaffold2Pos = marker at [2651.152,27.394,1941.150]
 	Scaffold3Pos = marker at [2656.779,27.169,1944.511]
+	Scaffold4Pos = marker at [2651.957,27.117,1945.278]
 
 	Scaffold2PlacePos = marker at [3289.278,47.570,3425.049]
 	Scaffold3PlacePos = marker at [3308.452,47.690,3396.670]
+	Scaffold4PlacePos = marker at [3252.089, 47.570, 3341.047]
 
 	Scaffold2 = 0
 	Scaffold3 = 0
+	Scaffold4 = 0
 
 	ScaffoldCheck = 0
 
@@ -549,6 +553,14 @@ start
 	wait until computer player 2 ready
 	disable Scaffold3 pickup
 	disable Scaffold3 moveable
+
+	Scaffold4 =  create SCAFFOLD at [Scaffold4Pos]
+	ANGLE of Scaffold4 = 160
+	set Scaffold4 building properties ABODE_NUMBER_WORKSHOP size 3 destroys when placed
+	force computer player 2	action "FindPlaceToUseScaffoldForBuilding" Scaffold4 Scaffold4PlacePos
+	wait until computer player 2 ready
+	disable Scaffold4 pickup
+	disable Scaffold4 moveable
 	
 	release computer player 2
 	KhazarInScript=0

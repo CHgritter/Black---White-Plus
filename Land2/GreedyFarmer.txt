@@ -40,8 +40,13 @@ start
 		eject good spirit
 		make good spirit point at [HideOut]
 		say HELP_TEXT_YOU_DESTROYED_SOMETHING_05 // Goodness. That's totally smashed!
+		while Child exists
+			Child play constant from ANM_P_SCARED_STIFF to ANM_P_SCARED_STIFF_2 loop -1
+			Child = get next in Children after Child
+		end while
 		wait until read
 
+		send good spirit home
 		move camera position to [Child] + [10,10,10] time 6
 		move camera focus to [Child] time 6
 		
@@ -359,6 +364,7 @@ start
 
 		close dialogue
 		wait 0.1 seconds
+		GreedyFarmerAlignmentTotal -= 0.6
 		snapshot challenge success 1.0 alignment GreedyFarmerAlignmentTotal HELP_TEXT_TITLE_11 StandardReminder(variable HELP_TEXT_REMINDER_12)
 	end cinema
 
@@ -415,6 +421,7 @@ begin script GreedyFarmer
 	BeginFoc = 0
 	StarvingCount = 0
 	AlignmentTotal = 0
+	RewardPos = marker at [1753.5812, 54.2700, 3008.0759]
 
 	Highlight = 0
 	LocalTown = get TOWN at [1800.4399, 51.5126, 3024.3201] radius 100
@@ -598,14 +605,14 @@ start
 	until HEALTH of Farmer <= 0
 		run script GreedyFarmerDead
 		GreedyFarmerFinished=1
-		GiveReward = 1
+		GiveReward = 2
 	until size of Cattle <= 0
 		run script GreedyFarmerCattleDead (Farmer, SoapBox, SoapCamPos)
 		GreedyFarmerFinished=1
 	until size of Children <= 0 or CowLastMemberOfFlock == 1
 		run script GreedyFarmerChildrenDead (SoapBox, SoapCamPos, Farmer)
 		GreedyFarmerFinished=1
-		GiveReward = 1
+		GiveReward = 2
 	until FarmerShowScared == 1 
 		run script ScaredThem(Child1, Child2, Child3, Child4, Child5, Children)
 		GreedyFarmerFinished=1
@@ -621,20 +628,31 @@ start
 	end if
 
 	// Give a reward if the player has made some sort of action. A ligtning bolt PU 1 for the LocalTown.
-	if GiveReward == 1
-		enable spell SPELL_LIGHTNING_LEVEL_1 in LocalTown
-		enable spell SPELL_LIGHTNING_LEVEL_2 in LocalTown
-		
+	//Herolich1: replacing the lightning reward with food for a less monstrous method, while giving a one shot extreme lightning for the evil route.
+	if GiveReward != 0
 		begin cinema
-			// Do flyby to the town centre to see the reward
-			move camera position to [1769.3789, 67.1658, 3026.8521] time 3
-			move camera focus to [1795.4517, 54.4811, 3028.6423] time 3
+			if GiveReward == 1
+				run script rewardnosky(variable REWARD_LARGE_FOOD, RewardPos, 4)
+			else
+				run script rewardnosky(variable REWARD_BOLT_PU2, RewardPos, 4)
+			end if
+			move camera focus to [RewardPos] time 3
+			move camera position to [1769.3789, 67.1658, 3026.8521]  time 3
 			wait until camera ready
-		end cinema with dialogue
-			eject evil spirit
-			say HELP_TEXT_NEW_REWARD_02
-			wait until read
-		end dialogue
+		end cinema
+		//enable spell SPELL_LIGHTNING_LEVEL_1 in LocalTown
+		//enable spell SPELL_LIGHTNING_LEVEL_2 in LocalTown
+		//
+		//begin cinema
+		//	// Do flyby to the town centre to see the reward
+		//	move camera position to [1769.3789, 67.1658, 3026.8521] time 3
+		//	move camera focus to [1795.4517, 54.4811, 3028.6423] time 3
+		//	wait until camera ready
+		//end cinema with dialogue
+		//	eject evil spirit
+		//	say HELP_TEXT_NEW_REWARD_02
+		//	wait until read
+		//end dialogue
 	end if
 	if LethysGone == 0
 	    run script ComputerPlayerConfrontPlayer(3, variable "I would've dealt with that much faster than you!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_GREEDYFARMER_01

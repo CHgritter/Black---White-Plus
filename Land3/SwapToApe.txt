@@ -324,6 +324,7 @@ end if
 			disable Woman high gfx detail
 			stop music
 		end cinema
+		// HEROLICH1: TODO add Lethys comment
 
 		delete Highlight
 		run background script SwapCreatures(Ape)

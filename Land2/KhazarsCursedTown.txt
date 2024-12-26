@@ -1,14 +1,18 @@
 // Herolich1: this quest starts after Khazar has been wiped out(?)
 // you need to do something to get the Guardian Stone, and then you can save the town.
 
+//MAKE SURE THE SINGING GUYS CAN'T BE KILLED OR THROWN INTO THE VORTEX!!!!
+
 begin script KhazarsCursedTown
 
 start
     // Make it unreachable for a while.
     // A silver scroll appears, and the town can be reached once more.
     // Cutscene to introduce the quest
-    // The part where the curse happens
-    // The part where you can sovle the curse
+    // The part where the curse happens, with everyone frozen in time.
+    // The part where you can sovle the curse. This is done by getting the two song guys to play their music to free the three bells.
+    // You need to play a much shorter version of the music puzzle to unlock the gatestone.
     // The ending cutscene where this gets solved.
+    // Alternative where you destroy the gatestone with fire, causing the entire town to age to death.
     // Main Script
 end script KhazarsCursedTown

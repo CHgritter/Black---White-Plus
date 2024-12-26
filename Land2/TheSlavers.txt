@@ -545,9 +545,7 @@ start
 	  //Jamie all yours. Slaves cheering?
 	  //Release them to the town.
 	  //say "Slavers dead"
-	if KhazarGone == 0
-    	run script ComputerPlayerConfrontPlayer(2, variable "Less than ideal... but at least it is done. Thank you, my friend, I know you meant well.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_07
-	end if
+    run script ComputerPlayerConfrontPlayer(2, variable "Less than ideal... but at least it is done. Thank you, my friend, I know you meant well.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_07
 end script SlaversDead
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -649,9 +647,7 @@ start
 			enable OnFireBuilding on fire 0.5
 		end if
 
-		if KhazarGone == 0
-			run script ComputerPlayerConfrontPlayer(2, variable "Khazar: Help me friend! We must get rid of these slavers, lest my town ends up in ruin!", 2) // Khazar calls for you aid. //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_06
-		end if
+		run script ComputerPlayerConfrontPlayer(2, variable "Khazar: Help me friend! We must get rid of these slavers, lest my town ends up in ruin!", 2) // Khazar calls for you aid. //MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_06
 		
 		begin dialogue
 			eject good spirit
@@ -866,9 +862,7 @@ start
 		wait until camera ready
 	end cinema
 	run background script SlaverChiefGuard(ChiefGuard)
-	if KhazarGone == 0
-    	run script ComputerPlayerConfrontPlayer(2, variable "Khazar: Be careful now, please?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_05
-	end if
+    run script ComputerPlayerConfrontPlayer(2, variable "Khazar: Be careful now, please?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_05
 
 end script SlaversFinalWarning
 

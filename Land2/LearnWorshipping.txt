@@ -39,6 +39,7 @@ end script CheckDyingWorshippers
 
 //------------------------------------------------------------------------------------------------------------------------
 // Send Khazar to create a workshop
+// Herolich1: Removed, and moved to BeginLand2
 //------------------------------------------------------------------------------------------------------------------------
 begin script CreateWorkshop
 	Scaffold4Pos = marker at [2651.957,27.117,1945.278]
@@ -234,7 +235,8 @@ start
 		delete Highlight with fade
 
 		//Create workshop
-		run script CreateWorkshop
+		//Herolich1: Removed, and moved to BeginLand2
+		//run script CreateWorkshop
 
 		//Place down miracles challenges
 		

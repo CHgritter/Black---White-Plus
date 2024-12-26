@@ -67,5 +67,6 @@ start
 		move camera focus to [FlockMiracleFoc2] time 5
 		wait until camera ready
 	end cinema
+	// HEROLICH1: TODO add Lethys comment
 
 end script TreePuzzleTwo

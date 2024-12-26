@@ -218,7 +218,7 @@ start
 		move camera position to [2102.096, 10.563, 2999.403] time 10
 		move camera focus to [2112.419, 13.427, 3000.378] time 12
 
-		if Man exists
+		if Man exists and HEALTH of Man > 0.0
 			move Man position to [2103.684, 9.804, 2999.995] 
 			wait until [Man] at [2103.684, 9.804, 2999.995]  
 			set Man focus to [2102.096, 10.563, 2999.403]
@@ -229,7 +229,7 @@ start
 		run background script BringBackTheDead
 
 		wait 1 second
-		if Man exists
+		if Man exists and HEALTH of Man > 0.0
 			say single line HELP_TEXT_MORE_SINGING_STONES_05 // The Dead shall live.
 			wait until read
 		end if
@@ -1173,9 +1173,7 @@ start
 			run script TwinkleSequence
 			if TwinkleDoneOnce == 0
 				TwinkleDoneOnce = 1
-				if KhazarGone == 0
-				    run script ComputerPlayerConfrontPlayer(2, variable "Let's be careful with this one. The people won't work if it's night, and you cannot impress a sleeping villager.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_03
-				end if
+				run script ComputerPlayerConfrontPlayer(2, variable "Let's be careful with this one. The people won't work if it's night, and you cannot impress a sleeping villager.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_03
 			end if
 		elsif FuneralComplete == 1
 			if FuneralDoneOnce == 0
@@ -1186,12 +1184,8 @@ start
 			run script FuneralSequence(Man)
 			if FuneralDoneOnce == 0
 				FuneralDoneOnce = 1
-				if KhazarGone == 0
-				    run script ComputerPlayerConfrontPlayer(2, variable "The dead rise...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_04
-				end if
-				if LethysGone == 0
-				    run script ComputerPlayerConfrontPlayer(3, variable "To think such power is hidden in the land...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_05
-				end if
+				run script ComputerPlayerConfrontPlayer(2, variable "The dead rise...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_04
+				run script ComputerPlayerConfrontPlayer(3, variable "To think such power is hidden in the land...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_05
 			end if
 		elsif WhiteChristmasComplete == 1
 			if ChristmasDoneOnce == 0
@@ -1202,9 +1196,7 @@ start
 			run script WhiteChristmasSequence
 			if ChristmasDoneOnce == 0
 				ChristmasDoneOnce = 1
-				if LethysGone == 0
-				    run script ComputerPlayerConfrontPlayer(3, variable "I like this atmosphere. I should remember that tune for after I win!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_02
-				end if
+				run script ComputerPlayerConfrontPlayer(3, variable "I like this atmosphere. I should remember that tune for after I win!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_MORE_SINGING_STONES_02
 			end if
 		end if
 

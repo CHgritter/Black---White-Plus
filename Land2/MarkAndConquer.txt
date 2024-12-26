@@ -1,1 +1,11 @@
 // Herolich1: A quest where you can direct Khazar to take over a given town.
+
+//Quest starts after completing Khazar's tutorials.
+//Create scroll somewhere
+//Intro where Khazar explains the situation
+//Create the marking device and it's functionality.
+//Add part for comments
+//Add something that allows Khazar to get going with his attempts to take over.
+//Add something that keeps track of the amount of towns Khazar has, and if it's 4 or above, all towns (except the norse) are given to the player.
+//Exclude the two indian towns near the player.
+//MAKE IT SO THAT NEMESIS ONLY ARRIVES AFTER ONE TOWN OF LETHYS IS TAKEN, OR KHAZAR HAS ONLY ONE TOWN LEFT.

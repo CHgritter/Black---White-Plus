@@ -552,6 +552,7 @@ start
 		wait until camera ready
 		disable Monk high graphics detail
 	end cinema
+	// HEROLICH1: TODO add Lethys comment
 
 	wait 5 seconds
 	wait until not Monk viewed and camera position not near [Monk] radius 50
@@ -564,7 +565,7 @@ start
 end script ShaolinMonk
 
 //------------------------------------------------------------------------------------------------------------------------
-
+// HEROLICH1: TODO add the evil path conclusion.
 begin script ShaolinGivesWonder
 	Wonder = marker at [2590.07,50.0,2259.28]
 	Monk = 0

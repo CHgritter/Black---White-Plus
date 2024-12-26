@@ -1,1 +1,25 @@
 // Herolich1: Another quest where Khazar needs something from you.
+
+// Triggers after Khazar has taken one town, with your help or without.
+//
+// IF the indian village with the quest for Zebra is taken:
+// Khazar needs help building up the new town, by giving it all civic buildings, and ensuring there are no homeless in the village.
+// Build a creche, graveyard, and Workshop
+// Make sure there are no homeless.
+// Be careful not to take over the town.
+// Rewards you with a wood miracle dispenser
+//
+// IF the indian village with the sacrifice quest is taken:
+// Khazar needs help defending against a hostile attack from Lethys.
+// Ensure none of his rocks are hitting his town, by either catching them or using shield.
+// If the town takes too much damage, Lethys will convert it (50% are damaged and/or the population has been halfed)
+// On success, it rewards a shield dispenser.
+//
+// IF the greek village with the healer is taken:
+// Khazar needs help to cure his own village.
+// The food has been poisened by Lethys.
+// If the people aren't cured, then Lethys will take it.
+// After removing the poison source, Khazar will ask for healing miracles, which you need to deliver as miracle seeds at his temple.
+// Once most are cured, you will get a food miracle dispenser.
+//
+// Khazar rewards you with a miracle dispenser in your teritory. It can be played three times.

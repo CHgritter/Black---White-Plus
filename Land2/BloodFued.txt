@@ -1,1 +1,11 @@
 // Herolich1: A quest where a blood fued between two Celtic towns comes to a boiling point.
+
+//ONCE THE LAST TWO CELTIC TOWNS ARE TAKEN, RUN THE MAIN SCRIPT.
+//Two groups of celts appear with a scroll above them
+//Intro, showing Town A having taken []  and requesting [] from Town B, and Town B having takenn [] and requesting [] from Town a
+//Allow the following options:
+//A: KILL A LEADER. Makes one side love you and the other hate you, losing faith and making them attack the other town.
+//B: STEAL IT BACK. Steal the item back. Same result as A, but the happy town gives you a reward.
+//C: GIVE A SIDE WHAT THEY WANT: This makes one side happy, making them reward you, while the other is... at least glad to have their thing back
+//D: KILL THEM ALL: No reward, but they don't dare oppose you.
+//Create the rewards, the taken item, and the requested item, and the attacks.

@@ -265,16 +265,12 @@ start
 	else 
 		HEALTH of Town = 0
 	end if
-	if KhazarGone == 0
-		if IsKilled == 2
-			run script ComputerPlayerConfrontPlayer(2, variable "Don't fret, my friend. You've done the right thing.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_03
-		else
-    		run script ComputerPlayerConfrontPlayer(2, variable "It looks as though this was no bluff...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_02
-		end if
+	if IsKilled == 2
+		run script ComputerPlayerConfrontPlayer(2, variable "Don't fret, my friend. You've done the right thing.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_03
+	else
+    	run script ComputerPlayerConfrontPlayer(2, variable "It looks as though this was no bluff...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_02
 	end if
-	if LethysGone == 0
-	    run script ComputerPlayerConfrontPlayer(3, variable "If I were you, I would have let him be. But let me guess: you work in mysterious ways!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_04
-	end if
+	run script ComputerPlayerConfrontPlayer(3, variable "If I were you, I would have let him be. But let me guess: you work in mysterious ways!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SPIRITUALHEALER_04
 end script HealerKilledOrBanished
 //------------------------------------------------------------------------------------------------------------------------
 begin script FirstTimeBanished(Healer, Town)

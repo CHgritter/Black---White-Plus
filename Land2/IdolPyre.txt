@@ -464,14 +464,11 @@ start
 
 	end cinema
 
-	if KhazarGone == 0
-		if HEALTH of Builder > 0
-		    run script ComputerPlayerConfrontPlayer(2, variable "Hurrah! The Idol has been destroyed! Well done, my ally.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_02
-		else
-		    run script ComputerPlayerConfrontPlayer(2, variable "Well, at least the Idol is gone.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_03
-		end if
+	if HEALTH of Builder > 0
+	    run script ComputerPlayerConfrontPlayer(2, variable "Hurrah! The Idol has been destroyed! Well done, my ally.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_02
+	else
+	    run script ComputerPlayerConfrontPlayer(2, variable "Well, at least the Idol is gone.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_03
 	end if
-	if LethysGone == 0
-	    run script ComputerPlayerConfrontPlayer(3, variable "I don't know whether to be glad you removed that thing or not...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_04
-	end if
+	run script ComputerPlayerConfrontPlayer(3, variable "I don't know whether to be glad you removed that thing or not...", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_FIRE_IDOL_04
+
 end script IdolPyreMain

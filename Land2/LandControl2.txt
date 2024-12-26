@@ -150,9 +150,7 @@ start
 			Exit = 1
 		elsif LearnGesturesCompleted == 1 // Herolich1: Allows the quest to play out, even with Khazar in charge 
 			run background script TheSlaversMain(Town)
-			if KhazarGone == 0
-			    run script ComputerPlayerConfrontPlayer(2, variable "I need your aid in my second town!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_10
-			end if
+			run script ComputerPlayerConfrontPlayer(2, variable "I need your aid in my second town!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SLAVERS_10
 			Exit = 1
 		end if
 	end while
@@ -208,6 +206,21 @@ start
 		end if
 	end while
 end script GreedyFarmerCheck
+
+//------------------------------------------------------------------------------------------------------------------------
+// Check for take over of Town8 and Lethys Main Town every 4 minutes.
+//------------------------------------------------------------------------------------------------------------------------
+begin script BloodFuedCheck(Town1, Town2)
+	Exit = 0
+start
+	while Exit == 0
+		wait 4*60 seconds
+		if PLAYER of Town1 == 1 and PLAYER of Town2 == 1
+			//run background script BloodFued
+			Exit = 1
+		end if
+	end while
+end script BloodFuedCheck
 
 //------------------------------------------------------------------------------------------------------------------------
 begin script TownOwnershipCheck(Town1, Town2, Town3, Town4, Town5, Town6, Town7, Town8, Town9, Town10, Town11)
@@ -403,6 +416,7 @@ start
 	run background script SacrificeCheck(Town6)
 	run background script BayWatchCheck(Town6, Town2)
 	run background script GreedyFarmerCheck(Town7)
+	run background script BloodFuedCheck(LethysHomeTown, Town8) //New quest
 	run background script TownOwnershipCheck(Town1, Town2, Town3, Town4, Town5, Town6, Town7, Town8, HomeTown, KhazarHomeTown, LethysHomeTown)
 		
 	while LeavingLandTwo == 0

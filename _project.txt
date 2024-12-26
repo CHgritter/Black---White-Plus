@@ -71,9 +71,8 @@ source Land1/StartingCreatures.txt
 source Land1/GodInMemory.txt
 source Land1/LeavingLand1Scene.txt
 source Land1/LandControl1.txt
-### hero's new land test. ###
-# source Land1A/SetupLand1A.txt
-# source Land1A/Landcontrol1A.txt
+### Land 1A ###
+### Land 1B ###
 ### Land 2 ###
 source Land2/setupland2.txt
 source Land2/SlaversWarning.txt
@@ -86,9 +85,12 @@ source Land2/beginland2.txt
 source Land2/LearnWorshipping.txt
 source Land2/greedyfarmer.txt
 source Land2/idolpyre.txt
+source Land2/khazaraskforfavor.txt
 source Land2/killkhazar.txt
+source Land2/khazarscursedtown.txt
 source Land2/leavethroughvortexl2.txt
 source Land2/lethysvortex.txt
+source Land2/BloodFued.txt
 source Land2/losttreasure.txt
 source Land2/SingingStonesSongs.txt
 source Land2/plague.txt
@@ -102,6 +104,7 @@ source Land2/LearnInfluence.txt
 source Land2/FinalGoldScroll.txt
 source Land2/LeavingLand2Scene.txt
 source Land2/landcontrol2.txt
+### Land 2A ###
 ### Land 3 ###
 source Land3/SetupLand3.txt
 source Land3/Shaolin.txt
@@ -113,6 +116,9 @@ source Land3/TreePuzzleTwo.txt
 source Land3/throwbloke.txt
 source Land3/LeavingLand3Scene.txt
 source Land3/LandControl3.txt
+### Land 3A ###
+### Land 3B ###
+### Land 3C ###
 ### Land 4 ###
 source Land4/setupland4.txt
 source Land4/land4meteorites.txt
@@ -126,6 +132,8 @@ source Land4/takeovervillagesl4.txt
 source Land4/ThesiusPuzzleLand4.txt
 source Land4/LeavingLand4Scene.txt
 source Land4/landcontrol4.txt
+### Land 4A ###
+### Land 4B ###
 ### Land 5 ###
 source Land5/beginland5.txt
 source Land5/creaturemirrorfight.txt
@@ -143,5 +151,6 @@ source Land5/CreatureCurse.txt
 source Land5/ControlNemesisBattleStrategy.txt
 source Land5/Crusaders.txt
 source Land5/landcontrol5.txt
+### Land 5A ###
 ### Start the game ###
 source LandControlAll.txt

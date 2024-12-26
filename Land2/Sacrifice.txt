@@ -316,9 +316,7 @@ start
 					set camera focus to [BeginFoc]
 				end cinema
 			end if
-			if KhazarGone == 0
-			    run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
-			end if
+			run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
 			SacrificeFinished = 1
 		elsif HEALTH of Woman <=0
 			//Wife dead:
@@ -363,9 +361,7 @@ start
 					set camera focus to [BeginFoc]
 				end cinema
 			end if
-			if KhazarGone == 0
-			    run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
-			end if
+			run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
 			SacrificeFinished = 1
 
 		elsif HEALTH of Boy <= 0
@@ -409,9 +405,7 @@ start
 					set camera focus to [BeginFoc]
 				end cinema
 			end if
-			if KhazarGone == 0
-			    run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
-			end if
+			run script ComputerPlayerConfrontPlayer(2, variable "Your choice has been made... I see. ", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_02
 			SacrificeFinished = 1
 
 		else
@@ -468,9 +462,7 @@ start
 					wait 0.1 seconds
 					snapshot challenge success 1 alignment 1 HELP_TEXT_TITLE_23 StandardReminder(variable HELP_TEXT_SACRIFICE_09)
 				end cinema
-				if KhazarGone == 0
-				    run script ComputerPlayerConfrontPlayer(2, variable "You are different from him.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_03
-				end if
+				run script ComputerPlayerConfrontPlayer(2, variable "You are different from him.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_SACRIFICE_03
 
 				SacrificeFinished = 1
 				run script rewardfromsky(variable REWARD_HEAL, RewardPos, IndianTown, 1)

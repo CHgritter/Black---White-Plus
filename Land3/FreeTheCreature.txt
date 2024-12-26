@@ -83,6 +83,7 @@ start
 			SPEED of WolfPack = 0.6
 			move WolfPack position to [TargetPos]
 
+			// HEROLICH1: TODO add the evil path
 			if MonkHasReachedEnd == 1
 				start music MUSIC_TYPE_TIBETAN_TOWN_GOOD
 				wait 4 seconds
@@ -538,6 +539,7 @@ start
 			send evil spirit home
 			wait until fade ready
 			
+			// HEROLICH1: TODO add the evil path
 			if MonkHasReachedEnd == 1
 				MonkHelpWithFireFinished = 0
 				set camera position to [2900.318, 25.373, 2720.446] 

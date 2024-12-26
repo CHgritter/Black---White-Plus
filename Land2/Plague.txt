@@ -223,12 +223,8 @@ start
 				wait until camera ready
 			end cinema
 			release Villager
-			if KhazarGone == 0
-			    run script ComputerPlayerConfrontPlayer(2, variable "I am sorry... Mortal life is so fragile.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_02
-			end if
-			if LethysGone == 0
-			    run script ComputerPlayerConfrontPlayer(3, variable "Hah! You are not as mighty as you thought, eh?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_03
-			end if
+			run script ComputerPlayerConfrontPlayer(2, variable "I am sorry... Mortal life is so fragile.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_02
+			run script ComputerPlayerConfrontPlayer(3, variable "Hah! You are not as mighty as you thought, eh?", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_03
 			StorageHealed = 2
 		end if
 
@@ -368,14 +364,8 @@ start
 				say HELP_TEXT_NEW_REWARD_01
 				wait until read
 			end dialogue
-
-			if KhazarGone == 0
-			    run script ComputerPlayerConfrontPlayer(2, variable "Well done my friend! Once again, you prove yourself capable.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_05
-			end if
-			if LethysGone == 0
-			    run script ComputerPlayerConfrontPlayer(3, variable "A minor victory. But ultimately the war will be mine!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_06
-			end if
-
+			run script ComputerPlayerConfrontPlayer(2, variable "Well done my friend! Once again, you prove yourself capable.", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_05
+			run script ComputerPlayerConfrontPlayer(3, variable "A minor victory. But ultimately the war will be mine!", 2) // MANUAL DIALOG HELP_TEXT_PLUS_GOD_COMMENT_PLAGUE_06
 			StorageHealed = 2
 		end if
 
